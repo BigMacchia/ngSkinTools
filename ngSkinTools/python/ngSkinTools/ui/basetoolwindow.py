@@ -45,7 +45,8 @@ class BaseToolWindow:
         if self.windowExists(self.windowName):
             raise Exception("window %s already opened" % self.windowName)
         if not self.useUserPrefSize:
-            cmds.windowPref(self.windowName,removeAll=True)
+            cmds.windowPref(self.windowName,remove=True)
+            cmds.windowPref(self.windowName,width=self.defaultWidth,height=self.defaultHeight)
 
         cmds.window(self.windowName,
                                    title=self.windowTitle,
