@@ -1,0 +1,77 @@
+/*
+	JEdit macro for opening selected rst file in browser as html
+	(from build/html folder)
+	
+	Calls are windows specific and will need some tweaking for 
+	other platforms.
+
+
+*/
+
+File getBasePath(File path){
+	if (path==null)
+		return null;
+	
+	if (path.isDirectory()) {
+		test = new File(path,"make.bat");
+		if (test.exists()){
+			return path;
+		}
+	}
+	
+	return getBasePath(path.getParentFile());
+}
+
+
+File bufferPath = new File(buffer.getPath());
+File basePath = getBasePath(bufferPath);
+File sourcePath = new File(basePath,"source");
+File htmlPath = new File(new File(basePath,"build"),"html");
+
+
+
+boolean isSourcePath(File path){
+	if (path==null)
+		return false;
+	if (path.equals(sourcePath))
+		return true;
+	
+	return isSourcePath(path.getParentFile());
+}
+
+// recursively goes into path, then returns with changed base path
+File getHtmlEquivalent(File path) {
+	if (!isSourcePath(path))
+		return null;
+	if (path.equals(sourcePath))
+		return htmlPath;
+	
+	File parent = getHtmlEquivalent(path.getParentFile());
+	
+	if (path.isDirectory())
+		return new File(parent,path.getName());
+	
+	String newName = path.getName().replaceAll("\\.rst",".html");
+	
+	return new File(parent,newName);
+}
+
+htmlEquivalent = getHtmlEquivalent(bufferPath);
+browser = "\"C:/Program Files (x86)/Mozilla Firefox/firefox.exe\" -url ";
+
+/**
+ * thread for opening documentation asynchronously
+ */
+class LaunchThread extends Thread {
+	void run(){
+		waitForConsole(view);
+		Runtime.getRuntime().exec(browser+htmlEquivalent.toURL().toString()).waitFor();
+	}
+}
+if (htmlEquivalent!=null) {
+	runCommandInConsole(view,"System","cd \""+basePath.getPath()+"\"");
+	runCommandInConsole(view,"System","make html");
+	// open document once console is done, but do the waiting asynchronously
+	LaunchThread thread = new LaunchThread();
+	thread.start();
+}

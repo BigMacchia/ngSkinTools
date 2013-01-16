@@ -1,0 +1,467 @@
+// !$*UTF8*$!
+{
+	8627DAD0133CFBD3001F193C /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeSDKPreference = macosx10.5;
+		activeTarget = 867FE941133DF3D700001585 /* ngSkinTools */;
+		addToTargets = (
+		);
+		codeSenseManager = 8627DAD5133CFBD3001F193C /* Code sense */;
+		ignoreBreakpointsInProjectsDict = {
+		};
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					22,
+					300,
+					404,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXExecutablesDataSource_ActiveFlagID,
+					PBXExecutablesDataSource_NameID,
+					PBXExecutablesDataSource_CommentsID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					182,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXSymbolsDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXSymbolsDataSource_SymbolNameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					16,
+					200,
+					50,
+					122,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXSymbolsDataSource_SymbolTypeIconID,
+					PBXSymbolsDataSource_SymbolNameID,
+					PBXSymbolsDataSource_SymbolTypeID,
+					PBXSymbolsDataSource_ReferenceNameID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.XCSCMDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					20,
+					158,
+					20,
+					48.1626,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_SCM_ColumnID,
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					142,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 322940516;
+			PBXWorkspaceStateSaveDate = 322940516;
+		};
+		perUserProjectItems = {
+			863CA64E133FC430005B4559 /* PBXTextBookmark */ = 863CA64E133FC430005B4559 /* PBXTextBookmark */;
+			863CA64F133FC430005B4559 /* PBXTextBookmark */ = 863CA64F133FC430005B4559 /* PBXTextBookmark */;
+			863CA650133FC430005B4559 /* PBXTextBookmark */ = 863CA650133FC430005B4559 /* PBXTextBookmark */;
+			863CA651133FC430005B4559 /* PBXTextBookmark */ = 863CA651133FC430005B4559 /* PBXTextBookmark */;
+			863CA652133FC430005B4559 /* PBXTextBookmark */ = 863CA652133FC430005B4559 /* PBXTextBookmark */;
+			863CA653133FC430005B4559 /* PBXTextBookmark */ = 863CA653133FC430005B4559 /* PBXTextBookmark */;
+			863CA654133FC430005B4559 /* PBXTextBookmark */ = 863CA654133FC430005B4559 /* PBXTextBookmark */;
+			863CA655133FC430005B4559 /* PBXTextBookmark */ = 863CA655133FC430005B4559 /* PBXTextBookmark */;
+			863CA656133FC430005B4559 /* PBXTextBookmark */ = 863CA656133FC430005B4559 /* PBXTextBookmark */;
+			863CA657133FC430005B4559 /* PBXTextBookmark */ = 863CA657133FC430005B4559 /* PBXTextBookmark */;
+			863CA658133FC430005B4559 /* PBXTextBookmark */ = 863CA658133FC430005B4559 /* PBXTextBookmark */;
+			863CA659133FC430005B4559 /* PBXTextBookmark */ = 863CA659133FC430005B4559 /* PBXTextBookmark */;
+			863CA65A133FC430005B4559 /* PBXTextBookmark */ = 863CA65A133FC430005B4559 /* PBXTextBookmark */;
+			863CA65B133FC430005B4559 /* PBXTextBookmark */ = 863CA65B133FC430005B4559 /* PBXTextBookmark */;
+			867FE8EC133D48FA00001585 /* PBXTextBookmark */ = 867FE8EC133D48FA00001585 /* PBXTextBookmark */;
+			867FE8ED133D48FA00001585 /* PBXTextBookmark */ = 867FE8ED133D48FA00001585 /* PBXTextBookmark */;
+			867FE8EE133D48FA00001585 /* PBXTextBookmark */ = 867FE8EE133D48FA00001585 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 8627DAD4133CFBD3001F193C /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	8627DAD4133CFBD3001F193C /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+		scmType = "";
+	};
+	8627DAD5133CFBD3001F193C /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	8627DCB8133D0380001F193C /* GeometryInfo.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1088, 5880}}";
+			sepNavSelRange = "{2951, 44}";
+			sepNavVisRect = "{{0, 1419}, {604, 173}}";
+		};
+	};
+	8627DCBA133D0380001F193C /* hardwarelock.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {711, 504}}";
+			sepNavSelRange = "{31, 11}";
+			sepNavVisRect = "{{0, 0}, {711, 429}}";
+			sepNavWindowFrame = "{{384, 121}, {750, 558}}";
+		};
+	};
+	8627DCC0133D0380001F193C /* MakeRigidWeights.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {728, 1302}}";
+			sepNavSelRange = "{1316, 0}";
+			sepNavVisRect = "{{0, 504}, {711, 429}}";
+			sepNavWindowFrame = "{{432, -27}, {750, 558}}";
+		};
+	};
+	8627DCC3133D0380001F193C /* ngLayerColorDisplayNode.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {963, 4466}}";
+			sepNavSelRange = "{6899, 44}";
+			sepNavVisRange = "{6587, 826}";
+			sepNavVisRect = "{{0, 3266}, {711, 429}}";
+			sepNavWindowFrame = "{{131, 132}, {750, 558}}";
+		};
+	};
+	8627DCC5133D0380001F193C /* ngSkinLayerCmd.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {944, 5586}}";
+			sepNavSelRange = "{4903, 0}";
+			sepNavVisRect = "{{0, 1979}, {711, 429}}";
+			sepNavWindowFrame = "{{61, 141}, {750, 558}}";
+		};
+	};
+	8627DCC9133D0380001F193C /* pluginMain.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {360, 1974}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 160}";
+		};
+	};
+	8627DCCC133D0380001F193C /* SkinLayer.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1226, 8750}}";
+			sepNavSelRange = "{20276, 0}";
+			sepNavVisRect = "{{0, 8433}, {983, 285}}";
+			sepNavWindowFrame = "{{84, 120}, {750, 558}}";
+		};
+	};
+	8627DCCD133D0380001F193C /* SkinLayerChanges.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {656, 2604}}";
+			sepNavSelRange = "{538, 0}";
+			sepNavVisRect = "{{0, 145}, {604, 173}}";
+		};
+	};
+	8627DCD0133D0380001F193C /* SkinLayerPaintContextCmds.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {360, 2814}}";
+			sepNavSelRange = "{5411, 0}";
+			sepNavVisRange = "{0, 0}";
+			sepNavVisRect = "{{0, 0}, {0, 0}}";
+			sepNavWindowFrame = "{{107, 99}, {750, 558}}";
+		};
+	};
+	8627DCD2133D0380001F193C /* SkinLayerWeightList.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1124, 4438}}";
+			sepNavSelRange = "{9364, 147}";
+			sepNavVisRect = "{{0, 3659}, {983, 285}}";
+		};
+	};
+	8627DCD6133D0380001F193C /* WeightedVertex.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {983, 3752}}";
+			sepNavSelRange = "{827, 0}";
+			sepNavVisRect = "{{0, 411}, {983, 285}}";
+		};
+	};
+	8627DD04133D03A7001F193C /* defines.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {872, 938}}";
+			sepNavSelRange = "{163, 0}";
+			sepNavVisRect = "{{0, 0}, {711, 429}}";
+			sepNavWindowFrame = "{{84, 120}, {750, 558}}";
+		};
+	};
+	8627DD07133D03A7001F193C /* hardwarelock.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {594, 1176}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 79}";
+			sepNavVisRect = "{{0, 0}, {595, 522}}";
+		};
+	};
+	8627DD08133D03A7001F193C /* InflListerBase.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {714, 826}}";
+			sepNavSelRange = "{120, 0}";
+			sepNavVisRect = "{{0, 0}, {714, 522}}";
+		};
+	};
+	8627DD19133D03A7001F193C /* predicates.cxx */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {486, 58702}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 480}";
+		};
+	};
+	8627DD1C133D03A7001F193C /* SkinLayer.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1190, 3066}}";
+			sepNavSelRange = "{5569, 0}";
+			sepNavVisRect = "{{0, 0}, {711, 429}}";
+			sepNavWindowFrame = "{{38, 162}, {750, 558}}";
+		};
+	};
+	8627DD24133D03A7001F193C /* tetgen.cxx */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {486, 486528}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 480}";
+		};
+	};
+	8627DD26133D03A7001F193C /* timer.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {711, 1134}}";
+			sepNavSelRange = "{1228, 0}";
+			sepNavVisRect = "{{0, 620}, {711, 429}}";
+			sepNavWindowFrame = "{{63, 149}, {750, 558}}";
+		};
+	};
+	8627DD27133D03A7001F193C /* utils.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {588, 882}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 85}";
+		};
+	};
+	863CA64E133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DCD0133D0380001F193C /* SkinLayerPaintContextCmds.cpp */;
+		name = "SkinLayerPaintContextCmds.cpp: 198";
+		rLen = 0;
+		rLoc = 5411;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	863CA64F133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DCC3133D0380001F193C /* ngLayerColorDisplayNode.cpp */;
+		name = "ngLayerColorDisplayNode.cpp: 234";
+		rLen = 44;
+		rLoc = 6899;
+		rType = 0;
+		vrLen = 198;
+		vrLoc = 6899;
+	};
+	863CA650133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DD24133D03A7001F193C /* tetgen.cxx */;
+		name = "tetgen.cxx: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 480;
+		vrLoc = 0;
+	};
+	863CA651133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DD27133D03A7001F193C /* utils.h */;
+		name = "utils.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 85;
+		vrLoc = 0;
+	};
+	863CA652133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DCC9133D0380001F193C /* pluginMain.cpp */;
+		name = "pluginMain.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 160;
+		vrLoc = 0;
+	};
+	863CA653133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DD07133D03A7001F193C /* hardwarelock.h */;
+		name = "hardwarelock.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 79;
+		vrLoc = 0;
+	};
+	863CA654133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DD19133D03A7001F193C /* predicates.cxx */;
+		name = "predicates.cxx: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 480;
+		vrLoc = 0;
+	};
+	863CA655133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DCD0133D0380001F193C /* SkinLayerPaintContextCmds.cpp */;
+		name = "SkinLayerPaintContextCmds.cpp: 198";
+		rLen = 0;
+		rLoc = 5411;
+		rType = 0;
+		vrLen = 0;
+		vrLoc = 0;
+	};
+	863CA656133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DCC3133D0380001F193C /* ngLayerColorDisplayNode.cpp */;
+		name = "ngLayerColorDisplayNode.cpp: 234";
+		rLen = 44;
+		rLoc = 6899;
+		rType = 0;
+		vrLen = 198;
+		vrLoc = 6899;
+	};
+	863CA657133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DD24133D03A7001F193C /* tetgen.cxx */;
+		name = "tetgen.cxx: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 480;
+		vrLoc = 0;
+	};
+	863CA658133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DD27133D03A7001F193C /* utils.h */;
+		name = "utils.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 85;
+		vrLoc = 0;
+	};
+	863CA659133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DCC9133D0380001F193C /* pluginMain.cpp */;
+		name = "pluginMain.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 160;
+		vrLoc = 0;
+	};
+	863CA65A133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DD07133D03A7001F193C /* hardwarelock.h */;
+		name = "hardwarelock.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 79;
+		vrLoc = 0;
+	};
+	863CA65B133FC430005B4559 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DD19133D03A7001F193C /* predicates.cxx */;
+		name = "predicates.cxx: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 480;
+		vrLoc = 0;
+	};
+	867FE8EC133D48FA00001585 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DD08133D03A7001F193C /* InflListerBase.h */;
+		name = "InflListerBase.h: 7";
+		rLen = 0;
+		rLoc = 120;
+		rType = 0;
+		vrLen = 721;
+		vrLoc = 0;
+	};
+	867FE8ED133D48FA00001585 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DD07133D03A7001F193C /* hardwarelock.h */;
+		name = "hardwarelock.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 793;
+		vrLoc = 0;
+	};
+	867FE8EE133D48FA00001585 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 8627DD08133D03A7001F193C /* InflListerBase.h */;
+		name = "InflListerBase.h: 7";
+		rLen = 0;
+		rLoc = 120;
+		rType = 0;
+		vrLen = 721;
+		vrLoc = 0;
+	};
+	867FE941133DF3D700001585 /* ngSkinTools */ = {
+		activeExec = 0;
+	};
+}

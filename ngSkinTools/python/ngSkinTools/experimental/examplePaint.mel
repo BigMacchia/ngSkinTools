@@ -1,0 +1,58 @@
+/// documentation:
+/// http://download.autodesk.com/us/maya/2008help/wwhelp/wwhimpl/js/html/wwhelp.htm?href=General/Write_MEL_Scripts_for_the_Paint_Scripts_Tool.html
+
+global proc ngSkinTools_paintLayers()
+{
+artUserPaintToolScript  4;
+artUserPaintCtx -e -tsc "ngSkinTools_paintLayersSetup" `currentCtx`;
+ngSkinTools_paintLayersSetup artUserPaintContext;
+}
+
+global proc ngSkinTools_paintLayersSetup(string $toolContext)
+{
+	artUserPaintCtx -e
+		-toolCleanupCmd "ngSkinTools_paintLayersCleanup"
+		-initializeCmd "ngSkinTools_paintLayersSettings"
+		-finalizeCmd "ngSkinTools_paintLayersFinalize"
+		-setValueCommand "ngSkinTools_paintLayersSetValue" 
+		-getValueCommand "ngSkinTools_paintLayersGetValue" 
+		$toolContext;
+		
+} 
+
+global proc ngSkinTools_paintLayersCleanup (string $toolContextName)
+{
+	setAttr $surfaceName+".displayColors" 0;
+}
+
+
+global proc string ngSkinTools_paintLayersSettings(string $surfaceName)
+{
+	ngSkinLayer -du;
+	return "-position world";
+	setAttr $surfaceName+".displayColors" 1;
+}
+
+
+global proc ngSkinTools_paintLayersFinalize(int $surfaceID)
+{
+
+}
+
+
+global proc ngSkinTools_paintLayersSetValue(
+					int $surfaceID,
+					int $index, 
+					float $value, 
+					float $locx, 
+					float $locy, 
+					float $locz
+				   )
+{
+	ngSkinLayer -pv $value -vtx $index;
+}
+
+global proc float ngSkinTools_paintLayersGetValue(int $surfaceID,
+					int $index){
+	return `ngSkinLayer -lpv -vtx $index`;
+}

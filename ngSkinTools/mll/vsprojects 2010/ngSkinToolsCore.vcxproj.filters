@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="layers">
+      <UniqueIdentifier>{03622081-71fe-4624-a932-da8634049298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="abstract weights modifier">
+      <UniqueIdentifier>{8ef99769-8ba7-44ce-be62-d0862570f40e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="clustering">
+      <UniqueIdentifier>{df7e3d52-14d2-448d-8d03-894252664276}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{12afa705-e089-4b2e-b5d2-ada11577249e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tetgen">
+      <UniqueIdentifier>{c1c93512-173e-4cdc-aad9-24a3229bdcfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="licensing">
+      <UniqueIdentifier>{ce1a6a9b-01a2-4f6f-a3ca-20f99e13b822}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assign weights cmd">
+      <UniqueIdentifier>{c3d7523b-a4bb-4cce-a860-dd513b3bcbd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="listinfluences cmd">
+      <UniqueIdentifier>{b74c8080-bbf5-4021-a395-76da7622683d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="relaxengine">
+      <UniqueIdentifier>{16819a16-f9b6-4cd8-ad37-ed5fd53403a8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\InfluenceMatchRules.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\NeighbourAssociationInfo.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ngLayerColorDisplayNode.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ngSkinLayerDataNode.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SkinLayer.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SkinLayerChanges.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SkinLayerData.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SkinLayerManager.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SkinLayerPaintContextCmds.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SkinLayerPaintGlobals.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SkinLayerPerformanceTrack.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SkinLayerWeightList.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\WeightTransferAssociation.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GeometryInfo.cpp">
+      <Filter>abstract weights modifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\WeightedVertex.cpp">
+      <Filter>abstract weights modifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\WeightsModifierEngine.cpp">
+      <Filter>abstract weights modifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ClusteredPointCloud.cpp">
+      <Filter>clustering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tetgen\predicates.cxx">
+      <Filter>tetgen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tetgen\tetgen.cxx">
+      <Filter>tetgen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\hardwarelock.cpp">
+      <Filter>licensing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\md5.cpp">
+      <Filter>licensing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AssignWeightsEngineBase.cpp">
+      <Filter>assign weights cmd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LimitWeights.cpp">
+      <Filter>assign weights cmd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MakeRigidWeights.cpp">
+      <Filter>assign weights cmd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\WeightsByClosestJoint.cpp">
+      <Filter>assign weights cmd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\WeightsByClosestJointDelaunay.cpp">
+      <Filter>assign weights cmd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\InflListerBase.cpp">
+      <Filter>listinfluences cmd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\InflListerByProximity.cpp">
+      <Filter>listinfluences cmd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\InflListerByWeights.cpp">
+      <Filter>listinfluences cmd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RelaxEngine.cpp">
+      <Filter>relaxengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\VertexRelaxData.cpp">
+      <Filter>relaxengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ClosestInfluenceFinder.cpp" />
+    <ClCompile Include="..\src\geometrymath.cpp" />
+    <ClCompile Include="..\src\LimitWeightsUtil.cpp" />
+    <ClCompile Include="..\src\ProgressWindow.cpp" />
+    <ClCompile Include="..\src\StatusException.cpp" />
+    <ClCompile Include="..\src\utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\InfluenceMatchRules.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\NeighbourAssociationInfo.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ngLayerColorDisplayNode.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ngSkinLayerDataNode.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SkinLayer.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SkinLayerChanges.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SkinLayerData.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SkinLayerManager.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SkinLayerPaintContextCmds.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SkinLayerPaintGlobals.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SkinLayerPerformanceTrack.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SkinLayerWeightList.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\VertIndexIterators.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\WeightTransferAssociation.h">
+      <Filter>layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GeometryInfo.h">
+      <Filter>abstract weights modifier</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\WeightedVertex.h">
+      <Filter>abstract weights modifier</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\WeightsModifierEngine.h">
+      <Filter>abstract weights modifier</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ClusteredPointCloud.h">
+      <Filter>clustering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\IPointCloud.h">
+      <Filter>clustering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\timer.h">
+      <Filter>debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\tetgen\tetgen.h">
+      <Filter>tetgen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\hardwarelock.h">
+      <Filter>licensing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\md5.h">
+      <Filter>licensing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AssignWeightsEngineBase.h">
+      <Filter>assign weights cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LimitWeights.h">
+      <Filter>assign weights cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\MakeRigidWeights.h">
+      <Filter>assign weights cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\WeightsByClosestJoint.h">
+      <Filter>assign weights cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\WeightsByClosestJointDelaunay.h">
+      <Filter>assign weights cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\InflListerBase.h">
+      <Filter>listinfluences cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\InflListerByProximity.h">
+      <Filter>listinfluences cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\InflListerByWeights.h">
+      <Filter>listinfluences cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RelaxEngine.h">
+      <Filter>relaxengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\VertexRelaxData.h">
+      <Filter>relaxengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ClosestInfluenceFinder.h" />
+    <ClInclude Include="..\src\defines.h" />
+    <ClInclude Include="..\src\geometrymath.h" />
+    <ClInclude Include="..\src\LimitWeightsUtil.h" />
+    <ClInclude Include="..\src\maya.h" />
+    <ClInclude Include="..\src\ProgressWindow.h" />
+    <ClInclude Include="..\src\StatusException.h" />
+    <ClInclude Include="..\src\utils.h" />
+  </ItemGroup>
+</Project>

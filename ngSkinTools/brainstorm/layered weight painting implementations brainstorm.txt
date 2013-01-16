@@ -1,0 +1,145 @@
+Weights Mod Engine rework for virtual influences
+================================================
+
+* At the moment, WME works only when the influence actually exists in any skin cluster of simulation;
+* 
+
+
+Weight Normalization Rework
+===========================
+
+* Parent weight maps are not normalized;
+* Normalization only works on weight maps with transparency 
+* When vertex weight sum is below 1.0, normalization assigns the remaining weight to transparency;
+* When vertex weigth sum is above 1.0, normalization sets transaprency to 0.0, and the rest of influences are normalized as usual
+
+
+
+Masking rework
+==============
+
+* Layer starts with no mask; when blending without mask, layer assumes only it's transparency for blending with previous layers
+* mask initialization should be undoable 
+* When layer has no mask, it's indicated by interface (UI message, different mask name in influence list, different color in display)
+* When starting painting, mask starts at 0.0 default weight (no mask)
+* Layer transparency can be converted to mask (to help better transition from 1-influence layers)
+* When filled with 0.0, mask is still present; to cancel masking, special command like "discard mask" has to be used
+
+
+
+Internal Weight Paint Modes:
+
+* Purpose: adding own mechanisms of paint modes, e.g., reimplementing smooth
+* Value of brush consists of two parts:
+	* When maya sends a replace value of 0.3 to a vertex, it may be either "replace 0.3" or
+	  replace of 1.0 with an opacity of 0.3, if previous vertex weight was 0, etc
+	* Intensity (I): applied amount from user, e.g. "replace: 1.0"
+	* Opacity (O): modifier from the brush shape, tablet pressure, opacity settings etc - used to blend previous vertex value
+	  with new vertex value
+	  
+* formulas
+	I: intensity value
+	O: opacity value
+	P: previous vertex value
+	N: neighbour weight sum value
+	
+	blend(v1,v2,bias): function blending v1 and v2 via bias ( v1*bias+v2*(1-bias))
+	opacityBlend(v1,v2): blend values v1 and v2 per opacity
+	opacityPrevValueBlend(v1): blend v1 and P via opacity 
+
+	replace: = opacityPrevValueBlend(I)
+	add: P+I*O (same as opacityPrevValueBlend(P+I) = (P*O+I*O)+(P-O*P)  )
+	scale: opacityPrevValueBlend(I*P)
+	relax: opacityPrevValueBlend(N)
+
+* getting correct values from intensity:
+	* use only replace mode
+	* use only intensity = 1.0
+	* always return weight 0.0 from surface
+	* with values above, brush value from maya at setValue is the correct brush opacity per vertex
+	* intensity should be maintained internally as settable value through command
+	
+		
+
+
+Weight transfer
+
+* Features:
+	* Mesh assosciation options:
+		* vertex number
+		* closest vertex
+	* Influence association
+		* same influence
+		* closest path match (longest partial path match)
+			* option to ignore namespaces for association
+		* closest influence
+		* name
+
+
+
+
+
+
+
+
+
+Undo Data Storing
+-----------------
+
+* WeightsChange should be treated as storage for old weights, and optimized for few different ways it will be used:
+	one vertice | vertice range | random vertex list | all vertices ->
+	influence weight values list | mask value
+
+
+Attach/Detach layer data
+------------------------
+* involves creation/deletion of ngSkinLayerData node
+
+* creation:
+	* determine attach point (at the moment, skin cluster)
+	* create node, connect to attach point
+	error checking:
+		* user selection has valid attach point
+		* attach point has no ngSkinLayerData attached
+		 
+	
+* deletion
+	* determine which ngSkinLayerData node to delete
+	
+
+
+Storing data
+------------
+
+* Binary format should save it's version;
+	* each version should be backwards compatible;
+
+* ASCII format should just serialize binary format.
+	
+* data should take as little space as possible
+	* only store those vertices that have weighting
+	
+
+
+
+
+
+
+Writing weights from one weight map to another
+-----------------------------------------------
+
+Two maps map to each other in a logical<->logical fashion. This mapping mostly only grows (could shrink with the
+weight list reduction). So logical<->logical could easily remap to physical-physical.
+
+Problems:
+	* when to update physical-physical map:
+		? store related weightmaps in a parent weightmap, and update children when parent changes
+		? update weightmap when another influence is added?
+			* weightmap keeps a "parent weightmap" link all the time;
+			* p-p mapping is invalidated when new influences to map are added, or when 
+			  parent map changes (is realocated)
+			* p-p mapping is accessed on next access  
+			
+	* how to store that map?
+	   * storing a list of pointers to parent map would provide fastest access to parent weight map
+			* this kind of storage is invalid each time parent weight map memory is realocated 

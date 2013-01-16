@@ -1,0 +1,34 @@
+Random assumptions
+* tethrahedra sides will not always represent a mesh triangle. Mesh combinations can exist when mesh
+
+Algorithm Brainstorm
+
+* all mesh points and influence shape samples are put into delaunay graph
+* Delaunay is calculated
+* each influence starts spreading it's "heat":
+	* heat contains:
+		* number of intersections
+		* distance to influence
+		
+	* every delaunay edge is either:
+		* WRONG: edge can be neither: for close to each other meshes, surface-forming tethrahedra sides may not be generated.
+		* surface-surface edge: if both ends belong to same polygon (polygon exists, that contains both ends)
+		* volume edge: all other edges: mesh-influence; mesh-mesh inside (start and end inside); mesh-mesh outside(start and end outside); 
+		  mesh-mesh mixed (both start and end outside/inside, when one-sided meshes come into play)
+		  
+	* influence starts at it's each sample point, and spreads across delaunay edges;
+	* if spread is changing sides (spread was inside, now it's outside) - increase spread level
+		e.g.: 
+			* start spread at infl. A: 0-level spead
+			* reach surface point: still at 0-level spread, add traveled distance;
+			* follow along surface point: still 0-level spread;
+			* follow along surface point, meeting already marked spread with shorter distance; break spread here
+			* follow edge that goes outside: mark as 1-level spread from now on 
+			
+	* when spread is finished, each vertex has spread distance and level for each influence;
+	* whichever influence has better spread level and distance, "wins" the vertex.
+	
+Possible Issues
+* The only option to follow edges will be bad because that sometimes can hurt shortest route quite a bit, e.g.:
+	* going from A to C point in polygon, when triangulation has an edge over B-D, gives a route of A-B-C or A-B-D, instead of A-B
+	 

@@ -1,0 +1,648 @@
+<?xml version="1.0"?>
+
+<project name="ngSkinTools" default="build">
+	
+	<!-- macro for creating a property from another property by constructing source's name -->
+	<macrodef name="propertycopy">
+		<attribute name="name" />
+		<attribute name="from" />
+		<sequential>
+			<condition property="@{name}" value="${@{from}}">
+				<isset property="@{from}" />
+			</condition>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="property-set-if-flag-enabled">
+		<attribute name="name" />
+		<attribute name="value" />
+		<attribute name="flag" />
+		<sequential>
+			<condition property="@{name}" value="@{value}">
+				<or>
+					<equals arg1="${@{flag}}" arg2="yes"/>
+					<equals arg1="${@{flag}}" arg2="true"/>
+					<equals arg1="${@{flag}}" arg2="on"/>
+				</or>
+			</condition>
+		</sequential>
+	</macrodef>
+	
+
+	<!-- sets a property only if target os matches -->
+	<macrodef name="platform-property">
+		<attribute name="name" />
+		<attribute name="value" default="true" />
+		<attribute name="os" />
+		<sequential>
+			<condition property="@{name}" value="@{value}">
+				<os family="@{os}" />
+			</condition>
+		</sequential>
+	</macrodef>
+
+	<!-- registers build artifact to an XML -->
+	<macrodef name="register-build-artifact">
+		<attribute name="package" />
+		<sequential>
+			<local name="packagename" />
+
+			<exec executable="${python.executable}" outputproperty="packagename">
+				<arg file="${project.buildscripts}/extract-filename.py" />
+				<arg file="@{package}" />
+			</exec>
+
+			<dirname file="@{package}" property="packagename" />
+			<echoxml file="${build.reportxml.packagelist}" append="true">
+				<package>${packagename}</package>
+			</echoxml>
+		</sequential>
+	</macrodef>
+
+
+	<!-- detect platform we're building on -->
+	<target name="detect-platform" unless="os.current">
+		<platform-property os="unix" name="os.linux" />
+		<platform-property os="windows" name="os.windows" />
+
+
+		<!-- resolve platform name -->
+		<platform-property os="windows" name="os.current" value="windows" />
+		<platform-property os="unix" name="os.current" value="linux" />
+
+		<echo message="resolved platform: ${os.current}" />
+	</target>
+
+	<target name="resolve-common-parameters" depends="detect-platform">
+		<property file="version.properties" />
+
+		<dirname file="${ant.file}" property="ant.file.location" />
+		<property name="project.basedir" location="${ant.file.location}" />
+		<property name="build.outdir-all" location="${project.basedir}/build-target" />
+		<property name="build.reportxml" location="${build.outdir-all}/artifacts.xml" />
+		<property name="build.reportxml.packagelist" location="${build.outdir-all}/packagelist.xml.txt" />
+
+		<tstamp>
+			<format property="build.time" pattern="yyyy-MM-dd-hhmm" />
+		</tstamp>
+
+		<property name="project.mlldir" location="${project.basedir}/mll" />
+		<property name="project.pythondir" location="${project.basedir}/python" />
+		<property name="project.buildscripts" location="${project.basedir}/build-scripts" />
+
+		<property name="build.cpp-srcdir" location="${project.mlldir}/src" />
+
+		<property name="project.pluginVersion" value="${project.version}.${project.revision}" />
+
+		<fileset dir="${build.cpp-srcdir}" id="build.sourcefileset">
+			<patternset>
+				<include name="*.cpp" />
+				<exclude name="WeightsByClosestJointDelaunay.cpp" />
+			</patternset>
+		</fileset>
+
+	</target>
+
+	<target name="resolve-build-parameters" depends="resolve-common-parameters, detect-platform">
+
+		<fail unless="mll.maya">Maya version not configured via mll.maya</fail>
+		<fail unless="mll.platform">Plugin platform not configured via mll.platform</fail>
+		<echo message="resolved target maya version: ${mll.maya} ${mll.platform}" />
+
+		<condition property="mll.windows.64bit">
+			<and>
+				<equals arg1="${mll.platform}" arg2="64" />
+				<isset property="os.windows" />
+			</and>
+		</condition>
+		<condition property="mll.windows.32bit">
+			<and>
+				<equals arg1="${mll.platform}" arg2="32" />
+				<isset property="os.windows" />
+			</and>
+		</condition>
+
+		<propertycopy name="maya.includedir" from="maya.${mll.maya}.${mll.platform}.includedir" />
+		<propertycopy name="maya.lib" from="maya.${mll.maya}.${mll.platform}.lib" />
+		<fail unless="maya.includedir">Include dir not configured for maya ${mll.maya}/${mll.platform}</fail>
+		<fail unless="maya.lib">Include dir not configured for maya ${mll.maya}/${mll.platform}</fail>
+		<echo message="maya include dir: ${maya.includedir}" />
+		<echo message="maya lib dir: ${maya.lib}" />
+		<condition property="maya.exists">
+			<and>
+				<available file="${maya.includedir}" type="dir" />
+				<available file="${maya.lib}" type="dir" />
+			</and>
+		</condition>
+		<fail unless="maya.exists">Configuration for maya ${mll.maya}/${mll.platform} is invalid</fail>
+
+
+		<property-set-if-flag-enabled name="build.prefix" value="-debug" flag="mll.debug" />
+		<property name="build.prefix" value=""/>
+		
+
+		<property name="build.outdir" location="${build.outdir-all}/${os.current}/maya${mll.maya}-${mll.platform}bit${build.prefix}" />
+		<property name="build.plugin-outdir" location="${build.outdir}/plugin" />
+		<platform-property os="unix" name="build.pluginfile" value="${build.plugin-outdir}/ngSkinTools.so" />
+		<platform-property os="windows" name="build.pluginfile" value="${build.plugin-outdir}/ngSkinTools.mll" />
+
+
+		<property name="build.module.root" location="${build.outdir}/module" />
+		<property name="build.module.plugins" location="${build.module.root}/plug-ins" />
+		<property name="build.module.scripts" location="${build.module.root}/scripts" />
+		<property name="build.module.shelves" location="${build.module.root}/shelves" />
+		<property name="build.module.descriptionfile" location="${build.outdir}/ngSkinTools-module.txt" />
+
+		<property name="build.reportxml.list" location="${build.outdir-all}/artifacts.xml.txt" />
+
+		<delete file="${build.reportxml.packagelist}" />
+
+
+
+		<property name="output.packagename-base" location="${build.outdir-all}/ngSkinTools-${project.pluginVersion}-${os.current}-maya${mll.maya}-${mll.platform}bit${build.prefix}" />
+	</target>
+
+
+	<target name="generate-build-id">
+		<exec executable="${python.executable}" outputproperty="output.buildwatermark">
+			<arg file="${project.buildscripts}/generate-build-id.py" />
+		</exec>
+		<echo message="build ID: ${output.buildwatermark}" />
+	</target>
+
+	<target name="resolve-linux-parameters" if="os.linux" depends="resolve-build-parameters">
+
+		<property name="maya.cppflags" value="-DBits64_ -D_BOOL -m64 -DUNIX -DLINUX -DFUNCPROTO -D_GNU_SOURCE
+					    -DLINUX_64 -fPIC 
+						-DNGSKINTOOLS_PLUGIN_VERSION='&quot;${project.pluginVersion}&quot;'
+					    -fno-strict-aliasing -DREQUIRE_IOSTREAM -Wno-deprecated -O3 -Wall
+					    -Wno-multichar -Wno-comment -Wno-sign-compare -funsigned-char
+					    -Wno-reorder -fno-gnu-keywords -ftemplate-depth-25 -pthread
+						-Wno-deprecated -fno-gnu-keywords" />
+		
+		<propertycopy name="maya.cppflags.additional" from="maya.${mll.maya}.${mll.platform}.cppflags" />
+
+		<property-set-if-flag-enabled name="maya.cppflags.additional" value="-D_DEBUG" flag="mll.debug"/>	
+		<property name="maya.cppflags.additional" value="-DNDEBUG" />
+		
+		<property name="maya.linkflags" value="-Wl -Bsymbolic -shared" />
+
+	</target>
+
+
+
+	<target name="compile-linux" if="os.linux" depends="resolve-linux-parameters">
+
+		<apply executable="${compiler.g++}" dir="${build.plugin-outdir}" dest="${build.plugin-outdir}" failonerror="yes">
+			<fileset refid="build.sourcefileset" />
+
+			<arg value="-c" />
+			<arg value="-I${build.cpp-srcdir}" />
+			<arg value="-I${maya.includedir}" />
+			<arg value="-I${cpp.lib.boost}" />
+			<arg line="${maya.cppflags}" />
+			<arg line="${maya.cppflags.additional}" />
+			<arg value="-o" />
+			<targetfile />
+			<srcfile />
+
+			<mapper type="glob" from="*.cpp" to="*.o" />
+		</apply>
+	</target>
+
+	<target name="link-linux" if="os.linux" depends="resolve-linux-parameters">
+		<pathconvert pathsep=" " property="build.objectfiles">
+			<fileset dir="${build.plugin-outdir}">
+				<include name="*.o" />
+			</fileset>
+			<mapper type="flatten" />
+		</pathconvert>
+
+		<exec executable="${compiler.g++}" dir="${build.plugin-outdir}">
+			<arg line="${maya.cppflags}" />
+			<arg line="${maya.linkflags}" />
+
+			<arg value="-L${maya.lib}" />
+			<arg value="-lOpenMaya" />
+			<arg value="-lFoundation" />
+			<arg value="-lOpenMayaAnim" />
+			<arg value="-lOpenMayaUI" />
+			<arg value="-IPHLPAPI" />
+
+			<arg value="-o" />
+			<arg path="${build.pluginfile}" />
+
+			<arg line="${build.objectfiles}" />
+		</exec>
+	</target>
+
+	<target name="resolve-windows-parameters" if="os.windows" depends="resolve-build-parameters">
+		<propertycopy name="maya.compiler" from="maya.${mll.maya}.compiler"/>
+		<propertycopy name="compiler.vs" from="compiler.${maya.compiler}.vs-location"/>
+		<propertycopy name="compiler.vc" from="compiler.${maya.compiler}.vc-location"/>
+	</target>
+
+	<target name="vcvars-amd64bit" depends="resolve-windows-parameters" if="mll.windows.64bit">
+		<property name="cl.exe" value="${compiler.vc}/bin/amd64/cl.exe" />
+		<property name="link.exe" value="${compiler.vc}/bin/amd64/link.exe" />
+
+		<path id="vcvars.path">
+			<pathelement location="${compiler.vs}/Common7/IDE" />
+			<pathelement location="${compiler.vc}/BIN/amd64" />
+			<pathelement location="${compiler.vc}/BIN/" />
+			<pathelement location="${compiler.vs}/Common7/Tools" />
+			<pathelement location="${compiler.vs}/Common7/Tools/bin" />
+			<pathelement location="${compiler.vc}/VCPackages" />
+			<pathelement location="${windows.sdk-loc}/bin" />
+		</path>
+
+		<path id="vcvars.include">
+			<pathelement location="${compiler.vc}/ATLMFC/INCLUDE" />
+			<pathelement location="${compiler.vc}/INCLUDE" />
+			<pathelement location="${windows.sdk-loc}/include" />
+		</path>
+
+		<path id="vcvars.lib">
+			<pathelement location="${compiler.vc}/ATLMFC/LIB/amd64" />
+			<pathelement location="${compiler.vc}/LIB/amd64" />
+			<pathelement location="${windows.sdk-loc}/lib/x64" />
+			<pathelement location="${maya.lib}" />
+		</path>
+
+		<property name="compile.platform-args" value="" />
+		<property name="link.platform-args" value="/MACHINE:X64" />
+	</target>
+
+	<target name="vcvars-32bit" depends="resolve-windows-parameters" if="mll.windows.32bit">
+		<property name="cl.exe" value="${compiler.vc}/bin/cl.exe" />
+		<property name="link.exe" value="${compiler.vc}/bin/link.exe" />
+
+		<path id="vcvars.path">
+			<pathelement location="${compiler.vs}/Common7/IDE" />
+			<pathelement location="${compiler.vc}/BIN/" />
+			<pathelement location="${compiler.vs}/Common7/Tools" />
+			<pathelement location="${compiler.vs}/Common7/Tools/bin" />
+			<pathelement location="${compiler.vc}/VCPackages" />
+			<pathelement location="${windows.sdk-loc}/bin" />
+		</path>
+
+		<path id="vcvars.include">
+			<pathelement location="${compiler.vc}/ATLMFC/INCLUDE" />
+			<pathelement location="${compiler.vc}/INCLUDE" />
+			<pathelement location="${windows.sdk-loc}/include" />
+		</path>
+
+		<path id="vcvars.lib">
+			<pathelement location="${compiler.vc}/ATLMFC/LIB" />
+			<pathelement location="${compiler.vc}/LIB" />
+			<pathelement location="${windows.sdk-loc}/lib" />
+			<pathelement location="${maya.lib}" />
+		</path>
+
+		<property name="compile.platform-args" value="" />
+		<property name="link.platform-args" value="" />
+	</target>
+
+	<target name="vcvars" depends="vcvars-amd64bit,vcvars-32bit" if="os.windows">
+		<property name="vcvars.path.flattened" refid="vcvars.path" />
+		<property name="vcvars.lib.flattened" refid="vcvars.lib" />
+		<property name="vcvars.include.flattened" refid="vcvars.include" />
+	</target>
+
+	<target name="compile-windows" if="os.windows" depends="vcvars,resolve-windows-parameters">
+
+		<apply executable="${cl.exe}" dir="${build.plugin-outdir}" dest="${build.plugin-outdir}" failonerror="yes" verbose="true">
+			<fileset refid="build.sourcefileset" />
+			<mapper type="glob" from="*.cpp" to="*.obj" />
+
+			<env key="Path" value="${vcvars.path.flattened}" />
+			<env key="include" value="${vcvars.include.flattened}" />
+
+			<arg value="/I" />
+			<arg path="${maya.includedir}" />
+			<arg value="/I" />
+			<arg path="${cpp.lib.boost}" />
+			<arg line="${compile.platform-args}" />
+			<arg value="/DNGSKINTOOLS_PLUGIN_VERSION#\&quot;${project.pluginVersion}\&quot;" />
+			
+			<!--
+			/MT: multithread static version of runtime
+			/MD multithread dynamic version of runtime 
+			-->
+			<arg line="
+				/O2 
+				/Oi
+				/Ot
+				/GL 
+				/D NDEBUG
+				/D MLIBRARY_DONTUSE_MFC_MANIFEST 
+				/D _CONSOLE
+				/D _WINDOWS
+				/D _MBCS 
+				/D NT_PLUGIN 
+				/D REQUIRE_IOSTREAM 
+				/D _CRT_SECURE_NO_WARNINGS
+				/FD 
+				/EHsc 
+				/MT
+				/Gy 
+				/W3 /nologo /c /Zi /TP /errorReport:prompt	
+				/GR /GS /EHsc
+				" />
+		</apply>
+
+	</target>
+
+	<target name="link-windows" if="os.windows" depends="vcvars,resolve-windows-parameters">
+
+		<pathconvert pathsep=" " property="build.objectfiles">
+			<fileset dir="${build.plugin-outdir}">
+				<include name="*.obj" />
+			</fileset>
+			<mapper type="flatten" />
+		</pathconvert>
+
+
+		<echo message="linking - path ${vcvars.lib.flattened}" />
+		<exec executable="${link.exe}" dir="${build.plugin-outdir}">
+			<env key="Path" value="${vcvars.path.flattened}" />
+			<env key="lib" value="${vcvars.lib.flattened}" />
+			<env key="libpath" value="${vcvars.lib.flattened}" />
+
+			<arg line="${build.objectfiles}" />
+			<arg line="${link.platform-args}" />
+			<arg line="
+				/EXPORT:initializePlugin 
+				/EXPORT:uninitializePlugin				
+				/OUT:&quot;${build.pluginfile}&quot; 
+				/NOLOGO 
+				/DLL 
+				/DYNAMICBASE 
+				/NXCOMPAT 
+				/ERRORREPORT:PROMPT 
+				/SUBSYSTEM:windows 
+				IPHLPAPI.lib  kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib 
+				OpenMaya.lib OpenMayaAnim.lib foundation.lib OpenMayaUI.lib 
+				" />
+		</exec>
+	</target>
+
+	<target name="clean" depends="resolve-common-parameters">
+		<delete dir="${build.outdir-all}" />
+	</target>
+
+	<target name="create-output-dir" depends="resolve-build-parameters">
+		<mkdir dir="${build.outdir}" />
+		<mkdir dir="${build.plugin-outdir}" />
+		<mkdir dir="${build.module.root}" />
+		<mkdir dir="${build.module.plugins}" />
+		<mkdir dir="${build.module.scripts}" />
+		<mkdir dir="${build.module.shelves}" />
+	</target>
+
+	<target name="compile" depends="create-output-dir, generate-build-id, compile-linux,compile-windows">
+	</target>
+
+	<target name="link" depends="compile, link-linux, link-windows">
+	</target>
+
+	<target name="copy-python-scripts" depends="resolve-build-parameters">
+
+		<fileset dir="${project.pythondir}" id="source.python-scripts-set">
+			<include name="**/install.py" />
+			<include name="ngSkinTools/**/*.py" />
+			<include name="**/license.txt" />
+			<exclude name="**/displaymacs.py" />
+			<exclude name="**/debug/*.*" />
+			<exclude name="**/experimental/*.*" />
+			<exclude name="**/license_header.py" />
+			<exclude name="**/*-test/**" />
+		</fileset>
+
+		<apply executable="${python.executable}" dir="${build.module.scripts}" dest="${build.module.scripts}" failonerror="yes">
+			<fileset refid="source.python-scripts-set" />
+			<mapper type="glob" from="*.py" to="*.py" />
+
+			<arg file="${project.buildscripts}/merge-files.py" />
+
+			<arg file="${project.pythondir}/ngSkinTools/license_header.py" />
+			<srcfile />
+			<targetfile />
+		</apply>
+
+		<delete>
+			<fileset dir="${build.module.scripts}">
+				<include name="**/*.py.tmp" />
+			</fileset>
+		</delete>
+
+		<apply executable="${python.executable}" dir="${build.module.scripts}">
+			<filelist>
+				<file name="${build.module.scripts}/ngSkinTools/version.py" />
+				<file name="${build.module.scripts}/install.py" />
+			</filelist>
+			<arg file="${project.buildscripts}/update-version.py" />
+			<arg value="${project.pluginVersion}" />
+			<arg value="${mll.maya}" />
+			<arg value="${mll.platform}" />
+			<arg value="${output.buildwatermark}" />
+			<srcfile />
+		</apply>
+
+
+	</target>
+
+	<target name="make-report-header">
+		<delete file="${build.reportxml}" />
+		<delete file="${build.reportxml.packagelist}" />
+
+		<echo append="true" file="${build.reportxml}">&lt;?xml version="1.0" ?&gt;
+			&lt;build-result version="1.0"&gt;
+		</echo>
+	</target>
+
+	<target name="make-report-footer">
+		<echo append="true" file="${build.reportxml}">
+			&lt;/build-result&gt;
+		</echo>
+		<delete file="${build.reportxml.packagelist}" verbose="true" />
+	</target>
+
+	<target name="register-build">
+		<loadfile property="build.reportxml.packagelist.contents" srcfile="${build.reportxml.packagelist}" />
+		<echo append="true" file="${build.reportxml}">
+			&lt;build&gt;
+				&lt;packages&gt;
+					${build.reportxml.packagelist.contents}				&lt;/packages&gt;
+				&lt;maya&gt;${mll.maya}&lt;/maya&gt;
+				&lt;platform&gt;${mll.platform}&lt;/platform&gt;
+				&lt;title&gt;${project.version}&lt;/title&gt;
+				&lt;os&gt;${os.current}&lt;/os&gt;
+				&lt;revision&gt;${project.revision}&lt;/revision&gt;
+				&lt;build-id&gt;${output.buildwatermark}&lt;/build-id&gt;
+			&lt;/build&gt;
+		</echo>
+
+
+	</target>
+
+	<target name="create-module" depends="link,copy-python-scripts">
+
+		<copy todir="${build.module.scripts}">
+			<fileset dir="${project.pythondir}">
+				<include name="**/help.xpm" />
+				<include name="**/help.png" />
+				<include name="**/logo.jpg" />
+			</fileset>
+		</copy>
+
+		<copy file="${build.pluginfile}" todir="${build.module.plugins}" />
+
+		<!-- set platform-specific instal path example dir -->
+		<platform-property os="windows" name="dummy.install-path" value="C:\Path\to\ngSkinTools\base\dir" />
+		<property name="dummy.install-path" value="/path/to/ngskintools/base/dir" />
+
+		<echo append="false" message="+ ngSkinTools ${project.pluginVersion} ${dummy.install-path}" file="${build.module.descriptionfile}" />
+
+		<move file="${build.module.scripts}/install.py" todir="${build.module.root}" />
+		<copy file="${project.basedir}/license.txt" todir="${build.module.root}" />
+		<copy file="${project.basedir}/changelog.txt" todir="${build.module.root}" />
+		<copy file="${project.basedir}/mel/shelf_ngSkinTools.mel" todir="${build.module.shelves}" />
+	</target>
+
+	<target name="package-linux" if="os.linux">
+		<delete file="${output.packagename-base}.tar" />
+		<delete file="${output.packagename-base}.tar.gz" />
+
+		<patternset id="tar.contents">
+			<include name="${build.module.root}/**" />
+			<include name="${build.module.descriptionfile}" />
+		</patternset>
+		<selector id="tar.executable-files">
+			<or>
+				<filename name="install.py" />
+			</or>
+		</selector>
+
+		<tar destfile="${output.packagename-base}.tar" longfile="gnu">
+			<tarfileset dir="${build.module.root}" filemode="755">
+				<include name="**/install.py" />
+			</tarfileset>
+			<tarfileset dir="${build.module.root}">
+				<exclude name="**/install.py" />
+			</tarfileset>
+			<tarfileset dir="${build.outdir}">
+				<include name="*module.txt"/>
+		    </tarfileset>
+		</tar>
+
+		<gzip destfile="${output.packagename-base}.tar.gz" src="${output.packagename-base}.tar" />
+		<delete file="${output.packagename-base}.tar" />
+
+		<register-build-artifact package="${output.packagename-base}.tar.gz" />
+	</target>
+
+	<target name="package-windows" if="os.windows" depends="resolve-windows-parameters">
+		<zip destfile="${output.packagename-base}.zip">
+			<zipfileset dir="${build.module.root}" />
+			<zipfileset file="${build.module.descriptionfile}" />
+		</zip>
+
+		<exec executable="${nsis.executable}">
+			<arg value="/V2" />
+			<arg value="/DOUTFILE=${output.packagename-base}-setup.exe" />
+			<arg value="/DVERSION=${project.pluginVersion}" />
+			<arg value="/DMAYAVERSION=${mll.maya}" />
+			<arg value="/DMAYAPLATFORM=${mll.platform}" />
+			<arg value="/DMAYA_MODULE_CONTENTS=${build.module.root}" />
+			<arg value="/DLICENSE=${project.basedir}\license.txt" />
+			<arg file="${project.buildscripts}/make-installer.nsi" />
+		</exec>
+
+		<register-build-artifact package="${output.packagename-base}-setup.exe" />
+		<register-build-artifact package="${output.packagename-base}.zip" />
+	</target>
+
+	<target name="package" depends="create-module,package-linux,package-windows">
+	</target>
+
+
+	<target name="build" depends="package,register-build">
+	</target>
+
+	<target name="build-skip" description="dummy target used instead of 'build' in 'build-maya-module' for cases when maya is not found">
+		<echo message="skipping build for maya${mll.maya}-${mll.platform}" />
+	</target>
+
+	<!-- calls build target for specific maya version and platform -->
+	<!-- if build for requested maya is not configured, it's skipped -->
+	<macrodef name="build-maya-module">
+		<attribute name="maya" />
+		<attribute name="platform" />
+		<sequential>
+
+			<!-- determine if we're building or not -->
+			<condition property="build-for-@{maya}-@{platform}" value="build">
+				<and>
+					<isset property="maya.@{maya}.@{platform}.includedir" />
+				</and>
+			</condition>
+			<property name="build-for-@{maya}-@{platform}" value="build-skip" />
+
+			<antcall target="${build-for-@{maya}-@{platform}}" inheritall="no" inheritrefs="no">
+				<param name="mll.maya" value="@{maya}" />
+				<param name="mll.platform" value="@{platform}" />
+			</antcall>
+		</sequential>
+	</macrodef>
+
+
+	<!-- builds stuff for every configured maya version -->
+	<target name="build-all" depends="resolve-common-parameters">
+		<fail if="mll.maya" message="not able to override maya version in build-all, do not define externally" />
+		<fail if="mll.platform" message="not able to override maya platform in build-all, do not define externally" />
+
+		<antcall target="make-report-header" />
+		<delete>
+			<fileset dir="${build.outdir-all}">
+				<include name="*.zip" />
+				<include name="*.tar.gz" />
+				<include name="*.exe" />
+			</fileset>
+		</delete>
+
+
+		<build-maya-module maya="2008" platform="32" />
+		<build-maya-module maya="2008" platform="64" />
+
+		<build-maya-module maya="2009" platform="32" />
+		<build-maya-module maya="2009" platform="64" />
+
+		<build-maya-module maya="2010" platform="32" />
+		<build-maya-module maya="2010" platform="64" />
+
+		<build-maya-module maya="2011" platform="32" />
+		<build-maya-module maya="2011" platform="64" />
+
+		<build-maya-module maya="2012" platform="32" />
+		<build-maya-module maya="2012" platform="64" />
+
+		<build-maya-module maya="2013" platform="32" />
+		<build-maya-module maya="2013" platform="64" />
+		
+		<build-maya-module maya="2013.5" platform="32" />
+		<build-maya-module maya="2013.5" platform="64" />
+
+		<antcall target="make-report-footer" />
+
+		<zip destfile="${build.outdir-all}/ngSkinTools-${os.current}-all.${build.time}.zip">
+			<fileset dir="${build.outdir-all}">
+				<include name="*.zip" />
+				<include name="*.tar.gz" />
+				<include name="*.exe" />
+				<include name="artifacts.xml" />
+			</fileset>
+		</zip>
+	</target>
+
+</project>

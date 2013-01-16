@@ -1,0 +1,13 @@
+//Maya Preference 2011 (Release 1)
+//
+//
+evalDeferred("autoLoadPlugin(\"\", \"VectorRender\", \"VectorRender\")");
+evalDeferred("autoLoadPlugin(\"\", \"DirectConnect\", \"DirectConnect\")");
+evalDeferred("autoLoadPlugin(\"\", \"mayaHIK\", \"mayaHIK\")");
+evalDeferred("autoLoadPlugin(\"\", \"Mayatomr\", \"Mayatomr\")");
+evalDeferred("autoLoadPlugin(\"\", \"ikSpringSolver\", \"ikSpringSolver\")");
+evalDeferred("autoLoadPlugin(\"\", \"rotateHelper\", \"rotateHelper\")");
+evalDeferred("autoLoadPlugin(\"\", \"decomposeMatrix\", \"decomposeMatrix\")");
+evalDeferred("autoLoadPlugin(\"\", \"MayaMuscle\", \"MayaMuscle\")");
+evalDeferred("autoLoadPlugin(\"\", \"fbxmaya\", \"fbxmaya\")");
+evalDeferred("autoLoadPlugin(\"\", \"ik2Bsolver\", \"ik2Bsolver\")");

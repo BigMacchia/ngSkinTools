@@ -1,0 +1,87 @@
+-- CURRENT FOCUS
+
+* Cleanup of functionality quirks and holes:
+	* influence limit for game weighting
+	* interface visual looks
+	* option names ant terminology
+
+* Publishing:
+	* Website is a cover page of the product: get it up and working.
+	* Finalize UI organization
+	* Documentation: cover everything
+	* Startup tutorials: read documentation from first-time-user point of view
+	* Automatic installation
+
+
+
+-- FIRST RELEASE
+
+
+
+* vertex selection: use any kind of selection (edges, faces)
+
+* make rigid: need more options
+	* make rigid by loop
+
+* reduce influences per point:
+	* make as separate weights modifier command
+	* include as additional option to "relax","make rigid"
+
+* "reduce influences" functionality:
+	* hard limit: no more than N influences per influence
+	* soft limit: when there's F weighted influences in influence, reduce to N influences
+		: could be used multiple times, e.g.:
+			0.2 weights: reduce to 4 influences
+			0.2 weights: reduce to 2 influences
+	* drop small influences: remove influence from vertex if it's below F influence
+
+
+
+* assign by closest joint: "use intersections" is confusing option.
+
+* assign by closest joint: custom joint selection should be less complicated.
+
+* documentation needs strong navigation, examples:
+ 	drupal (http://drupal.org/node/250174)
+
+* selecting joints for weights assign operation might be difficult when user
+  wants to create a list of joints by multiple criteria, e.g. have in one list: 
+  	L_ twist joints;
+  	shoulder joint;
+  	wrist joint;
+  	
+  in joint lister, there should be joint search and joint selection lists
+
+* relax: limit influence spread to reduce garbage
+
+* Finish buying procedure (building for given hardware ID, confirming payment - just review whole process)
+
+* Documentation
+
+* Finish tool window menu
+	* online documentation
+
+* Introduction video montage for voice-overs
+
+* Influence lister basic functionality
+
+* Tourist Zack
+	* Create introduction and teaser documentation
+	* Finish website with tutorial screenshots
+	
+
+* Retest everything on all Maya versions
+
+* Utility shortcut buttons (paint weights/select vertices/switch model)
+
+* plugin building for mac
+
+-- LATER
+* skin mirroring
+	
+	
+* ? metajoints
+* brainstorm on gathering user feedback/suggestions/bug reports. forum? wave? email form?
+* brainstorm on documenting change log/bug fixes.
+
+* Automatic testing (if gui opens, if relax/assign commands run successfully)

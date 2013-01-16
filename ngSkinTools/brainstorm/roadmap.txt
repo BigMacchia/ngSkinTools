@@ -1,0 +1,284 @@
+Roadmap
+----------
+
+RC1:
+
+* smooth paint is somehow broken, smoothing down from 1.0 value fills the rest of the weight vector with the rest of influences in the list
+	* review
+
+
+* Short tutorials:
+	* hand skinning tutorial
+		* shortest influence
+		* layer usage
+	* influence filtering tutorial
+
+* create "all" download version
+	* include exe for windows, and archives for linux
+	* provide additional notes file: general info about archive "plugin for maya", OS/platform/maya version selection warning, link to installation instructions 
+
+* continue remote maya launch implementation
+	* incorporate into the build
+	* support using either raw python workspace or compiled one
+	* support multiple mayas
+	* support multiple os'es
+
+* mll: review exception handling in createUndoableBit - possible memory leaks. 
+
+* mll: cleanup mess in ngSkinLayerCmd
+	* break into smaller methods
+
+* mllInterface
+	* continue with tests (set* tests)
+	* continue with moving cmds calls to mll interface methods
+	
+	
+	
+
+RC2:
+* run tests as part of the build
+
+* Weight transfer:
+	* provide rule list in SkinLayerManager::transferWeights
+
+	* Add UI for weight transfer 
+	* turn off upstream updates on setParent() for each layer, update after whole transfer operation has completed
+		* incorporate this change into "load weights" algorithm, right now manager uses an "is loading" flag
+		
+	* add more options on how weights are transfered:
+		* everything as single layer
+		* everything as grouped layers
+		* copy layers one by one
+		
+	* redo influence matching when transfering into more "civilized"
+	  rule approach (rule priority list, etc). right now matching by 
+	  position and by name is too hardcoded
+	  	* each rule returns "rule applies: true/false", along with "how well it applies",
+	  	  so that later in other attempts it can compare if match elsewhere was better;
+	  	* rules should have the ability to be customized (e.g., name match should get left/right prefix customization)
+
+	* implement nested layer copying
+
+		
+Unable to reproduce
+-------------------
+
+* more robust manager detection; test crashes in radec rig
+
+* assertion error in init weights by closest influence;
+
+* assign weights from closest joint fails, probably due to "use all influences" flag
+
+Normal Priority
+----------------
+
+* implement at least some UI tests
+
+* implement clustering by edge selection                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+
+* doclink:
+	# TODO: validate documentation location
+	# TODO: support multiple documentation locations
+
+
+* transfer skin data: should be an undoable bit
+
+* paint - review colors
+
+* add rule on/off/order switches ?
+
+* build: build test cases; make a testing targetl
+
+* add "relax all layers", "relax selected layers" option
+
+* Influence list needs some convenience utilities:
+	* "Select influences to show" functionality;
+		* "pin"?
+
+* disable layer drag and drop UI feature
+	* cannot implement, no such flag in treeview
+
+
+* make influence filter keep it's value per-layer
+	* with multiple skin clusters in mind - won't be a trivial task to do
+
+
+* Any chance getting the marking menus for influence selection?
+	* http://tech-artists.org/forum/showthread.php?t=419
+
+* better algorithm for finding best weight on "floodToTransparency" is needed; closest by surface vertex maybe;
+
+
+
+* need to rethink workflow for how separate shells smooth between each other
+	* for character parts such as separated arms from shoulder, belt on a body, button on a shirt, etc
+		* fuse operator? searches for a vertices close to each other and tries to unify weights of recognized pairs
+		* adding invisible links for smoothing?	
+
+
+
+* continue WeightsModifierEngine support
+	* influence lister is failing due to bad "contained weights" received message
+	* mask support: all the relax options should be available for mask as well
+	* weights modifier engine should work either on a weight list or weight map;
+
+
+
+
+* Layers Interface:
+	* implement layer add/modify GUI
+		* move layers around
+			* change parent, 	
+			* move layer to current mask/group 
+		* merge options:
+			* merge selected layers
+			* merge layer down
+				* merge by mask values, if they differ
+			* merge children
+
+* more relaxing options: 
+	* relax loop
+	* relax ignoring borders
+	
+* Make "smooth current" and "smooth all" brush modes; "smooth current" would apply smooth only where current influence
+  has any weight (and potential vertices that can accept that, that is, neighbours)
+
+
+* need all functionality for mask painting as for weight painting: 
+	* make rigid
+	* relax (volume, soft selection, etc)
+
+
+
+* experiment once again about writing to lot of MPlugs at once
+
+* redo "setup" and "cleanup" paint commands to C commands instead of MEL procedures
+
+* Dynamic layers/effects:
+	* weights update automatically to some rules, examples would be:
+		* layer is mirrored (onto itself or into another layer)
+		* 
+
+* better smoothing tool: 
+	* work in a relax-mode (no unrelated influences added, true smoothing effect of the skin)
+	* full-stroke based (paint relax area, relax on stroke end)
+
+* add "display mode" for layerColorDisplay:
+	* current influence (as implemented currently)
+	* all influences (current layer): colored display of each influence
+	* all influences, masked away (current layer)
+	* final weights - root layer weights, just easier to access than reading directly from skin cluster 
+	
+
+* "smooth everything for selected": smooth all layers, all weights, all masks: "i just want this area to get smoother" option.
+
+* check if saving during paint operation leaves color display node in stack.
+	* same goes for paint->undo
+
+
+* further optimization options:
+	* when updating whole layer (parent change, opacity change), don't use vertices that are not painted, or masked to 0.0
+	  this will require layer to track all it's "valid" vertices.
+	* shrink influences weight list (garbage collect-like style, so it does not happen
+	  during stroke etc)
+	* empty influences: normalize incredibly slow when setting values from higher to lower (e.g., flood 1.0 is much faster than 0.5 flood that follows) 
+
+* new functionality: how calculates sum of it's children;
+	options are:
+		*stack: evaluate layers in order, adding them to stack and normalizing after each step
+			* typical usage: layers override what's below; layer order matters
+			* default behaviour of root group
+		*multiply: sum weights from all layers, THEN normalize.
+			typical usage: layers should blend friendly with their neighbours; layer order doesn't matter
+
+Skin Weights update flow
+-------------------------
+* for every vertex, layer calculates and returns a final result of influence weights;
+* this calculation should be cached, so that whole tree is not evaluated each time vertex is changed - only upstream.
+* when vertex value changes, layer recalculates its final weight sum and notifies parent layer about the change
+* root layer, after calculation, updates skin cluster.
+
+
+
+Implementation
+--------------
+
+* Layers are a tree
+
+* Layer can have different types
+	* weighting layer: paint influence weights
+	* DQ blend weight
+	* mask layer: paint mask over children layers
+	* group layer: simple group for organizational purposes; does nothing except providing on/off functionality
+	* procedural: can also be an additional effect over a layer
+		* limit weights to #
+		* smooth
+		..etc
+* Layer blend mode:
+	* additive: weights underneath are reduced to accompany new weights (if there's no alpha in new weights, old weights are lost)
+	* multiplicative: weights are summed, then normalized
+	* exclusive: weights painted on top aren't overwritten. 
+
+* Each Layer holds it's "current influence" reference; using it is an option (user might want to stick to 
+  same influence when switching layers) 
+
+* when baking, each layer calculates it's weights before passing them to parent
+	
+* Storing
+	* Don't read/write maya's values on the fly; read once ("load"), write each time there's a change
+	* Values should be stored in skin cluster node, custom attributes
+	* When paint tool is activated, attribute values are read into plugins native data structure;
+	* While painting, new node values are written
+	* at any point, layer values are "baked" into maya's native skin weight storage
+	
+* Painting workflow
+	* display influences that affect current layer
+	* 
+	
+* Color Display
+	* there's "current value display" flag. can be many different things: 
+		* influence weight in particular layer: set "current layer" and "current influence"
+		* current mask selected: set "current mask"
+		
+	* display updates polyColorPerVertex node; 
+		* anytime "current value display changes", whole
+		  node is updated;
+		* when user is paiting, only changed vertices are updated with color
+		
+	* when tool finishes, shape color display is turned off.
+
+* Painting
+
+
+Layer properties
+----------------
+
+* Type
+	* weighting
+	* mask
+	* group
+* On/Off 
+* Opacity
+* Blend Mode
+	* Multiply
+	* Override
+* Auto-mirror
+* Parent layer
+* Children layers []
+* Influence Weights [] indexed by influence
+	* Weight [] indexed by vertex
+	
+
+	
+	
+creating storage for layer data
+-------------------------------
+
+from maya import cmds
+cmds.addAttr(ln="ngSkinToolsLayers",at='compound',multi=True,numberOfChildren=2)
+cmds.addAttr(ln='layerType',parent="ngSkinToolsLayers",at='long')
+cmds.addAttr(ln='influences',parent="ngSkinToolsLayers",at='compound',multi=True,numberOfChildren=1)
+cmds.addAttr(ln='weights',parent="influences",at='float',multi=True)
+
+cmds.getAttr('locator1.ngSkinToolsLayers[0].influences[3].weights[100]')
+

@@ -1,0 +1,16 @@
+
+
+
+* Rule description is not tied to particular influence, but rather just a configured factory which is ready to produce
+* Rule description produces rule instances;
+
+* a rule answers a question "does this influence match that influence"
+* a rule *may* answer a question "does this influence match that influence better than already matched influence"
+
+* all rule descriptions are placed in a queue by priority; if a match is found, further rules are not checked.
+
+
+RuleDescription:
+	Rule & createRule(InfluenceTrasferInfo &info);
+	
+Rule:	

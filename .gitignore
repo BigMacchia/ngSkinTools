@@ -1,0 +1,17 @@
+/.metadata/*
+/*/.settings/
+/jreleasedb/target/
+/jreleasedb/build.properties
+/ngSkinTools/build.properties
+/ngSkinTools/build-target/
+**/sync.properties
+*.pyc
+**/documentation/user-doc/build
+**.rst~
+*.vcproj.*.*.user
+*.ncb
+*.suo
+ngSkinTools/mll/vsprojects/build
+ngSkinTools/mll/vsprojects/output
+RemoteSystemsTempFiles
+jreleasedb/src/main/java/META-INF/sun-jaxb.episode

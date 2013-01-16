@@ -1,0 +1,15 @@
+So if we're able to target the Platform/Windows SDK's instead of having the full VS installations what's the equivalent SDK versions for each of the following:
+
+VC6.0sp6 - Platform SDK Feb 2003?
+
+VS2002sp1 (for sake of completeness)
+
+VS2003sp1 - Windows Server 2003 R2 PSDK?
+
+VS2005sp1 - Windows Server 2008 SDK?
+
+VS2008sp1 - Windows 7 SDK?
+
+Assuming there is equivalent SDKs for each of the above is there really any reason for keeping the older VS versions installed?
+
+Or is it only recommended that we target previous VS installations?

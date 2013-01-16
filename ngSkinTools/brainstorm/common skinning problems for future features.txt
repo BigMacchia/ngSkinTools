@@ -1,0 +1,33 @@
+Intro
+======
+
+This document summarizes common skinning problems that occur in skinning process,
+and based on those stories some features might be invented.
+
+
+Common Problems
+===============
+
+Diagnosing Skinning Issues
+------------------
+
+* User might want to visualise his skin setup, e.g. see vertices/faces that a face 
+  is influencing (select verts of influence)
+ 
+
+Joint Replacement
+------------------
+
+* Some joints that already are skinned need to be deleted, replacing them with other joints.
+  e.g. reduction/addition of spline joints: delete old chain, add new chain.
+  
+  
+Weighting Merging
+-----------------
+
+* Merging two skin clusters - examples: 
+	* one mesh weighted to head + jaw, other one to head+neck. User wants to preserve weighting on jaw,
+      and on top of that, have the head-neck weighting.
+    * rigging spine separately in different file than hands-clavicles setup.
+  
+  

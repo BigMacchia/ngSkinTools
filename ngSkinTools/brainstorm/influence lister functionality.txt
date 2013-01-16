@@ -1,0 +1,15 @@
+Influence Lister Engine Functionality
+=====================================
+
+
+-- RANDOM IDEAS
+* blacklisting rules (hide always)
+	oposite side influences (right side or left side)
+  could be implemented as "only show from: left side, right side, middle"
+
+* vertex-based listing options (list influences by selection, list influences near selection):
+	* include nearby vertices (radius option, like skin relax)
+
+
+* create toolset of finding a distance to influence:
+	* visualising influence "shape" (string - influence with one child, tree - influence with many children, plane-influence with many children forming a shape)

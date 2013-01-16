@@ -1,0 +1,195 @@
+
+    menuItem
+        -label "Outliner" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "switchPanelToType Outliner" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "N" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Outliner" 
+        -italicized 0
+        -boldFont 0
+        menuItem58;
+
+    menuItem
+        -label "Graph Editor" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "switchPanelToType GraphEditor" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "E" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Graph Editor" 
+        -italicized 0
+        -boldFont 0
+        menuItem59;
+
+    menuItem
+        -label "Dope Sheet" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "switchPanelToType DopeSheet" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "SE" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Dope Sheet" 
+        -italicized 0
+        -boldFont 0
+        menuItem60;
+
+    menuItem
+        -label "Hypergraph" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "switchPanelToType Hypergraph" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "S" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Hypergraph" 
+        -italicized 0
+        -boldFont 0
+        menuItem61;
+
+    menuItem
+        -label "Dynamic Relationships" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "switchPanelToType DynRelationships" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "SW" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Dynamic Relationships" 
+        -italicized 0
+        -boldFont 0
+        menuItem62;
+
+    menuItem
+        -label "Hypershade" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "switchPanelToType Hypershade" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "W" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Hypershade" 
+        -italicized 0
+        -boldFont 0
+        menuItem63;
+
+    menuItem
+        -label "Render View" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "switchPanelToType RenderView" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "NW" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Render View" 
+        -italicized 0
+        -boldFont 0
+        menuItem64;
+
+    menuItem
+        -label "Sets" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "switchPanelToType SetEditor" 
+        -altModifier 0
+        -optionModifier 0
+        -commandModifier 0
+        -ctrlModifier 0
+        -shiftModifier 0
+        -optionBox 0
+        -enable 1
+        -data 0
+        -radialPosition "NE" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -echoCommand 0
+        -annotation "Sets" 
+        -italicized 0
+        -boldFont 0
+        menuItem65;
+
+setParent -m ..;
+

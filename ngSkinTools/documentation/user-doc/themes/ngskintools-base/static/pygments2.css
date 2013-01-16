@@ -1,0 +1,11 @@
+.highlight pre {
+	height:300pt;
+	overflow:auto;
+}
+
+div.admonition p.admonition-title {
+	background-image: url("info.gif");
+	background-repeat: no-repeat;
+	background-position: 2px 2px;
+	padding-left: 26px;
+}

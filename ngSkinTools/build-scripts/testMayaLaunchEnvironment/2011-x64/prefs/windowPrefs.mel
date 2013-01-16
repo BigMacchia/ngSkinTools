@@ -1,0 +1,18 @@
+//Maya Preference 2011 (Release 1)
+//
+//
+windowPref -topLeftCorner 225 150 -widthHeight 250 400 -parentMain true outlinerPanel1Window;
+windowPref -topLeftCorner 250 200 -widthHeight 700 400 -parentMain true hyperGraphPanel1Window;
+windowPref -topLeftCorner 250 200 -widthHeight 660 400 -parentMain true graphEditor1Window;
+windowPref -topLeftCorner 250 200 -widthHeight 660 400 -parentMain true dopeSheetPanel1Window;
+windowPref -topLeftCorner 250 200 -widthHeight 660 400 -parentMain true clipEditorPanel1Window;
+windowPref -topLeftCorner 250 200 -widthHeight 524 470 -parentMain true devicePanel1Window;
+windowPref -topLeftCorner 250 200 -widthHeight 700 400 -parentMain true hyperShadePanel1Window;
+windowPref -topLeftCorner 250 200 -widthHeight 700 400 -parentMain true dynPaintScriptedPanelWindow;
+windowPref -topLeftCorner 250 200 -widthHeight 550 562 -parentMain true blindDataEditor1Window;
+windowPref -topLeftCorner 390 640 -widthHeight 300 350 -parentMain true InitTransferWindow;
+windowPref -topLeftCorner 390 640 -widthHeight 400 505 -parentMain true ngSkinToolsMainWindow;
+windowPref -topLeftCorner 390 640 -widthHeight 540 545 -parentMain true learningMoviesLaunchWnd;
+windowPref -topLeftCorner 9 61 -widthHeight 1280 1024 -parentMain false MayaWindow;
+windowPref -topLeftCorner 200 200 -widthHeight 1048 717 -parentMain true scriptEditorPanel1Window;
+windowPref -topLeftCorner 390 640 -widthHeight 402 304 -parentMain true ngSkinToolsUpdateCheckWindow;

@@ -1,0 +1,5 @@
+Testing:
+
+* python - lxml:
+	http://lxml.de/installation.html
+	>> easy_install --allow-hosts=lxml.de,*.python.org lxml==2.2.8

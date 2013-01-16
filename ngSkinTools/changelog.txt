@@ -1,0 +1,78 @@
+1.0beta.865
+* 
+
+
+1.0 beta build 860
+* Introduced weights clipboard:
+	* A simple and intuitive way to move weights from one influence on to another;
+	* Cut/copy weights for selected influence;
+	* Paste weights on to another influence, either adding new weights to existing ones, or replacing them.
+	* Cross-mesh copy/paste will only work if vertex counts are identical; this feature should mainly be used
+	  on the same mesh.
+* Changed how influence names are displayed:
+	* Influences with unique names will display just short name, as previously
+	* Influences with duplicate names will display a unique name in the context of the list; that is, if
+	  rig contains two joints named "joint1", then they will be displayed as "joint1 (joint2|joint1)",
+	  but behaviour will only occur if the list is actually displaying two "joint1" items.
+	* The idea behind the change is to only show long names when short name is not unique in 
+	  a skin cluster.
+* Influences can be filtered with wildcards now; for example, "finger*_1" will match "finger1_1", 
+  "finger2_1" or "L_finger66_1_joint".
+* Minor API fix: MllInterface.getLayersAvailable() will work correctly on context mesh of MllInterface.
+* Fix in import/export: internal layer transparency was being incorrectly calculated after importing
+  weights.
+* Stability improvements: setting vertex weights with sum above 1.0 could cause crashes
+* Performance improvements: "import weights", "duplicate layers" should now be much faster 
+  (and mirroring multiple layers - just a bit:)
+* API additions: 
+	* Batch update management added to speedup multiple update calls to internal layer data object
+
+1.0 beta build 849
+* Keyboard is now enabled in layer/influence lists, making it possible to go through influences
+  with up/down keys (in Maya 2011 and up)
+* Fixed: paint tool could crash maya in some occasions when skin layer data could not be determined from selection   
+
+1.0 beta build 847
+* Fixed: "Add manual association" in mirror initialization should be functional again.
+
+1.0 beta build 845
+* Maya 2012 crash on Linux resolved
+* Update checker window fixed to show itself when update is found.
+
+1.0 beta build 843
+* Critical bug fix: unable to open ngSkinTools UI due to preference value type mismatch. 
+
+1.0 beta build 842
+* Reviewed some Linux stability issues when initializing layers
+* Fixed: error message when opening ngSkinTools window for the first time
+
+1.0 beta build 840
+* Fixed: when exporting, influence names are now absolute;
+* Improved direction display in mirroring window: now it will properly say "left to right", or "top to bottom",
+  (depending on mirroring axis you chose when initializing mirror cache), instead of just "positive to negative";
+* Mirroring now works with multiple selected layers; 
+
+1.0 beta build 835
+* Added new tool "Import Influences" for synchronizing influences lists between different skin clusters;
+* "Delete current layer" became "Delete selected layer(s)" and now allows selecting multiple layers for deletion;
+* Added "Duplicate selected layer(s)" in menus;
+* Fixed documentation links here and there (apparently nobody cares as "View documentation online" menu item 
+  actually never worked before);
+
+1.0 beta build 830
+
+* Added layer on/off feature, available from layer right-click menu.
+
+* Added layer info import/export:
+	* XML format available for all supported Maya versions;
+	* JSON available from Maya 2011 and up;
+	
+* First attepts at python API:
+	* ngSkinTools.mllInterface.MllInterface : low level access to internal plugin functions
+	* ngSkinTools.importExport.* : import/export capabilities 
+
+* Fixed a few Maya 2009 compatibility issues	
+
+* A lot of refactoring inside the code, so possible stability issues, but it's all for the brighter future;
+
+ 
