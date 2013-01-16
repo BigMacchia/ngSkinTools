@@ -34,7 +34,6 @@ class NoLayersUI:
         MayaEvents.nodeSelectionChanged.addHandler(self.update,parent)
         MayaEvents.undoRedoExecuted.addHandler(self.update,parent)
         
-    
     def update(self):
         if self.data.layerDataAvailable:
             return
@@ -47,10 +46,10 @@ class NoLayersUI:
         
         if attachPossible:
             self.controls.label1.setLabel('Skin selected:')
-            self.controls.label2.setLabel("%s (%s)" % tuple(attachPoint))
+            self.controls.label2.setLabel("%s (%s)" % tuple(map(Utils.shortName,tuple(attachPoint))))
         elif selectionAvailable:
             self.controls.label1.setLabel("Layer data cannot be attached to:")
-            self.controls.label2.setLabel(selection[0])
+            self.controls.label2.setLabel(Utils.shortName(selection[0]))
         else:
             self.controls.label1.setLabel("Nothing is selected")
             self.controls.label2.setLabel('')

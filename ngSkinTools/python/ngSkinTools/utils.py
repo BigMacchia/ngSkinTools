@@ -354,3 +354,13 @@ class Utils:
             raise MessageException("node %s does not exist" % nodeName) 
         return result
         
+    @staticmethod
+    def shortName(nodeName):
+        if not isinstance(nodeName,basestring):
+            return nodeName
+        
+        try:
+            return nodeName[nodeName.rfind("|")+1:]
+        except:
+            return nodeName
+        

@@ -2,6 +2,7 @@ import maya.cmds as cmds
 import maya.mel as mel
 from ngSkinTools.log import LoggerFactory
 from ngSkinTools.utils import MessageException
+from ngSkinTools.layerUtils import LayerUtils
 
 class MllInterface(object):
     '''
@@ -220,7 +221,26 @@ class MllInterface(object):
         '''
         Set current layer to given value
         '''
-        return self.ngSkinLayerCmd(cl=layerId)    
+        return self.ngSkinLayerCmd(cl=layerId)  
+    
+    def setCurrentPaintTarget(self,paintTarget):
+        '''
+        universal way to set current paint target. Paint target can be 
+        LayerUtils.PAINT_TARGET_MASK or a layer id
+        '''
+        #if id>=0:
+        self.ngSkinLayerCmd(ci=paintTarget)
+        #elif id==LayerUtils.PAINT_TARGET_MASK:
+        #    self.ngSkinLayerCmd(cpt="mask")
+            
+            
+    def getCurrentPaintTarget(self):
+        '''
+        just an alias for getCurrentInfluence(); should be cleaned up once
+        all paint targets start using unified API 
+        '''
+        return self.getCurrentInfluence()[0]
+        
     
         
     def getMirrorAxis(self):

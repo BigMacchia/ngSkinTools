@@ -249,9 +249,12 @@ void SetLayerWeights::execute(){
 		throwStatusException(boost::format("Invalid vertex count, should be %1%") % this->manager->getMeshVertCount(), MStatus::kInvalidParameter);
 	}
 
-	// cache previous weights
-	InfluenceWeightsMap &map = this->layer.influenceWeightList;
-	layer.initializeWeightsChanges(&this->prevWeights,NULL);
+	if (getTarget()==SkinLayer::PAINT_TARGET_MASK){
+		layer.initializeWeightsChanges(NULL,&this->prevWeights);
+	}
+	else {
+		layer.initializeWeightsChanges(&this->prevWeights,NULL);
+	}
 
 	this->redo();
 }

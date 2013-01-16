@@ -245,6 +245,7 @@ class TabPaint(BaseTab):
     def createUI(self,parent):
         from ngSkinTools.ui.mainwindow import MainWindow
         
+        LayerEvents.currentLayerChanged.addHandler(self.updateHighlight, parent)
         LayerEvents.currentInfluenceChanged.addHandler(self.updateHighlight,parent)
         LayerEvents.layerAvailabilityChanged.addHandler(self.updateToTool,parent)
         MayaEvents.nodeSelectionChanged.addHandler(self.updateToTool, parent)

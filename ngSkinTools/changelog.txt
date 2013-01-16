@@ -1,6 +1,16 @@
 1.0beta.865
-* 
-
+* A fix to get Maya 2009 UI work again;
+* Bug fix: paste weights to mask should properly work now;
+* Bug fix: setting mask weights via API is properly undoable now;
+* Bug fix: changing current layer while painting now properly highlights it's current influence;
+* Bug fix: multi-layer selection now works for layer on/off action;
+* Bug fix: long mesh names will no longer resize main UI window;
+* UI code will now verify that plugin version matches UI version (this mainly solves upgrade issues,
+  when old plugin sometimes gets loaded with newer ui) 
+* API changes:
+	added MllInterface.setCurrentPaintTarget(): universal way to set current paint target (influence or mask)
+	added MllInterface.getCurrentPaintTarget()
+	 
 
 1.0 beta build 860
 * Introduced weights clipboard:

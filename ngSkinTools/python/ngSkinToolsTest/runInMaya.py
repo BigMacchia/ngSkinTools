@@ -59,9 +59,9 @@ def storeTestResult():
     
     
 def runTests():
-    return runSingleTest(allTests.MainWindowTest,'testAddManualInfluence')
+    #return runSingleTest(allTests.CopyPasteActionsTest,'testCantCopyEmptyMask')
     
-    #runTestClass(allTests.MllInterfaceTest)
+    runTestClass(allTests.CopyPasteActionsTest)
     #runTestClass(VariousImportScenarios)
     #runTestClass(MllInterfaceTest)
     #runAllTests()

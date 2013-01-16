@@ -89,8 +89,9 @@ class NewLayerAction(BaseLayerAction):
         
 class EnableDisableLayerAction(BaseLayerAction):
     def execute(self):
-        layers = LayerDataModel.getInstance()
-        layers.toggleLayerEnabled(layers.getCurrentLayer())
+        layerData = LayerDataModel.getInstance()
+        for layerId in layerData.layerListsUI.getSelectedLayers():
+            layerData.toggleLayerEnabled(layerId)
         LayerEvents.layerListModified.emit()
         self.onExecuted.emit()
 

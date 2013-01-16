@@ -17,6 +17,7 @@ class BaseToolWindow:
         
         self.defaultWidth = 300
         self.defaultHeight = 300
+        self.useUserPrefSize = True
         
         BaseToolWindow.windowInstances[self.windowName]=self
         
@@ -43,6 +44,8 @@ class BaseToolWindow:
     def createWindow(self):
         if self.windowExists(self.windowName):
             raise Exception("window %s already opened" % self.windowName)
+        if not self.useUserPrefSize:
+            cmds.windowPref(self.windowName,removeAll=True)
 
         cmds.window(self.windowName,
                                    title=self.windowTitle,

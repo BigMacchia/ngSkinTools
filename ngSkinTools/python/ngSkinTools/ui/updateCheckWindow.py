@@ -29,14 +29,15 @@ class UpdateCheckWindow(BaseToolWindow):
         BaseToolWindow.__init__(self,windowName)
         self.updateAvailable = False
         self.windowTitle = 'NgSkinTools Update'
-        self.sizeable = False;
+        self.sizeable = True
+        self.useUserPrefSize = False
     
     def createWindow(self):
         BaseToolWindow.createWindow(self)
         margin1 = 5 
         margin2 = 10
 
-        form = cmds.formLayout(parent=self.windowName,width=400,height=300)
+        form = cmds.formLayout(parent=self.windowName,width=500,height=400)
         self.topLabel = cmds.text(label='',font='boldLabelFont')
         self.customUIContainer = cmds.columnLayout(adjustableColumn=1,rowSpacing=margin2)
         cmds.separator()

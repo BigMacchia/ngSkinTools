@@ -3,6 +3,7 @@
 '''
 import logging
 from ngSkinTools import log 
+from ngSkinToolsTest.cutCopyPasteActionsTest import CopyPasteActionsTest
 log.LoggerFactory = log.SimpleLoggerFactory(logging.WARN)
 
 from ngSkinToolsTest.influenceNameTransformsTest import InfluenceNameTransformsTest
@@ -37,4 +38,4 @@ MainWindowTest
 ImportInfluencesTest
 InfluenceNameFilterTest
 MllInterfaceTest
-
+CopyPasteActionsTest
