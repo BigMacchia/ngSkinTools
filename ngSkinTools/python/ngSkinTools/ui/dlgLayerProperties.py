@@ -6,6 +6,7 @@ from ngSkinTools.ui.events import Signal
 from ngSkinTools.ui.options import ValueModel
 from ngSkinTools.ui.uiCompounds import FloatSliderField
 from ngSkinTools.ui.uiWrappers import StoredTextEdit
+from ngSkinTools.utils import Utils
 
 
 
@@ -46,7 +47,8 @@ class LayerPropertiesDialog(BaseDialog):
             
             
             # check if valid layer name was entered
-            if self.layerNameValue.get().strip()=='':
+            # new layer mode should allow empty value
+            if not self.newLayerMode and self.layerNameValue.get().strip()=='':
                 Utils.confirmDialog( title='Validation Error', message="layer name cannot be blank", button=['Ok'], defaultButton='Ok')
                 return
         

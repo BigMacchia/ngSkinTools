@@ -78,13 +78,16 @@ class InfluenceFilterAction(BaseLayerAction):
         
 class NewLayerAction(BaseLayerAction):
     def execute(self):
+        defaultLayerName = "New Layer"
         dlg = LayerPropertiesDialog(newLayerMode=True)
-        dlg.layerNameValue.set("New Layer")
+        dlg.layerNameValue.set("")
         if dlg.execute()!=dlg.BUTTON_OK:
             return
         
-        
-        LayerDataModel.getInstance().addLayer(dlg.layerNameValue.get())
+        newLayerName = dlg.layerNameValue.get()
+        if newLayerName.strip()=="":
+            newLayerName = defaultLayerName
+        LayerDataModel.getInstance().addLayer(newLayerName)
         self.onExecuted.emit()
         
 class EnableDisableLayerAction(BaseLayerAction):
