@@ -18,20 +18,6 @@ bool removePrefix(MString &s,const MString &prefix){
 	return true;
 }
 
-/**
- * returns a name with any left/right prefix known
- */
-void getStrippedName(const MString &name,MString &strippedName){
-	strippedName = name;
-	
-	removePrefix(strippedName,"L_") ||
-		removePrefix(strippedName,"R_") ||
-		removePrefix(strippedName,"Lf") ||
-		removePrefix(strippedName,"Rt");
-
-	return;
-}
-
 void InfluenceTransferInfo::setDestination(InfluenceTransferInfo &destination){
 	if (this->destination!=NULL){
 		this->destination->source.erase(this);
@@ -39,56 +25,6 @@ void InfluenceTransferInfo::setDestination(InfluenceTransferInfo &destination){
 
 	this->destination = &destination;
 	this->destination->source.insert(this);
-}
-
-void InfluenceTransferInfo::testSource(const double maxDistanceError,InfluenceTransferInfo &source,const bool asMirror,const bool stripLeftRightPrefix){
-	// don't test against self
-	if (this==&source)
-		return;
-
-	// we've already got as best match as possible
-	if (nameMatched)
-		return;
-
-	// source has a better option to match to already
-	if (asMirror && source.destination && source.destination->nameMatched)
-		return;
-
-
-	// compare mirrored differences of position
-	MVector positionDifference = source.pivot;
-	if (asMirror)
-		positionDifference.x = -positionDifference.x;
-
-	positionDifference -= this->pivot;
-	double distance = positionDifference.length();
-	if (distance>maxDistanceError || distance>this->matchDistance)
-		return;
-
-	this->matchDistance = distance;
-	source.setDestination(*this);
-	
-
-
-	// compare names
-	if (this->influenceName.length()!=source.influenceName.length())
-		return;
-
-	
-	if (stripLeftRightPrefix) {
-		MString strippedName,otherStrippedName;
-		getStrippedName(this->influenceName,strippedName);
-		getStrippedName(source.influenceName,otherStrippedName);
-
-		// mark this as position and name match
-		this->nameMatched =  this->nameMatched || (strippedName==otherStrippedName);
-	}
-
-	if (!asMirror){
-		this->nameMatched =  this->nameMatched || (this->influencePath==source.influencePath);
-	}
-
-	
 }
 
 InfluenceTransferInfo& WeightTransferAssociation::addInfluence(unsigned int logicalIndex, const MVector &pivot, const MString &name, const MString &path){

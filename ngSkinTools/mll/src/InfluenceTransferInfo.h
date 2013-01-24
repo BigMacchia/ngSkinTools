@@ -91,12 +91,6 @@ public:
 	}
 	
 
-	/**
-	 * tests if "other" is a candidate for this influence to be a mirror opposite
-	 * and sets it as a new source influence
-	 */
-	void testSource(const double maxDistanceError,InfluenceTransferInfo &other,const bool asMirror,const bool stripLeftRightPrefix);
-
 	InfluenceTransferInfo():
 		destination(NULL),
 		matchDistance(std::numeric_limits<double>::max()),

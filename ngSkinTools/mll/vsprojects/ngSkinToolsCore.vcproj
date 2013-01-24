@@ -508,6 +508,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\weightsCache.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\WeightTransferAssociation.cpp"
 				>
 			</File>
