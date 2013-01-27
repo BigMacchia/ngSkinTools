@@ -1,8 +1,3 @@
-'''
-Created on Sep 11, 2012
-
-@author: uiron
-'''
 from __future__ import with_statement 
 import unittest
 import ngSkinTools.importExport as ie

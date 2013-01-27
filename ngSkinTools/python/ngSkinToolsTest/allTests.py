@@ -4,6 +4,7 @@
 import logging
 from ngSkinTools import log 
 from ngSkinToolsTest.cutCopyPasteActionsTest import CopyPasteActionsTest
+from ngSkinToolsTest.meshDataImportExportTest import MeshDataImportExportTest
 log.LoggerFactory = log.SimpleLoggerFactory(logging.WARN)
 
 from ngSkinToolsTest.influenceNameTransformsTest import InfluenceNameTransformsTest
@@ -39,3 +40,4 @@ ImportInfluencesTest
 InfluenceNameFilterTest
 MllInterfaceTest
 CopyPasteActionsTest
+MeshDataImportExportTest
