@@ -7,6 +7,7 @@ class MeshDataExporter:
     
     def __init__(self):
         self.meshMObject = None
+        self.transformMatrix = None
         
     def useSkinClusterInputMesh(self,skinCluster):
         '''
@@ -25,21 +26,17 @@ class MeshDataExporter:
         matrixPlug = om.MPlug(transformNode, matrixAttr).elementByLogicalIndex(0)
         transform = om.MFnMatrixData(matrixPlug.asMObject()).transformation().asMatrix()
         return transform
-        
-    def exportMeshTriangles(self,meshTransform):
+    
+    def setTransformMatrixFromNode(self,transformNode):
+        self.transformMatrix = self.getWorldMatrix(transformNode)
+       
+    def export(self,):
         '''
         returns mesh triangles: first vertex list, then vertex ID list for each triangle;
         meshTransform (supplied as transform node name) is required to transform
         each vertex to world-space
         '''
-        
-        transform = self.getWorldMatrix(meshTransform)
-
-        
-        for pt in (om.MPoint(0,0,0),om.MPoint(1,1,1)):
-            pt = pt*transform
-            print "%.3f %.3f %.3f" % (pt.x,pt.y,pt.z)
-
+ 
         # get triangles for the mesh
         fnMesh = om.MFnMesh(self.meshMObject)
         counts = om.MIntArray()
@@ -52,7 +49,7 @@ class MeshDataExporter:
         fnMesh.getPoints(points)
         pointList = []
         for p in Utils.mIter(points):
-            p = p*transform
+            p = p*self.transformMatrix
             pointList.extend((p.x,p.y,p.z))
 
         # return point values, id values            

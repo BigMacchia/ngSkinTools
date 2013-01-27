@@ -43,8 +43,9 @@ class MeshDataExporterTest(AdditionalAsserts, unittest.TestCase):
 
         exporter = MeshDataExporter()
         exporter.useSkinClusterInputMesh("skinCluster1")
+        exporter.setTransformMatrixFromNode("pPlane1")
         
-        verts,ids = exporter.exportMeshTriangles("pPlane1")
+        verts,ids = exporter.export()
         
         # check first vertice: must be in world coords
         self.assertAlmostEqual(verts[0], 6.189,places=3)
