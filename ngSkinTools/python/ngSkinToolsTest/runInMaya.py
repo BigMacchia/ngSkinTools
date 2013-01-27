@@ -61,7 +61,7 @@ def storeTestResult():
 def runTests():
     #return runSingleTest(allTests.CopyPasteActionsTest,'testCantCopyEmptyMask')
     
-    runTestClass(allTests.MeshDataImportExportTest)
+    runTestClass(allTests.MeshDataExporterTest)
     #runTestClass(VariousImportScenarios)
     #runTestClass(MllInterfaceTest)
     #runAllTests()

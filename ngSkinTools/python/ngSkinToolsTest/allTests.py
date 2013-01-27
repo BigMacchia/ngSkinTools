@@ -3,10 +3,11 @@
 '''
 import logging
 from ngSkinTools import log 
-from ngSkinToolsTest.cutCopyPasteActionsTest import CopyPasteActionsTest
-from ngSkinToolsTest.meshDataImportExportTest import MeshDataImportExportTest
+from ngSkinToolsTest.meshDataExporterTest import MeshDataExporterTest
 log.LoggerFactory = log.SimpleLoggerFactory(logging.WARN)
 
+
+from ngSkinToolsTest.cutCopyPasteActionsTest import CopyPasteActionsTest
 from ngSkinToolsTest.influenceNameTransformsTest import InfluenceNameTransformsTest
 from ngSkinToolsTest.actionsTest import ActionsTest, BaseActionTest
 from ngSkinToolsTest.versionTest import VersionTest
@@ -40,4 +41,4 @@ ImportInfluencesTest
 InfluenceNameFilterTest
 MllInterfaceTest
 CopyPasteActionsTest
-MeshDataImportExportTest
+MeshDataExporterTest
