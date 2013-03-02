@@ -324,8 +324,8 @@ TEST_F(XYZAxisTester,testYAxisAssociation){
 
 
 	// test some mirror pairs
-	assertHasWeight(manager.mirrorData.getVertexTransferInfo(9),0,1.0);
-	assertHasWeight(manager.mirrorData.getVertexTransferInfo(10),19,1.0);
+	assertHasWeight(manager.mirrorData.vertexTransfer.getVertexTransferInfo(9),0,1.0);
+	assertHasWeight(manager.mirrorData.vertexTransfer.getVertexTransferInfo(10),19,1.0);
 
 
 

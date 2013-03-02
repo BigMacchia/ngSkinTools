@@ -47,6 +47,13 @@ class AdditionalAsserts:
         '''
         validates that two layer data models are identical
         '''
+        if model1.meshInfo == None:
+            self.assertEquals(model2.meshInfo,None)
+        else:
+            self.assertFloatArraysEqual(model1.meshInfo.verts, model2.meshInfo.verts)
+            self.assertArraysEqual(model1.meshInfo.triangles, model2.meshInfo.triangles)
+        
+        
         self.assertEquals(len(model1.layers),len(model2.layers))
         
         for l1,l2 in zip(model1.layers,model2.layers):

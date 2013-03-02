@@ -31,23 +31,49 @@ public:
 	}
 };
 
-typedef std::vector<VertexTransferInfo> VertexTransferInfoVec;
+class VertexTransferAssociations {
+private:
+	std::vector<VertexTransferInfo> associations;
+	SkinToolsGlobal::Axis mirrorAxis;
+	MPointArray meshPoints;
+
+public:
+	VertexTransferAssociations(): mirrorAxis(SkinToolsGlobal::UNDEFINED_AXIS){
+	}
+
+
+	inline const VertexTransferInfo & getVertexTransferInfo(const unsigned int i) const {
+		return associations.at(i);
+	}
+
+	/**
+	 * initializes source vertices, taking positions and numbering from given mesh; can be 
+	 * different mesh than the one used to initialize vertices of this WTA
+	 */
+	void initVertexTransferFrom(MObject &mesh,const bool mirror,const SkinToolsGlobal::Axis mirrorAxis=SkinToolsGlobal::UNDEFINED_AXIS);
+
+	inline void reset(){
+		associations.clear();
+	}
+
+	bool isInitialized() const {
+		return !associations.empty();
+	}
+
+	void setVertices(MObject &mesh);
+
+	inline public SkinToolsGlobal::Axis getMirrorAxis() const {
+		return mirrorAxis;
+	}
+};
 
 
 class WeightTransferAssociation
 {
 private:
 	InfluenceTransferInfoVec influencesList;
-	VertexTransferInfoVec vertexList;
-	MPointArray meshPoints;
-
-	SkinToolsGlobal::Axis mirrorAxis;
-
-
 public:
-
-	WeightTransferAssociation(): mirrorAxis(SkinToolsGlobal::UNDEFINED_AXIS){
-	}
+	VertexTransferAssociations vertexTransfer;
 
 	inline const InfluenceTransferInfoVec &getInfluencesList() const {
 		return this->influencesList;
@@ -58,7 +84,7 @@ public:
 	 */
 	void reset(){
 		influencesList.clear();
-		vertexList.clear();
+		vertexTransfer.reset();
 	}
 
 	/**
@@ -66,25 +92,10 @@ public:
 	 */
 	InfluenceTransferInfo & addInfluence(unsigned int logicalIndex, const MVector &pivot, const MString &name, const MString &path);
 
-	void setVertices(MObject &mesh);
-
-	bool isInitialized() const {
-		return (!influencesList.empty() && !vertexList.empty());
+	inline bool isInitialized() const {
+		return (!influencesList.empty() && vertexTransfer.isInitialized());
 	}
 
-	inline const VertexTransferInfo & getVertexTransferInfo(const unsigned int i) const {
-		return vertexList.at(i);
-	}
-
-	/**
-	 * initializes source vertices, taking positions and numbering from given mesh; can be 
-	 * different mesh than the one used to initialize vertices of this WTA
-	 */
-	void initVertexTransferFrom(MObject &mesh,const bool mirror,const SkinToolsGlobal::Axis mirrorAxis=SkinToolsGlobal::UNDEFINED_AXIS);
-
-	inline const SkinToolsGlobal::Axis getMirrorAxis() const{
-		return this->mirrorAxis;
-	}
 
 
 	void initInfluenceAssociations(RuleDescriptionList &ruleList, WeightTransferAssociation &sourceWTA);

@@ -72,6 +72,8 @@ class ImportExportTest(AdditionalAsserts, unittest.TestCase):
         '''
         
         model = ie.LayerData()
+        model.meshInfo.verts = [0.0,0.0,0.0,   0.0,1.0,0.0,   1.0,0.0,0.0]
+        model.meshInfo.triangles = [0,2,1]
         
         layer = ie.Layer()
         layer.opacity = 0.00001
@@ -108,11 +110,25 @@ class ImportExportTest(AdditionalAsserts, unittest.TestCase):
         exporter = XmlExporter()
         xml = exporter.process(model1)
         
+        self.log.info(xml)
+        
         importer = XmlImporter()
         model2 = importer.process(xml)
         
         # make sure unserialized model matches original model
         self.assertModelsEqual(model1, model2)
+        
+    def testImportEmptyXml(self):
+        xml = "<ngstLayerData></ngstLayerData>"
+        model = XmlImporter().process(xml)
+        self.assertEquals(len(model.layers),0)
+        
+    def testImportMeshInfo(self):
+        xml = "<ngstLayerData> <meshInfo vertices=\"1.1 1.2 1.3\" /> </ngstLayerData>"
+        model = XmlImporter().process(xml)
+        self.assertFloatArraysEqual(model.meshInfo.verts,[1.1,1.2,1.3])
+        
+        
         
     
     @decorators.requiresDependency('json') 
@@ -120,6 +136,9 @@ class ImportExportTest(AdditionalAsserts, unittest.TestCase):
         model1 = self.createSampleModel()
         exporter = JsonExporter()
         json = exporter.process(model1)
+        
+        self.log.info(json)
+        
         
         importer = JsonImporter()
         model2 = importer.process(json)

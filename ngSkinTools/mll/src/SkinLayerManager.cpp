@@ -259,13 +259,13 @@ void SkinLayerManager::initSkinMirrorData(RuleDescriptionList &ruleList){
 
 	ruleList.isMirrorMode = true;
 	mirrorData.initInfluenceAssociations(ruleList,mirrorData);
-	mirrorData.initVertexTransferFrom(this->meshHandle,true,ruleList.getMirrorAxis());
+	mirrorData.vertexTransfer.initVertexTransferFrom(this->meshHandle,true,ruleList.getMirrorAxis());
 }
 
 void SkinLayerManager::populateWTA(WeightTransferAssociation &wta){
 	wta.reset();
 
-	wta.setVertices(this->meshHandle);
+	wta.vertexTransfer.setVertices(this->meshHandle);
 
 	MDagPathArray influences;
 	MFnSkinCluster skinFn(this->skinClusterHandle);
@@ -435,7 +435,7 @@ void SkinLayerManager::transferWeights(SkinLayerManager &source){
 	source.populateWTA(sourceWTA);
 	this->populateWTA(destinationWTA);
 	
-	destinationWTA.initVertexTransferFrom(source.meshHandle,false);
+	destinationWTA.vertexTransfer.initVertexTransferFrom(source.meshHandle,false);
 
 	RuleDescriptionList ruleList;
 	// TODO: provide rule list

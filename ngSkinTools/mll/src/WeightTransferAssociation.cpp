@@ -6,6 +6,8 @@
 
 #include "InfluenceMatchRules.h"
 
+using namespace std;
+
 /**
  * removes prefix from a string, and returns true, if prefix was indeed found on a string
  */
@@ -79,13 +81,13 @@ void calcBaryCoords(const MPointArray &triangle,const MPoint &pointPos,double ba
 	baryCoords[2] = 1.0-baryCoords[0]-baryCoords[1];
 }
 
-void WeightTransferAssociation::setVertices(MObject &mesh){
+void VertexTransferAssociations::setVertices(MObject &mesh){
 	MFnMesh meshFn(mesh);
-	vertexList.resize(meshFn.numVertices());
+	associations.resize(meshFn.numVertices());
 	meshFn.getPoints(meshPoints);
 }
 
-void WeightTransferAssociation::initVertexTransferFrom(MObject &sourceMesh,const bool mirror,const SkinToolsGlobal::Axis mirrorAxis) {
+void VertexTransferAssociations::initVertexTransferFrom(MObject &sourceMesh,const bool mirror,const SkinToolsGlobal::Axis mirrorAxis) {
 	this->mirrorAxis = SkinToolsGlobal::UNDEFINED_AXIS;
 	MMeshIntersector intersector;
 	intersector.create(sourceMesh);
@@ -95,7 +97,7 @@ void WeightTransferAssociation::initVertexTransferFrom(MObject &sourceMesh,const
 	MPointArray trianglePoints;
 	MIntArray triangleVertices;
 	for (unsigned int i=0;i<meshPoints.length();i++){
-		VertexTransferInfoVec::reference mi = vertexList.at(i);
+		vector<VertexTransferInfo>::reference mi = associations.at(i);
 
 		MPoint pt = meshPoints[i];
 

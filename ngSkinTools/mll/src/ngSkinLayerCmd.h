@@ -61,6 +61,11 @@ namespace SkinLayerCmd{
 		// start/end batch updates
 		const char BEGINDATAUPDATE[] = "-bdu";
 		const char ENDDATAUPDATE[] = "-edu";
+
+
+		// reference mesh arguments
+		const char REFERENCEMESHVERTICES[] = "-rmv";
+		const char REFERENCEMESHTRIANGLES[] = "-rmt";
 	}
 
 

@@ -563,7 +563,7 @@ void SkinLayer::mirrorWeights(const bool toNegativeSide,const double mirrorWidth
 
 	for (unsigned int i=0;i<this->influenceWeightList.getNumVerts();i++){
 		// mirror left to right vertices
-		const VertexTransferInfo & vti = this->manager.mirrorData.getVertexTransferInfo(i);
+		const VertexTransferInfo & vti = this->manager.mirrorData.vertexTransfer.getVertexTransferInfo(i);
 		double blendWeight = 0.0;
 		if (mirrorWidth==0){
 			blendWeight = vti.distanceToCenter<0 ? 1 :0;

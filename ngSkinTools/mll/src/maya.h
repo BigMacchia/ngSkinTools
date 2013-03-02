@@ -15,6 +15,7 @@
 #include <maya/MSelectionList.h>
 
 #include <maya/MFnMesh.h>
+#include <maya/MFnMeshData.h>
 #include <maya/MFnSkinCluster.h>
 #include <maya/MFnSingleIndexedComponent.h>
 #include <maya/MFnTransform.h>

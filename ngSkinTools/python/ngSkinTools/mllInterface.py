@@ -160,6 +160,9 @@ class MllInterface(object):
             return str(value)
         
         return ",".join(map(formatFloat, floatList))
+
+    def __intListAsString(self,values):
+        return ",".join(values)
         
 
     def getLayerMask(self,layerId):
@@ -300,10 +303,25 @@ class MllInterface(object):
         '''
         
         return BatchUpdateContext(self)
+    
+    def setWeightsReferenceMesh(self,vertices,triangles):
+        '''
+        set reference mesh for setInfluenceWeights()/setLayerMask().
+        vertices is a float array, listing x y z for first vertex, then second, etc;
+        triangles is an int array, listing vertex IDs for first triangle, then second, etc.
+        '''
+        
+        self.ngSkinLayerCmd(e=True,
+                    referenceMeshVertices=self.__floatListAsString(vertices),
+                    referenceMeshTriangles=self.__floatListAsString(triangles)
+                    )
+        
+        
         
 class BatchUpdateContext:
     '''
-    A helper class for MllInterface.batchUpdateContext() method.
+    A helper class for MllInterface.batchUpdateContext() method, helping 
+    implement "with" statement setup/teardown functionality
     '''
     def __init__(self,mll):
         self.mll = mll

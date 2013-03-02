@@ -27,6 +27,7 @@ from maya import OpenMaya as om
 from maya import OpenMayaAnim as oma
 from ngSkinTools import utils
 from ngSkinTools.skinClusterFn import SkinClusterFn
+from ngSkinTools.meshDataExporter import MeshDataExporter
 
 class Influence(object):
     '''
@@ -82,7 +83,15 @@ class Layer(object):
     def __repr__(self):
         return "[Layer %r %r %r %r]" % (self.name, self.opacity, self.enabled, self.influences)
     
+class MeshInfo(object):
+    def __init__(self):
+        # vertex positions for each vertex, listing x y z for first vertex, then second, etc.
+        # total 3*(number of vertices) values
+        self.verts = []
         
+        # vertex IDs for each triangle, listing three vertex indexes for first triangle, then second, etc
+        # total 3*(number of triangles) values
+        self.triangles = []
         
         
 class LayerData(object):
@@ -95,6 +104,8 @@ class LayerData(object):
         #: layers list
         self.layers = []
         self.mll = MllInterface()
+
+        self.meshInfo = MeshInfo()
 
     def addLayer(self, layer):
         '''
@@ -118,6 +129,13 @@ class LayerData(object):
         '''
         
         self.mll.setCurrentMesh(mesh)
+        mesh,skinCluster = self.mll.getTargetInfo()
+        
+        meshExporter = MeshDataExporter()
+        meshExporter.setTransformMatrixFromNode(mesh)
+        meshExporter.useSkinClusterInputMesh(skinCluster)
+        self.meshInfo = MeshInfo()
+        self.meshInfo.verts,self.meshInfo.triangles = meshExporter.export()
         
         for layerID, layerName in self.mll.listLayers():
             layer = Layer()
@@ -248,13 +266,22 @@ class XmlExporter:
         self.baseElement.setAttribute("version", "1.0")
         self.document.appendChild(self.baseElement)
         
+        if layerDataModel.meshInfo is not None and len(layerDataModel.meshInfo.verts)>0:
+            meshInfoElement = self.document.createElement("meshInfo")
+            self.baseElement.appendChild(meshInfoElement)
+            self.floatArrayToAttribute(meshInfoElement, "vertices", layerDataModel.meshInfo.verts)
+            self.arrayToAttribute(meshInfoElement, "triangles", layerDataModel.meshInfo.triangles,str)
+        
         for layer in layerDataModel.layers:
             self.processLayer(layer)
             
         return self.document.toprettyxml(encoding="UTF-8")
             
     def floatArrayToAttribute(self, node, attrName, values):
-        node.setAttribute(attrName, " ".join(map(self.formatFloat, values)))
+        self.arrayToAttribute(node, attrName, values, self.formatFloat)
+
+    def arrayToAttribute(self, node, attrName, values, itemCallable):
+        node.setAttribute(attrName, " ".join(map(itemCallable, values)))
             
     def formatFloat(self, value):
         # up to 15 digits after comma, no trailing zeros if present
@@ -268,12 +295,15 @@ class XmlImporter:
             if i.nodeName == name:
                 yield i
                 
-    def attributeToFloatList(self, node, attribute):
+    def attributeToList(self, node, attribute, itemCallable):
         value = node.getAttribute(attribute).strip()
         if len(value) == 0:
             return []
         
-        return map(float, value.split(" "))
+        return map(itemCallable, value.split(" "))
+
+    def attributeToFloatList(self, node, attribute):
+        return self.attributeToList(node, attribute, float)
     
     def process(self, xml):
         'transforms XML to LayerDataModel'
@@ -283,6 +313,10 @@ class XmlImporter:
         self.dom = minidom.parseString(xml)
         
         for layersNode in self.iterateChildren(self.dom, "ngstLayerData"):
+            for meshData in self.iterateChildren(layersNode, "meshInfo"):
+                self.model.meshInfo.verts = self.attributeToFloatList(meshData, "vertices")
+                self.model.meshInfo.triangles = self.attributeToList(meshData, "triangles",int)
+            
             for layerNode in self.iterateChildren(layersNode, "layer"):
                 layer = Layer()
                 self.model.addLayer(layer)
@@ -321,9 +355,16 @@ class JsonExporter:
             result['influences'].append(self.__influenceToDictionary(infl))
             
         return result
+
+    def __meshInfoToDictionary(self,meshInfo):
+        result = {}
+        result['verts'] = meshInfo.verts
+        result['triangles'] = meshInfo.triangles
+        return result
     
     def __modelToDictionary(self, model):
         result = {}
+        result['meshInfo'] = self.__meshInfoToDictionary(model.meshInfo)
         result['layers'] = []
         for layer in model.layers:
             result['layers'].append(self.__layerToDictionary(layer))
@@ -339,6 +380,18 @@ class JsonExporter:
     
     
 class JsonImporter:
+    
+    def getOptionalValue(self,keys,defaultValue,startAt=None):
+        result = startAt
+        if result is None:
+            result = self.document
+        try:
+            for key in keys:
+                result = result[key]
+            return result
+        except:
+            return defaultValue
+    
     def process(self, jsonDocument):
         '''
         transform JSON document into layerDataModel
@@ -347,11 +400,14 @@ class JsonImporter:
         self.document = json.loads(jsonDocument)
         
         model = LayerData()
+        model.meshInfo.verts = self.getOptionalValue(['meshInfo','verts'], [])
+        model.meshInfo.triangles = self.getOptionalValue(['meshInfo','triangles'], [])
+        
         for layerData in self.document["layers"]:
             layer = Layer()
             model.addLayer(layer)        
             layer.enabled = layerData['enabled']
-            layer.mask = layerData['mask']
+            layer.mask = self.getOptionalValue(['mask'], [], layerData)
             layer.name = layerData['name']
             layer.opacity = layerData['opacity']
             layer.influences = []

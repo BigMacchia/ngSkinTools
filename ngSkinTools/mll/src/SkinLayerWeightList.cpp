@@ -28,7 +28,7 @@ void SkinLayerWeightList::transferWeights(const SkinLayerWeightList &source, con
 	assert(this->getSize()>0);
 
 	for (unsigned int i=0;i<this->getSize();i++){
-		this->transferWeights(source,i,destinationWTA.getVertexTransferInfo(i));
+		this->transferWeights(source,i,destinationWTA.vertexTransfer.getVertexTransferInfo(i));
 	}
 }
 
@@ -231,7 +231,7 @@ void InfluenceWeightsMap::transferWeights(const InfluenceWeightsMap &sourceWeigh
 	// don't allow copying from same instance
 	assert(this!=&sourceWeights);
 
-	const VertexTransferInfo &vmi = mirrorInfo.getVertexTransferInfo(vertexNum);
+	const VertexTransferInfo &vmi = mirrorInfo.vertexTransfer.getVertexTransferInfo(vertexNum);
 
 	for (InfluenceTransferInfoVec::const_iterator i=mirrorInfo.getInfluencesList().begin(); i!=mirrorInfo.getInfluencesList().end();i++){
 		InfluenceTransferInfo *const info=*i;

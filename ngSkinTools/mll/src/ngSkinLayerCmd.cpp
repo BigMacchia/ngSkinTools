@@ -212,7 +212,7 @@ MStatus ngSkinLayerCmd::handleQuery(){
 	if (argData->isFlagSet(FlagNames::MIRRORAXIS)) {
 		requireManager();
 		const WeightTransferAssociation & data = layerManager->mirrorData;
-		setResult(axisToString(data.getMirrorAxis()));
+		setResult(axisToString(data.vertexTransfer.getMirrorAxis()));
 		return MStatus::kSuccess;
 	}
 
@@ -752,6 +752,9 @@ MSyntax ngSkinLayerCmd::syntaxCreator(){
 	
 	result.addFlag(FlagNames::BEGINDATAUPDATE,"-beginDataUpdate");
 	result.addFlag(FlagNames::ENDDATAUPDATE,"-endDataUpdate");
+
+	result.addFlag(FlagNames::REFERENCEMESHVERTICES,"-referenceMeshVertices",MSyntax::kString);
+	result.addFlag(FlagNames::REFERENCEMESHTRIANGLES,"-referenceMeshTriangles",MSyntax::kString);
 
 	result.enableQuery(true);
 	result.enableEdit(true);

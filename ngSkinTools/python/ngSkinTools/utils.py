@@ -342,6 +342,14 @@ class Utils:
         obj = om.MObject()
         sel.getDependNode(0,obj)
         return obj            
+
+    @staticmethod
+    def getDagPathForNode(nodeName):
+        sel = om.MSelectionList();
+        sel.add(nodeName)
+        obj = om.MDagPath()
+        sel.getDagPath(0,obj)
+        return obj            
         
     @staticmethod
     def getDagPathForNode(nodeName):

@@ -24,7 +24,7 @@ double PaintStrokeInfo::calculateSide(const WeightTransferAssociation &transferA
 	double const * w = lastStrokeWeights.getWeights();
 	for (unsigned int i=0;i<lastStrokeWeights.getSize();i++,w++){
 		if (*w!=0){
-			if (transferAssociation.getVertexTransferInfo(i).isPositiveSide()){
+			if (transferAssociation.vertexTransfer.getVertexTransferInfo(i).isPositiveSide()){
 				positiveSum++;
 				positiveAverage += *w;
 			}

@@ -109,6 +109,7 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
 				BrowseInformation="1"
 				WarningLevel="3"
 				DebugInformationFormat="3"
@@ -445,6 +446,14 @@
 			</File>
 			<File
 				RelativePath="..\src\PaintStrokeInfo.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\ReferenceMeshHolder.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\ReferenceMeshHolder.h"
 				>
 			</File>
 			<File

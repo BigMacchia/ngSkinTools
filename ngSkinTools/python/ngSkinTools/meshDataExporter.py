@@ -20,17 +20,19 @@ class MeshDataExporter:
         
     def getWorldMatrix(self,nodeName):
         # get world transform matrix for given mesh transform node
-        transformNode = Utils.getMObjectForNode(nodeName)         
-        nodeFn = om.MFnDependencyNode(transformNode)
-        matrixAttr = nodeFn.attribute("worldMatrix")
-        matrixPlug = om.MPlug(transformNode, matrixAttr).elementByLogicalIndex(0)
-        transform = om.MFnMatrixData(matrixPlug.asMObject()).transformation().asMatrix()
-        return transform
+        return Utils.getDagPathForNode(nodeName).inclusiveMatrix()
+        
+        #transformNode = Utils.getMObjectForNode(nodeName)         
+        #nodeFn = om.MFnDependencyNode(transformNode)
+        #matrixAttr = nodeFn.attribute("worldMatrix")
+        #matrixPlug = om.MPlug(transformNode, matrixAttr).elementByLogicalIndex(0)
+        #transform = om.MFnMatrixData(matrixPlug.asMObject()).transformation().asMatrix()
+        #return transform
     
     def setTransformMatrixFromNode(self,transformNode):
         self.transformMatrix = self.getWorldMatrix(transformNode)
        
-    def export(self,):
+    def export(self):
         '''
         returns mesh triangles: first vertex list, then vertex ID list for each triangle;
         meshTransform (supplied as transform node name) is required to transform
