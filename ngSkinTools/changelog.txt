@@ -1,6 +1,7 @@
 1.0beta.870
 * "new layer" window will appear with empty layer name box, instead of having a "new layer" text in it.
   You can still submit the dialog without typing anything in, in that case new layer will get default name.
+* Manually added mirror influence pairs will correctly export/import now.
 
 1.0beta.865
 * A fix to get Maya 2009 UI work again;
