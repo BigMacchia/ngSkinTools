@@ -47,8 +47,6 @@ class Influence(object):
     def __repr__(self):
         return "[Infl %r]" % (self.influenceName)
         
-        
-
 
 class Layer(object):
     '''
@@ -95,6 +93,29 @@ class LayerData(object):
         #: layers list
         self.layers = []
         self.mll = MllInterface()
+        
+        # a map [sourceInfluenceName] -> [destinationInfluenceName]
+        self.mirrorInfluenceAssociationOverrides = {}
+        
+    def addMirrorInfluenceAssociationOverride(self,sourceInfluence,destinationInfluence=None,selfReference=False,bidirectional=True):
+        '''
+        Adds mirror influence association override, similar to UI of "Add influences association".
+        Self reference creates a source<->source association, bidirectional means that destination->source 
+        link is added as well
+        '''
+        
+        if selfReference:
+            self.mirrorInfluenceAssociationOverrides[sourceInfluence] = sourceInfluence
+            return
+        
+        if destinationInfluence is None:
+            raise MessageException("destination influence must be specified")
+        
+        self.mirrorInfluenceAssociationOverrides[sourceInfluence] = destinationInfluence
+        
+        if bidirectional:
+            self.mirrorInfluenceAssociationOverrides[destinationInfluence] = sourceInfluence 
+        
 
     def addLayer(self, layer):
         '''
@@ -120,6 +141,8 @@ class LayerData(object):
         self.mll.setCurrentMesh(mesh)
         
         for layerID, layerName in self.mll.listLayers():
+            self.mirrorInfluenceAssociationOverrides = self.mll.listManualMirrorInfluenceAssociations() 
+            
             layer = Layer()
             layer.name = layerName
             self.addLayer(layer)
@@ -180,6 +203,9 @@ class LayerData(object):
         self.mll.setCurrentMesh(mesh)
             
         with self.mll.batchUpdateContext():
+            for source,destination in self.mirrorInfluenceAssociationOverrides:
+                self.mll.addManualMirrorInfluenceAssociation(source, destination)
+            
             for layer in reversed(self.layers):
                 layerId = self.mll.createLayer(name=layer.name, forceEmpty=True)
                 self.mll.setCurrentLayer(layerId)
@@ -248,6 +274,12 @@ class XmlExporter:
         self.baseElement.setAttribute("version", "1.0")
         self.document.appendChild(self.baseElement)
         
+        for source,destination in layerDataModel.mirrorInfluenceAssociationOverrides.items():
+            assoc = self.document.createElement("mirrorInfluenceAssociation")
+            self.baseElement.appendChild(assoc)
+            assoc.setAttribute("source",source)
+            assoc.setAttribute("destination",destination)
+        
         for layer in layerDataModel.layers:
             self.processLayer(layer)
             
@@ -282,7 +314,11 @@ class XmlImporter:
         from xml.dom import minidom
         self.dom = minidom.parseString(xml)
         
+        
         for layersNode in self.iterateChildren(self.dom, "ngstLayerData"):
+            for node in self.iterateChildren(layersNode, "mirrorInfluenceAssociation"):
+                self.model.mirrorInfluenceAssociationOverrides[node.getAttribute("source")]=node.getAttribute("destination")
+            
             for layerNode in self.iterateChildren(layersNode, "layer"):
                 layer = Layer()
                 self.model.addLayer(layer)
@@ -324,6 +360,8 @@ class JsonExporter:
     
     def __modelToDictionary(self, model):
         result = {}
+        if len(model.mirrorInfluenceAssociationOverrides)>0:
+            result['manualInfluenceOverrides'] = dict(model.mirrorInfluenceAssociationOverrides.items())
         result['layers'] = []
         for layer in model.layers:
             result['layers'].append(self.__layerToDictionary(layer))
@@ -347,6 +385,10 @@ class JsonImporter:
         self.document = json.loads(jsonDocument)
         
         model = LayerData()
+        
+        if self.document.has_key("manualInfluenceOverrides"):
+            model.mirrorInfluenceAssociationOverrides = self.document['manualInfluenceOverrides']
+        
         for layerData in self.document["layers"]:
             layer = Layer()
             model.addLayer(layer)        

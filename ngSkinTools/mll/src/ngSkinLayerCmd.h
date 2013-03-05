@@ -50,8 +50,8 @@ namespace SkinLayerCmd{
 		const char MIRRORCACHEINFLUENCES[]="-mci"; // mirror cache influences associations
 		const char INFLUENCEASSOCIATIONDISTANCE[]="-iad"; // distance error when matching left/right influences
 		const char INFLUENCEPREFIX[]="-ipf"; // influence prefix list for name match rule
-		const char ADD_INFLUENCE_ASSOCIATION[]="-aia"; // add manual influence association override: source->target
-		const char REMOVE_INFLUENCE_ASSOCIATION[]="-ria"; // remove manual influence association override: source->target
+		const char MIRROR_INFLUENCE_ASSOCIATION[]="-maa"; // add/query manual mirror influence association override: source->target
+		const char REMOVE_MIRROR_INFLUENCE_ASSOCIATION[]="-rma"; // remove manual mirror influence association override: source->target
 
 		const char COPYSKINDATA[]="-cpd";
 
@@ -132,8 +132,7 @@ private:
 		return getLayerFromArgId(flagName,"must supply layer id");
 	}
 
-
-
+	MSelectionList selectedObjects;
 public:
 	static const char COMMAND_NAME[];
 
@@ -150,6 +149,23 @@ public:
 
 	ngSkinLayerCmd(void);
 	virtual ~ngSkinLayerCmd(void);
+
+	void detectLayerManager();
+
+	inline void setLayerManager(SkinLayerManager &manager){
+		this->layerManager = &manager;
+	}
+
+	void setSelectedObjects(const MSelectionList &selectedObjects){
+		this->selectedObjects = selectedObjects;
+	}
+
+	inline const MSelectionList & getSelectedObjects() const {
+		return this->selectedObjects;
+	}
+
+
+	void queryManualMirrorInfluenceAssociations(MStringArray &result);
 
 };
 

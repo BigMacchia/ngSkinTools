@@ -59,9 +59,9 @@ def storeTestResult():
     
     
 def runTests():
-    #return runSingleTest(allTests.CopyPasteActionsTest,'testCantCopyEmptyMask')
+    runSingleTest(allTests.MllInterfaceTest,'testOverwriteWeightsCrashesMaya')
     
-    runTestClass(allTests.CopyPasteActionsTest)
+    #runTestClass(allTests.CopyPasteActionsTest)
     #runTestClass(VariousImportScenarios)
     #runTestClass(MllInterfaceTest)
     #runAllTests()

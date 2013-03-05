@@ -13,6 +13,7 @@
 #include "ManagerBasedTest.h"
 #include "../SkinLayerChanges.h"
 #include "../ngLayerColorDisplayNode.h"
+#include "../StatusException.h"
 
 #include "../SkinLayerPaintContextCmds.h"
 

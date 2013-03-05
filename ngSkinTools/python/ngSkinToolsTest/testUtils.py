@@ -42,12 +42,19 @@ class AdditionalAsserts:
         self.assertEquals(len(list1),len(list2))
         for index, (v1,v2) in enumerate(zip(list1,list2)):
             self.assertEqual(v1,v2,"values not equal at %d: %r %r:" % (index,v1,v2))
+            
+    def assertDictionariesEqual(self,dict1,dict2):
+        self.assertEquals(len(dict1), len(dict2), "Dictionaries must have same number of values")
+        for key,value in dict1.items():
+            self.assertEquals(dict2[key],value,"dictionary missing value %s for key %s" % (value, key))
+            
     
     def assertModelsEqual(self,model1,model2):
         '''
         validates that two layer data models are identical
         '''
         self.assertEquals(len(model1.layers),len(model2.layers))
+        self.assertDictionariesEqual(model1.mirrorInfluenceAssociationOverrides, model2.mirrorInfluenceAssociationOverrides)
         
         for l1,l2 in zip(model1.layers,model2.layers):
             self.assertEquals(l1.name, l2.name)

@@ -300,6 +300,27 @@ class MllInterface(object):
         '''
         
         return BatchUpdateContext(self)
+    
+    def addManualMirrorInfluenceAssociation(self,source,destination):
+        '''
+        adds an override to mirror influence association, a rule specifying that "source" influence weights
+        should be copied on to "destination" influence on another side. 
+        for bidirectional (e.g. L_wrist<->R_wrist) relationships, call method twice for both directions;
+        for self-reference (e.g., "hip mirrors onto itself"), specify source and destination as same influence
+        '''
+        self.ngSkinLayerCmd(mirrorInfluenceAssociation=source+","+destination)
+        
+    def removeManualMirrorInfluenceAssociation(self,source,destination):
+        self.ngSkinLayerCmd(removeMirrorInfluenceAssociation=source+","+destination)
+        
+        
+    def listManualMirrorInfluenceAssociations(self):
+        '''
+        returns a dictionary "source influence name"->"destination influence name"
+        '''
+        influenceAssociations = self.ngSkinLayerCmd(q=True,mirrorInfluenceAssociation=True)
+        return dict(zip(influenceAssociations[0::2],influenceAssociations[1::2])) 
+        
         
 class BatchUpdateContext:
     '''

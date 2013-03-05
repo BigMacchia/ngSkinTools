@@ -168,19 +168,24 @@ class TransferWeightsTab(BaseTab):
         self.manualItems = []
     
     def addManualPair(self,source,destination,bidirectional):
-        cmds.ngSkinLayer(addInfluenceAssociation=source+","+destination)
+        self.getMll().addManualMirrorInfluenceAssociation(source,destination)
         if bidirectional:
-            cmds.ngSkinLayer(addInfluenceAssociation=destination+","+source)
+            self.getMll().addManualMirrorInfluenceAssociation(destination,source)
             
         self.execInitMirrorData()
+        
+    def getMll(self):
+        return LayerDataModel.getInstance().mll 
+
         
     def removePairs(self,pairList):
         changed = False
         for i in pairList:
             changed = True
-            cmds.ngSkinLayer(removeInfluenceAssociation=i.source+","+i.destination)
+            
+            self.getMll().removeManualMirrorInfluenceAssociation(i.source,i.destination)
             if i.bidirectional:
-                cmds.ngSkinLayer(removeInfluenceAssociation=i.destination+","+i.source)
+                self.getMll().removeManualMirrorInfluenceAssociation(i.destination,i.source)
             
         if changed:
             self.execInitMirrorData()
