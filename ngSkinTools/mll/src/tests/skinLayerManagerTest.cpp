@@ -9,6 +9,8 @@ using namespace std;
 #include "../SkinLayerChanges.h"
 #include "../StatusException.h"
 #include "../ngSkinLayerCmd.h"
+#include "../SkinLayerData.h"
+#include "../utils.h"
 
 
 TEST_F(ManagerBasedTest,addRemoveManualMirrorInfluences){
@@ -37,4 +39,29 @@ TEST_F(ManagerBasedTest,addRemoveManualMirrorInfluences){
 	ASSERT_EQ(result[1],rightJoint);
 	ASSERT_EQ(result[2],rightJoint);
 	ASSERT_EQ(result[3],leftJoint);
+}
+
+TEST(SkinLayerManagerTest,detachedManagerLoadSave){
+	setupMayaLibrary();
+
+	SkinLayerManager manager1;
+	SkinLayer * layer = manager1.createLayer();
+	layer->setName("whatever name");
+	layer->setParent(manager1.rootLayer);
+	MDoubleArray weights;
+	mStringToDoubleArray("0.2,0.3,0.5",weights);
+	layer->influenceWeightList.setInfluenceWeights(0,weights);
+
+	std::stringstream io;
+	SkinLayerData::saveManager(manager1,io);
+
+
+	SkinLayerManager manager2;
+	SkinLayerData::loadManager(manager2,io,SKIN_LAYER_DATA_VERSIONS::CURR);
+	ASSERT_EQ(manager1.rootLayer->children.size(), manager2.rootLayer->children.size());
+
+	ASSERT_EQ(MString("whatever name"), manager2.rootLayer->children[0]->getName());
+	MDoubleArray loadedWeights;
+	manager2.rootLayer->children[0]->influenceWeightList.getInfluenceWeights(0,loadedWeights);
+	assertEquals(weights,loadedWeights);
 }
