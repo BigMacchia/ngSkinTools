@@ -362,23 +362,29 @@ MStatus SkinLayerData::readASCII(const MArgList &args, unsigned int &lastElement
 	}
 }
 
-void SkinLayerData::decodeChunks(const MArgList &args, unsigned int &lastElement, std::ostream &result){
-	MStatus status;
-	std::streamsize bytesLeftToRead =  args.asInt(lastElement++);
-
-	MStringArray chunks = args.asStringArray(lastElement,&status);
-	CHECK_STATUS("error reading input file",status);
-
+void SkinLayerData::decodeChunks(const MStringArray &chunks,std::ostream &result,std::streamsize & bytesDecoded){
+	bytesDecoded = 0;
 	for (unsigned int i=0;i<chunks.length();i++){
-//	while (bytesLeftToRead>0){
-		//MString inputValue = args.asString(lastElement++,&status);
-		//CHECK_STATUS("error reading input file",status);
-
 		int len=0;
 		const char * contents = chunks[i].asUTF8(len);
 		const std::string &decodedValue = base64_decode(std::string(contents,len));
 		result.write(decodedValue.c_str(),decodedValue.length());
-		bytesLeftToRead -= decodedValue.length();
+		bytesDecoded += decodedValue.length();
+	}
+}
+
+void SkinLayerData::decodeChunks(const MArgList &args, unsigned int &lastElement, std::ostream &result){
+	MStatus status;
+	std::streamsize bytesToDecode =  args.asInt(lastElement++);
+
+	MStringArray chunks = args.asStringArray(lastElement,&status);
+	CHECK_STATUS("error reading input file",status);
+
+	std::streamsize bytesDecoded;
+	decodeChunks(chunks,result,bytesDecoded);
+
+	if (bytesDecoded!=bytesToDecode){
+		throwStatusException("Error decoding binary data",MStatus::kInvalidParameter);
 	}
 }
 

@@ -57,6 +57,7 @@ public:
 	}
 
 	static void encodeInChunks(std::istream &source, std::ostream &out, const std::streamsize maxBytes);
+	static void decodeChunks(const MStringArray &chunks,std::ostream &result,std::streamsize & bytesDecoded);
 	static void decodeChunks(const MArgList &args, unsigned int &lastElement, std::ostream &result);
 
 	static void loadManager(SkinLayerManager &manager,std::istream &input,boost::uint32_t version);

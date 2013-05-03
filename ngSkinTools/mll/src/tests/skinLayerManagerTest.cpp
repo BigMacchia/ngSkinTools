@@ -50,7 +50,8 @@ TEST(SkinLayerManagerTest,detachedManagerLoadSave){
 	layer->setParent(manager1.rootLayer);
 	MDoubleArray weights;
 	mStringToDoubleArray("0.2,0.3,0.5",weights);
-	layer->influenceWeightList.setInfluenceWeights(0,weights);
+	layer->influenceWeightList.addInfluenceMapping(3,0);
+	layer->influenceWeightList.setLogicalInfluenceWeights(0,weights);
 
 	std::stringstream io;
 	SkinLayerData::saveManager(manager1,io);
@@ -62,6 +63,6 @@ TEST(SkinLayerManagerTest,detachedManagerLoadSave){
 
 	ASSERT_EQ(MString("whatever name"), manager2.rootLayer->children[0]->getName());
 	MDoubleArray loadedWeights;
-	manager2.rootLayer->children[0]->influenceWeightList.getInfluenceWeights(0,loadedWeights);
+	manager2.rootLayer->children[0]->influenceWeightList.getLogicalInfluenceWeights(0,loadedWeights);
 	assertEquals(weights,loadedWeights);
 }

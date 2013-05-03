@@ -81,6 +81,7 @@ TEST_F(SkinLayerWeightListTests,normalizeToRemainingSpace){
 	
 	// set both influences to 0.3 and make sure that stays!
 	MDoubleArray weights;
+	weights.setLength(1);
 	weights[0] = 0.7;
 		
 	// some transparency happens here
