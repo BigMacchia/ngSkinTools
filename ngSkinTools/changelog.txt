@@ -3,6 +3,11 @@
   You can still submit the dialog without typing anything in, in that case new layer will get default name.
 * Manually added mirror influence pairs now will be exported/imported to xml/json along 
   with other layers data.
+* Improved load times for ASCII files, but due to different save format, files will no longer open with older
+  plugin versions.
+* "Delete custom nodes" action will inform when there are no custom ngSkinTools nodes to delete, instead
+  of displaying a deletion confirmation box.    
+  
 
 1.0beta.865
 * A fix to get Maya 2009 UI work again;
