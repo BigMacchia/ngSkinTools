@@ -633,6 +633,8 @@
 		<build-maya-module maya="2013.5" platform="32" />
 		<build-maya-module maya="2013.5" platform="64" />
 
+		<build-maya-module maya="2014" platform="64" />
+
 		<antcall target="make-report-footer" />
 
 		<zip destfile="${build.outdir-all}/ngSkinTools-${os.current}-all.${build.time}.zip">
