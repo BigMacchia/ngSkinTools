@@ -48,7 +48,9 @@ SkinLayer * SkinLayerManager::createLayer(SkinLayerID id){
 	if (id>=layerIDGenerator)
 		layerIDGenerator = id;
 	SkinLayer * newLayer = new SkinLayer(layerIDGenerator,*this);
+
 	newLayer->influenceWeightList.resize(this->getMeshVertCount(),2,false);
+
 	this->layers[newLayer->getID()] = newLayer;
 	return newLayer;
 }

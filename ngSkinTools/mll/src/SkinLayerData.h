@@ -8,6 +8,14 @@
 class SkinLayerManager;
 class SkinLayer;
 
+namespace SKIN_LAYER_DATA_VERSIONS {
+	const boost::uint32_t V1 = 1;
+	const boost::uint32_t V2 = 2;
+	const boost::uint32_t V3 = 3;
+	const boost::uint32_t V4 = 4; // introducing line breaks to ascii encoded format
+	const boost::uint32_t CURR = V4;
+}
+
 /**
  * The sole purpose of skin layer data type is to read/write associated manager to/from file.
  * skin layer data node takes care that this data always points to the right layer manager.
@@ -21,8 +29,7 @@ private:
 	bool needsLoading;
 
 	virtual MStatus readBinaryDataSegment(boost::uint32_t version, istream& in, unsigned length);
-	virtual MStatus writeBinaryDataSegment(boost::uint32_t version, ostream& out);
-	virtual boost::uint32_t getCurrentOutputVersion();
+	virtual MStatus writeBinaryDataSegment(ostream& out);
 
 public:
 	static const MString typeName;
@@ -48,4 +55,13 @@ public:
 	static void* creator() {
 		return new SkinLayerData();
 	}
+
+	static void encodeInChunks(std::istream &source, std::ostream &out, const std::streamsize maxBytes);
+	static void decodeChunks(const MStringArray &chunks,std::ostream &result,std::streamsize & bytesDecoded);
+	static void decodeChunks(const MArgList &args, unsigned int &lastElement, std::ostream &result);
+
+	static void loadManager(SkinLayerManager &manager,std::istream &input,boost::uint32_t version);
+	static void saveManager(SkinLayerManager &manager,std::ostream &output);
 };
+
+

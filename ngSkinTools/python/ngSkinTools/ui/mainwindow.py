@@ -26,6 +26,7 @@ from ngSkinTools.ui.headlessDataHost import HeadlessDataHost
 from ngSkinTools.doclink import SkinToolsDocs
 from ngSkinTools.ui.utilities.weightsClipboardActions import CopyWeights,\
     CutWeights, PasteWeightsAdd, PasteWeightsReplace
+from ngSkinTools.layerUtils import LayerUtils
 
 log = LoggerFactory.getLogger("MainWindow")
 
@@ -39,6 +40,10 @@ class MainMenu:
         
     @Utils.undoable
     def execCleanNodes(self,*args):
+        if not LayerUtils.hasCustomNodes():
+            Utils.confirmDialog(icon='information', title='Info', message='Scene does not contain any custom ngSkinTools nodes.', button=['Ok']);
+            return
+        
         message = 'This command deletes all custom nodes from ngSkinTools plugin. Skin weights will be preserved, but all layer data will be lost. Do you want to continue?'
         if Utils.confirmDialog(
                 icon='warning',

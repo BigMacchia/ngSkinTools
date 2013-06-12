@@ -19,6 +19,15 @@ def runUnitTests():
     logger.info("done")
     
 def runAllTests():
+    '''
+    .. code-block:: python
+
+        from ngSkinToolsTest import debugToolbarButtons
+        reload(debugToolbarButtons)
+        debugToolbarButtons.runAllTests()    
+        
+    '''
+    
     from ngSkinTools.debug import reloader
     reload(reloader)
     reloader.unload()

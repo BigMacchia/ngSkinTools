@@ -67,21 +67,38 @@ class MllInterfaceTest(AdditionalAsserts, unittest.TestCase):
         testUtils.openMayaFile("genericSkinnedMesh.mb")
         self.mll.setCurrentMesh("mesh|pPlane1")
         self.mll.initLayers()
-        layerId = self.mll.createLayer("initial weights")
+        layerId = self.mll.createLayer("initial weights",forceEmpty=True)
         weights = [1.0]*self.mll.getVertCount()
         weights[0] = 0.7
         weights[1] = 0.5
         weights[2] = 0.3
         
         self.mll.setInfluenceWeights(layerId, 0, weights)
+        self.assertFloatArraysEqual(self.mll.getInfluenceWeights(layerId, 0)[0:3], [0.7,0.5,0.3])
 
         self.mll.setInfluenceWeights(layerId, 1, weights)
-        self.assertArraysEqual(weights,self.mll.getInfluenceWeights(layerId, 1))
+        self.assertFloatArraysEqual(weights,self.mll.getInfluenceWeights(layerId, 1))
         
         # previous influence should have some of it's value substracted
-        newWeights1 = self.mll.getInfluenceWeights(layerId, 0)
-        self.assertAlmostEqual(0.3, newWeights1[0]) # 1 - 0.7
-        self.assertAlmostEqual(0.5, newWeights1[1]) # should remain untouched
-        self.assertAlmostEqual(0.3, newWeights1[2]) # should remain untouched
+        self.assertFloatArraysEqual(self.mll.getInfluenceWeights(layerId, 0)[0:3], [0.3,0.5,0.3])
+        
+        
+        
+    @insideMayaOnly
+    def testAddManualMirrorInfluences(self):
+        testUtils.openMayaFile("genericSkinnedMesh.mb")
+        self.mll.setCurrentMesh("mesh|pPlane1")
+        self.mll.initLayers()
+        layerId = self.mll.createLayer("initial weights")
+        
+        result = self.mll.listManualMirrorInfluenceAssociations()
+        self.assertArraysEqual(result, [])
+        
+        self.mll.addManualMirrorInfluenceAssociation("L_joint1", "R_joint1")
+        self.mll.addManualMirrorInfluenceAssociation("R_joint1", "L_joint1")
+        
+        result = self.mll.listManualMirrorInfluenceAssociations()
+        self.assertDictionariesEqual(result, {"L_joint1":"R_joint1","R_joint1":"L_joint1"})
+        
         
         

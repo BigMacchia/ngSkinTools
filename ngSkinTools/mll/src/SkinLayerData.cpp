@@ -1,9 +1,10 @@
-
+#define NOMINMAX
 #include <boost/cstdint.hpp>
 #include "SkinLayerData.h"
 #include "defines.h"
 #include "SkinLayerManager.h"
 #include "SkinLayer.h"
+#include "StatusException.h"
 
 #include "base64.h"
 
@@ -11,12 +12,7 @@
 const MString SkinLayerData::typeName("ngSkinLayerDataStorage");
 const MTypeId SkinLayerData::id(0x00115A81);
 
-namespace SKIN_LAYER_DATA_VERSIONS {
-	const boost::uint32_t V1 = 1;
-	const boost::uint32_t V2 = 2;
-	const boost::uint32_t V3 = 3;
-	const boost::uint32_t CURR = V3;
-}
+
 
 template <class T>
 inline void read(std::istream &in, T &value){
@@ -60,7 +56,7 @@ class BinaryStreamWriter: public StreamHandler{
 private:
 	std::ostream * out;
 public:
-	BinaryStreamWriter(std::ostream &out,const boost::uint32_t version): StreamHandler(version){
+	BinaryStreamWriter(std::ostream &out): StreamHandler(SKIN_LAYER_DATA_VERSIONS::CURR){
 		this->out = &out;
 	}
 
@@ -74,7 +70,6 @@ public:
 
 SkinLayerData::SkinLayerData(void):
 	manager(NULL),
-	rawLoadedData(),
 	needsLoading(false),
 	MPxData()
 {
@@ -254,8 +249,9 @@ void saveManualOverrides(BinaryStreamWriter &outWriter,std::map<unsigned int,uns
 	}
 }
 
-void loadManager(SkinLayerManager &manager,BinaryStreamReader &inReader){
+void SkinLayerData::loadManager(SkinLayerManager &manager,std::istream &input,boost::uint32_t version){
 	{
+		BinaryStreamReader inReader(input,version);
 		LocalManagerSuspension managerSuspension(manager);
 
 		loadLayer(manager,inReader,*manager.rootLayer);
@@ -268,12 +264,12 @@ void loadManager(SkinLayerManager &manager,BinaryStreamReader &inReader){
 	}
 }
 
-void saveManager(SkinLayerManager &manager,BinaryStreamWriter &outWriter){
+void SkinLayerData::saveManager(SkinLayerManager &manager, std::ostream &output){
+	BinaryStreamWriter outWriter(output);
+
 	saveLayer(outWriter,*manager.rootLayer);
 	
-	if (outWriter.getVersion()>=SKIN_LAYER_DATA_VERSIONS::V2){
-		saveManualOverrides(outWriter,manager.mirrorManualOverrides);
-	}
+	saveManualOverrides(outWriter,manager.mirrorManualOverrides);
 }
 
 
@@ -297,35 +293,31 @@ MStatus SkinLayerData::readBinaryDataSegment(boost::uint32_t version, std::istre
 
 	//read raw data, parse later when manager is set
 	copyStream(in,rawLoadedData,length);
-	needsLoading = true;
+	needsLoading = length>0;
 	
 	return MS::kSuccess;
 }
 
-MStatus SkinLayerData::writeBinaryDataSegment(boost::uint32_t version, std::ostream &out){
-	if (needsLoading) {
+MStatus SkinLayerData::writeBinaryDataSegment(std::ostream &out){
+	SkinLayerManager * manager = this->manager;
+	SkinLayerManager tempManager;
+	
+	if (manager==NULL || needsLoading) {
+		manager = &tempManager;
 		rawLoadedData.seekg(0);
-		copyStream(rawLoadedData,out,rawLoadedData.str().length());
-		return MS::kSuccess;
+		loadManager(*manager,rawLoadedData,loadedVersion);
 	}
 
-	// save given layer
-	BinaryStreamWriter outWriter(out,version);
-	saveManager(*this->manager,outWriter);
-
+	saveManager(*manager,out);
 
 	return MS::kSuccess;
-}
-
-boost::uint32_t SkinLayerData::getCurrentOutputVersion(){
-	return needsLoading?loadedVersion:SKIN_LAYER_DATA_VERSIONS::CURR;
 }
 
 MStatus SkinLayerData::writeBinary(std::ostream &out){
 
 	// write version
-	writeValue<boost::uint32_t>(out,this->getCurrentOutputVersion());
-	return this->writeBinaryDataSegment(this->getCurrentOutputVersion(),out);
+	writeValue<boost::uint32_t>(out,SKIN_LAYER_DATA_VERSIONS::CURR);
+	return this->writeBinaryDataSegment(out);
 }
 
 
@@ -344,32 +336,97 @@ MStatus SkinLayerData::readASCII(const MArgList &args, unsigned int &lastElement
 	// get version
 	const int version = args.asInt(lastElement++);
 
-	// get input as stream
+	if (version<SKIN_LAYER_DATA_VERSIONS::V4){
+		// old, non-chunked version - left here to support old file versions
+		MStatus status;
+		MString inputValue = args.asString(lastElement++,&status);
+		if (!status)
+			return status;
+
+		int len;
+		const char * contents = inputValue.asChar(len);
+		const std::string &decodedValue = base64_decode(std::string(contents,len));
+		std::stringstream inputStream(decodedValue);
+
+		return this->readBinaryDataSegment(version,inputStream,static_cast<unsigned int>(decodedValue.length()));
+	}
+
+	// newer format stores encoded data in small chunks, so that maya has easier time parsing the file
+	try {
+		std::stringstream result;
+		decodeChunks(args,lastElement,result);
+		return this->readBinaryDataSegment(version,result,static_cast<unsigned int>(result.str().length()));
+	}
+	catch (StatusException &e){
+		return e.getStatus();
+	}
+}
+
+void SkinLayerData::decodeChunks(const MStringArray &chunks,std::ostream &result,std::streamsize & bytesDecoded){
+	bytesDecoded = 0;
+	for (unsigned int i=0;i<chunks.length();i++){
+		int len=0;
+		const char * contents = chunks[i].asUTF8(len);
+		const std::string &decodedValue = base64_decode(std::string(contents,len));
+		result.write(decodedValue.c_str(),decodedValue.length());
+		bytesDecoded += decodedValue.length();
+	}
+}
+
+void SkinLayerData::decodeChunks(const MArgList &args, unsigned int &lastElement, std::ostream &result){
 	MStatus status;
-	MString inputValue = args.asString(lastElement++,&status);
-	if (!status)
-		return status;
+	std::streamsize bytesToDecode =  args.asInt(lastElement++);
 
-	int len;
-	const char * contents = inputValue.asChar(len);
-	const std::string &decodedValue = base64_decode(std::string(contents,len));
-	std::stringstream inputStream(decodedValue);
+	MStringArray chunks = args.asStringArray(lastElement,&status);
+	CHECK_STATUS("error reading input file",status);
 
-	return this->readBinaryDataSegment(version,inputStream,static_cast<unsigned int>(decodedValue.length()));
+	std::streamsize bytesDecoded;
+	decodeChunks(chunks,result,bytesDecoded);
+
+	if (bytesDecoded!=bytesToDecode){
+		throwStatusException("Error decoding binary data",MStatus::kInvalidParameter);
+	}
+}
+
+
+void SkinLayerData::encodeInChunks(std::istream &source, std::ostream &out, const std::streamsize maxBytes){
+	char *buffer = new char[maxBytes];
+
+	// length
+	source.seekg(0,ios::end);
+	std::streamsize totalBytes=source.tellg();
+
+	out << totalBytes <<" {";
+
+	source.seekg (0, ios::beg);
+	while (totalBytes>0){
+		out<<"\n";
+		std::streamsize bytesRead = std::min(totalBytes,maxBytes);
+		source.read(buffer,bytesRead);
+		totalBytes-=bytesRead;
+
+		std::string encodedData = base64_encode(reinterpret_cast<const unsigned char *>(buffer),bytesRead);
+		out<<"\"" << encodedData <<"\"";
+		if (totalBytes<=0)
+			out<<"}";
+		else {
+			out<<",";
+		}
+	}
+
+	delete [] buffer;
 }
 
 MStatus SkinLayerData::writeASCII(std::ostream &out){
-	out << this->getCurrentOutputVersion() << " ";
+	out << SKIN_LAYER_DATA_VERSIONS::V4 << " ";
 
-	std::stringstream output;
-	MStatus status=this->writeBinaryDataSegment(this->getCurrentOutputVersion(),output);
+	std::stringstream data;
+	MStatus status=this->writeBinaryDataSegment(data);
 	if (status!=MS::kSuccess)
 		return status;
 
-	const std::string & preEncodeContents = output.str();
-	std::string encodedData = base64_encode(reinterpret_cast<const unsigned char *>(preEncodeContents.c_str()),preEncodeContents.size());
-	
-	out<<"\"" << encodedData <<"\"";
+	encodeInChunks(data,out,1024);
+
 	return MS::kSuccess;
 }
 
@@ -390,8 +447,7 @@ void SkinLayerData::setValue(SkinLayerManager *value)
 		needsLoading = false;
 		rawLoadedData.seekg(0,ios::beg);
 
-		BinaryStreamReader reader(rawLoadedData,this->loadedVersion);
-		loadManager(*this->manager,reader);
+		loadManager(*this->manager,rawLoadedData,this->loadedVersion);
 	}
 }
 

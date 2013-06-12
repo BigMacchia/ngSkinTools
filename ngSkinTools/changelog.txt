@@ -1,12 +1,19 @@
-1.0beta.870
-* "new layer" window will appear with empty layer name box, instead of having a "new layer" text in it.
-  You can still submit the dialog without typing anything in, in that case new layer will get default name.
 * Import/Export: importing weights on to a different mesh is now possible. Mesh information is now exported 
   with weights file (vertex positions + triangles), and when importing into a mesh with different vertex count/
   different structure, an approximation is used instead.
 * API changes:
 	* added MllInterface.setWeightsReferenceMesh() 
   
+
+1.0beta.870
+* "new layer" window will appear with empty layer name box, instead of having a "new layer" text in it.
+  You can still submit the dialog without typing anything in, in that case new layer will get default name.
+* Manually added mirror influence pairs now will be exported/imported to xml/json along 
+  with other layers data.
+* Improved load times for ASCII files, but due to different save format, files will no longer open with older
+  plugin versions.
+* "Delete custom nodes" action will inform when there are no custom ngSkinTools nodes to delete, instead
+  of displaying a deletion confirmation box.    
   
 
 1.0beta.865

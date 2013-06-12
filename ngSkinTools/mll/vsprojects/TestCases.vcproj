@@ -528,6 +528,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\tests\SkinLayerDataTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\tests\skinLayerManagerTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\tests\SkinLayerWeightListTests.cpp"
 				>
 			</File>

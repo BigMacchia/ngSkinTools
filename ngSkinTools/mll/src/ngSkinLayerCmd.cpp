@@ -290,11 +290,29 @@ MStatus ngSkinLayerCmd::handleQuery(){
 		return MStatus::kSuccess;
 	}
 
+	if (argData->isFlagSet(FlagNames::MIRROR_INFLUENCE_ASSOCIATION)){
+		MStringArray result;
+		queryManualMirrorInfluenceAssociations(result);
+		setResult(result);
+		return MStatus::kSuccess;
+	}
+
 
 	// invalid query?
 	return MStatus::kInvalidParameter;
 }
 
+void ngSkinLayerCmd::queryManualMirrorInfluenceAssociations(MStringArray &result){
+	requireManager();
+	
+	for (std::map<unsigned int,unsigned int>::const_iterator it=layerManager->mirrorManualOverrides.begin();it!=layerManager->mirrorManualOverrides.end();it++){
+		MDagPath path;
+		layerManager->getInfluencePath(it->first,path);
+		result.append(path.partialPathName());
+		layerManager->getInfluencePath(it->second,path);
+		result.append(path.partialPathName());
+	}
+}
 
 SkinLayerChanges::SkinLayerChange * ngSkinLayerCmd::createUndoableBit(){
 	// add layer
@@ -535,6 +553,16 @@ void ngSkinLayerCmd::initMirrorData(){
 	DEBUG_EXECUTE(layerManager->mirrorData.dumpInfluenceAssociations());
 }
 
+void ngSkinLayerCmd::detectLayerManager(){
+	MStatus status;
+	layerManager = NULL;
+
+	if (getSelectedObjects().length()>0){
+		getSelectedObjects().getDagPath(0,selectedShape);
+		layerManager = SkinLayerManager::findManager(selectedShape);
+	}
+}
+
 MStatus ngSkinLayerCmd::doIt( const MArgList& args){
 	try{
 		MStatus status;
@@ -542,17 +570,10 @@ MStatus ngSkinLayerCmd::doIt( const MArgList& args){
 		this->argData = &argData;
 		CHECK_STATUS("initialize arg data",status);
 
-		layerManager = NULL;
-
-		// read selection
-		MSelectionList tempSelectionList;
-		status = argData.getObjects(tempSelectionList);
+		status = argData.getObjects(this->selectedObjects);
 		CHECK_STATUS("arg data: get objects",status);
-		if (tempSelectionList.length()>0){
-			tempSelectionList.getDagPath(0,selectedShape);
-			layerManager = SkinLayerManager::findManager(selectedShape);
-		}
 
+		detectLayerManager();
 
 
 		if (argData.isQuery()){
@@ -587,14 +608,13 @@ MStatus ngSkinLayerCmd::doIt( const MArgList& args){
 			}
 
 			// nearly identical code for add/remove influence assoc
-			if (argData.isFlagSet(FlagNames::ADD_INFLUENCE_ASSOCIATION) || argData.isFlagSet(FlagNames::REMOVE_INFLUENCE_ASSOCIATION)) {
-				if (!layerManager){
-					return MStatus::kInvalidParameter;
-				}
+			if (argData.isFlagSet(FlagNames::MIRROR_INFLUENCE_ASSOCIATION) || argData.isFlagSet(FlagNames::REMOVE_MIRROR_INFLUENCE_ASSOCIATION)) {
+				requireManager();
+
 
 				MStringArray influences;
-				bool add = argData.isFlagSet(FlagNames::ADD_INFLUENCE_ASSOCIATION);
-				MString flag = argData.flagArgumentString(add?FlagNames::ADD_INFLUENCE_ASSOCIATION:FlagNames::REMOVE_INFLUENCE_ASSOCIATION,0);
+				bool add = argData.isFlagSet(FlagNames::MIRROR_INFLUENCE_ASSOCIATION);
+				MString flag = argData.flagArgumentString(add?FlagNames::MIRROR_INFLUENCE_ASSOCIATION:FlagNames::REMOVE_MIRROR_INFLUENCE_ASSOCIATION,0);
 				flag.split(',',influences);
 				if (influences.length()!=2){
 					return MStatus::kInvalidParameter;
@@ -614,11 +634,11 @@ MStatus ngSkinLayerCmd::doIt( const MArgList& args){
 
 
 			if (argData.isFlagSet(FlagNames::COPYSKINDATA) && layerManager){
-				DEBUG_COUT_ENDL("-----TOTAL OBJECTS SELECTED: "<<tempSelectionList.length());
+				DEBUG_COUT_ENDL("-----TOTAL OBJECTS SELECTED: "<<getSelectedObjects().length());
 		
-				if (tempSelectionList.length()>1){
+				if (getSelectedObjects().length()>1){
 					MDagPath secondMesh;
-					tempSelectionList.getDagPath(1,secondMesh);
+					getSelectedObjects().getDagPath(1,secondMesh);
 					SkinLayerManager * targetLayerManager = SkinLayerManager::findManager(secondMesh);
 
 					if (targetLayerManager && (targetLayerManager!=layerManager)){
@@ -729,8 +749,8 @@ MSyntax ngSkinLayerCmd::syntaxCreator(){
 	result.addFlag(FlagNames::INFLUENCEASSOCIATIONDISTANCE,"-influenceAssociationDistance",MSyntax::kDouble);
 	result.addFlag(FlagNames::INFLUENCEPREFIX,"-influenceAssociationPrefix",MSyntax::kString);
 
-	result.addFlag(FlagNames::ADD_INFLUENCE_ASSOCIATION,"-addInfluenceAssociation",MSyntax::kString);
-	result.addFlag(FlagNames::REMOVE_INFLUENCE_ASSOCIATION,"-removeInfluenceAssociation",MSyntax::kString);
+	CHECK_STATUS("could not add flag 'mirrorInfluenceAssociation'",result.addFlag(FlagNames::MIRROR_INFLUENCE_ASSOCIATION,"-mirrorInfluenceAssociation",MSyntax::kString));
+	result.addFlag(FlagNames::REMOVE_MIRROR_INFLUENCE_ASSOCIATION,"-removeMirrorInfluenceAssociation",MSyntax::kString);
 
 	result.addFlag(FlagNames::COPYSKINDATA,"-copySkinData");
 

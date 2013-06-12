@@ -9,7 +9,6 @@
 #include "../SkinLayer.h"
 #include "../SkinLayerManager.h"
 #include "../SkinLayerChanges.h"
-#include "../ngSkinLayerCmd.h"
 
 
 #include "mayaSupport.h"

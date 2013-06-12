@@ -213,9 +213,16 @@ public:
 	/**
 	 * adds influence mapping, but first ensuring that numVerts is set to given value
 	 * in case this is the first influence being added
+	 * TODO: phase this out; both influence count ant vertex count should be set separately and memory 
+	 * initialized once both params are available
 	 */
 	inline void addInfluenceMapping(const unsigned int numVerts,const unsigned int logical){
-		this->numVerts = numVerts;
+		assert(numVerts>0);
+		assert(this->numVerts==0 || this->numVerts==numVerts);
+
+		if (this->numVerts==0)
+			resize(numVerts, this->numInfluences,false);
+
 		addInfluenceMapping(logical);
 	}
 	void addInfluenceMapping(const unsigned int logical);

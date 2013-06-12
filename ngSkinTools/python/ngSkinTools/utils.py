@@ -205,7 +205,8 @@ class Utils:
             testVersion('2010', Utils.MAYA2010) or \
             testVersion('2011', Utils.MAYA2011) or \
             testVersion('2012', Utils.MAYA2012) or \
-            testVersion('2013', Utils.MAYA2013)
+            testVersion('2013', Utils.MAYA2012) or \
+            testVersion('2014', Utils.MAYA2013)
             
         return Utils.CURRENT_MAYA_VERSION
     

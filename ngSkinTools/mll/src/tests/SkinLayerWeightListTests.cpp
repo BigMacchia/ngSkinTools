@@ -70,6 +70,31 @@ TEST_F(SkinLayerWeightListTests,normalizeIfNeeded){
 	ASSERT_NEAR(0.3,*map.getLogicalInfluence(2,vertIndex),1.0e-11);
 }
 
+TEST_F(SkinLayerWeightListTests,normalizeToRemainingSpace){
+	InfluenceWeightsMap map(true);
+	map.resize(1,3,false);
+
+	map.addInfluenceMapping(1);
+	map.addInfluenceMapping(2);
+
+	const unsigned int vertIndex = 0;
+	
+	// set both influences to 0.3 and make sure that stays!
+	MDoubleArray weights;
+	weights.setLength(1);
+	weights[0] = 0.7;
+		
+	// some transparency happens here
+	map.setInfluenceWeights(1,weights);
+	ASSERT_NEAR(0.3,*map.getLogicalInfluence(InfluenceWeightsMap::TRANSPARENCY_LOGICAL_INDEX,vertIndex),1.0e-11);
+
+	// transparency gets eaten away; influence 1 reduced to 0.3, as second influence is set to 0.7
+	map.setInfluenceWeights(2,weights);
+	ASSERT_NEAR(0.0,*map.getLogicalInfluence(InfluenceWeightsMap::TRANSPARENCY_LOGICAL_INDEX,vertIndex),1.0e-11);
+	ASSERT_NEAR(0.3,*map.getLogicalInfluence(1,vertIndex),1.0e-11);
+	ASSERT_NEAR(0.7,*map.getLogicalInfluence(2,vertIndex),1.0e-11);
+}
+
 
 /**
  * test: distribute weight evenly to the remaining influences

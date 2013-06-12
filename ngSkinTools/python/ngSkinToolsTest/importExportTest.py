@@ -130,6 +130,47 @@ class ImportExportTest(AdditionalAsserts, unittest.TestCase):
         
         
         
+    def testManualInfluencesToXml(self):
+        '''
+        test serialize to XML and back
+        '''
+        exporter = XmlExporter()
+        model1 = self.createSampleModel()
+        model1.addMirrorInfluenceAssociationOverride("a", "b", selfReference=False, bidirectional=True)
+        xml = exporter.process(model1)
+        print xml
+        self.assertNotEquals(xml.find(r'<mirrorInfluenceAssociation destination="b" source="a"/>'),-1);
+        
+    def testUnserializeManualXmlInfluences(self):
+        xml = """<?xml version="1.0" encoding="UTF-8"?>
+                    <ngstLayerData version="1.0">
+                        <mirrorInfluenceAssociation destination="b" source="a"/>
+                        <mirrorInfluenceAssociation destination="a" source="b"/>
+                        <layer enabled="no" mask="1 1 0 0" name="base  layer" opacity="1e-05"/>
+                        <layer enabled="yes" mask="1 1 0 0" name="layer 2" opacity="0.9000000000009">
+                            <influence index="0" name="root|L_Joint1" weights="0.1 0.2 0.3 0.4"/>
+                        </layer>
+                    </ngstLayerData>""";
+        importer = XmlImporter()
+        result = importer.process(xml)
+        self.assertDictionariesEqual(result.mirrorInfluenceAssociationOverrides, {'a':'b','b':'a'})
+
+    def testUnserializeV1(self):
+        '''
+        unserialize old xml
+        '''
+        xml = """<?xml version="1.0" encoding="UTF-8"?>
+                <ngstLayerData version="1.0">
+                    <layer enabled="no" mask="1 1 0 0" name="base  layer" opacity="1e-05"/>
+                    <layer enabled="yes" mask="1 1 0 0" name="layer 2" opacity="0.9000000000009">
+                        <influence index="0" name="root|L_Joint1" weights="0.1 0.2 0.3 0.4"/>
+                    </layer>
+                </ngstLayerData>""";
+        importer = XmlImporter()
+        result = importer.process(xml)
+        self.assertDictionariesEqual(result.mirrorInfluenceAssociationOverrides, {})
+        
+        
     
     @decorators.requiresDependency('json') 
     def testJson(self):
@@ -144,6 +185,38 @@ class ImportExportTest(AdditionalAsserts, unittest.TestCase):
         model2 = importer.process(json)
         
         self.assertModelsEqual(model1, model2)
+        
+    def testManualInfluencesToJson(self):
+        '''
+        test serialize to XML and back
+        '''
+        model1 = self.createSampleModel()
+        model1.addMirrorInfluenceAssociationOverride("A", "b")
+        
+        exporter = JsonExporter()
+        json = exporter.process(model1)
+        
+        importer = JsonImporter()
+        model2 = importer.process(json)
+        
+        self.assertModelsEqual(model1, model2)
+        
+    def testUnserializeV1Json(self):
+        '''
+        verify there's no errors in parsing v1 json
+        '''
+        json = '{"layers": [{"opacity": 1e-05, "mask": [1.0, 1.0, 0, 0], "enabled": false, "name": "base  layer", "influences": []}, {"opacity": 0.9000000000009, "mask": [1.0, 1.0, 0, 0], "enabled": true, "name": "layer 2", "influences": [{"index": 0, "weights": [0.1, 0.2, 0.3, 0.4], "name": "root|L_Joint1"}]}]}'
+        importer = JsonImporter()
+        importer.process(json)
+        
+    def testUnserializeJsonManualInfluences(self):
+        '''
+        verify there's no errors in parsing v1 json
+        '''
+        json = '{"layers": [{"opacity": 1e-05, "mask": [1.0, 1.0, 0, 0], "enabled": false, "name": "base  layer", "influences": []}, {"opacity": 0.9000000000009, "mask": [1.0, 1.0, 0, 0], "enabled": true, "name": "layer 2", "influences": [{"index": 0, "weights": [0.1, 0.2, 0.3, 0.4], "name": "root|L_Joint1"}]}]}'
+        importer = JsonImporter()
+        importer.process(json)
+        
         
         
     @decorators.requiresDependency('flexmock') 
@@ -165,6 +238,8 @@ class ImportExportTest(AdditionalAsserts, unittest.TestCase):
         mll.should_receive('getInfluenceWeights').with_args(123,1).and_return([0,0,0,0])
         mll.should_receive('getInfluenceWeights').with_args(456,0).and_return([0,0,0,0])
         mll.should_receive('getInfluenceWeights').with_args(456,1).and_return([0,0,0,0])
+        mll.should_receive('listManualMirrorInfluenceAssociations').and_return({"a":"b"})
+        
         
         model = LayerData()
         model.getFullNodePath = lambda a: a

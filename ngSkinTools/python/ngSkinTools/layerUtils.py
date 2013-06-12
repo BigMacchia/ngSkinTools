@@ -10,14 +10,26 @@ class LayerUtils:
     PAINT_TARGET_MASK = -2
     
     @staticmethod
+    def iterCustomNodes():
+        for nodeType in ['ngSkinLayerData','ngSkinLayerDisplay']:
+            items = cmds.ls(type=nodeType)
+            if items is not None:
+                for i in items:
+                    yield i
+    
+    @staticmethod
     def deleteCustomNodes():
-        def deleteNodes(nodes):
-            if nodes is not None and len(nodes)>0:
-                cmds.delete(nodes)
-                
         log.info("removing ngSkinTools nodes from current scene")
                 
-        deleteNodes(cmds.ls(type='ngSkinLayerData'))
-        deleteNodes(cmds.ls(type='ngSkinLayerDisplay'))
+        nodes = list(LayerUtils.iterCustomNodes())
+        if len(nodes)>0:
+            cmds.delete(nodes)
+        
+    @staticmethod
+    def hasCustomNodes():
+        for _ in LayerUtils.iterCustomNodes():
+            return True
+        
+        return False
         
 
