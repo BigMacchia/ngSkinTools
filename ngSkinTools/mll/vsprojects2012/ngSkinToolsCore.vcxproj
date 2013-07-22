@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug 2011|Win32">
+      <Configuration>Debug 2011</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug 2011|x64">
+      <Configuration>Debug 2011</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug 2013|Win32">
+      <Configuration>debug 2013</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug 2013|x64">
+      <Configuration>debug 2013</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release 2011|Win32">
+      <Configuration>Release 2011</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release 2011|x64">
+      <Configuration>Release 2011</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1D6E15C1-364D-403B-AF67-74B22DD1E3F7}</ProjectGuid>
+    <RootNamespace>ngSkinToolsCore</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug 2013|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release 2011|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug 2011|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug 2013|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release 2011|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug 2011|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v90</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug 2013|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release 2011|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug 2011|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug 2013|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release 2011|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug 2011|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.60315.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug 2011|Win32'">
+    <OutDir>$(ProjectDir)output\$(ProjectName) $(Configuration) $(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)build\$(ProjectName) $(Configuration) $(Platform)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug 2011|x64'">
+    <OutDir>$(ProjectDir)output\$(ProjectName) $(Configuration) $(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)build\$(ProjectName) $(Configuration) $(Platform)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release 2011|Win32'">
+    <OutDir>$(ProjectDir)output\$(ProjectName) $(Configuration) $(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)build\$(ProjectName) $(Configuration) $(Platform)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release 2011|x64'">
+    <OutDir>$(ProjectDir)output\$(ProjectName) $(Configuration) $(Platform)\</OutDir>
+    <IntDir>$(ProjectDir)build\$(ProjectName) $(Configuration) $(Platform)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug 2013|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug 2013|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug 2011|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Program Files\Autodesk\Maya2011\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug 2011|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Viktoro\lib\cpp\boost_1_48_0;C:\Program Files\Autodesk\Maya2011\include;C:\Viktoro\lib\cpp\libb64-1.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>MLIBRARY_DONTUSE_MFC_MANIFEST;WIN32;_DEBUG;_CONSOLE;GOOGLE_GLOG_DLL_DECL=;_SHOW_TIMERS;_WINDOWS;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BrowseInformation>true</BrowseInformation>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Bscmake>
+      <PreserveSBR>true</PreserveSBR>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release 2011|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release 2011|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>C:\Program Files\Autodesk\Maya2011\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>MLIBRARY_DONTUSE_MFC_MANIFEST;WIN32;_DEBUG;_CONSOLE;GOOGLE_GLOG_DLL_DECL=;_SHOW_TIMERS;_WINDOWS;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug 2013|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Program Files\Autodesk\Maya2011\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug 2013|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Program Files\Autodesk\Maya2013\include;C:\Viktoro\lib\cpp\boost_1_48_0;C:\Viktoro\lib\cpp\libb64-1.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>MLIBRARY_DONTUSE_MFC_MANIFEST;WIN32;_DEBUG;_CONSOLE;GOOGLE_GLOG_DLL_DECL=;_SHOW_TIMERS;_WINDOWS;_MBCS;NT_PLUGIN;REQUIRE_IOSTREAM;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\exceptions.h" />
+    <ClInclude Include="..\src\InfluenceMatchRules.h" />
+    <ClInclude Include="..\src\NeighbourAssociationInfo.h" />
+    <ClInclude Include="..\src\ngLayerColorDisplayNode.h" />
+    <ClInclude Include="..\src\ngSkinLayerDataNode.h" />
+    <ClInclude Include="..\src\PaintStrokeInfo.h" />
+    <ClInclude Include="..\src\SkinLayer.h" />
+    <ClInclude Include="..\src\SkinLayerChanges.h" />
+    <ClInclude Include="..\src\SkinLayerData.h" />
+    <ClInclude Include="..\src\SkinLayerManager.h" />
+    <ClInclude Include="..\src\SkinLayerPaintGlobals.h" />
+    <ClInclude Include="..\src\SkinLayerPerformanceTrack.h" />
+    <ClInclude Include="..\src\SkinLayerWeightList.h" />
+    <ClInclude Include="..\src\VertIndexIterators.h" />
+    <ClInclude Include="..\src\WeightTransferAssociation.h" />
+    <ClInclude Include="..\src\GeometryInfo.h" />
+    <ClInclude Include="..\src\WeightedVertex.h" />
+    <ClInclude Include="..\src\WeightsModifierEngine.h" />
+    <ClInclude Include="..\src\ClusteredPointCloud.h" />
+    <ClInclude Include="..\src\IPointCloud.h" />
+    <ClInclude Include="..\src\timer.h" />
+    <ClInclude Include="..\src\md5.h" />
+    <ClInclude Include="..\src\AssignWeightsEngineBase.h" />
+    <ClInclude Include="..\src\LimitWeights.h" />
+    <ClInclude Include="..\src\MakeRigidWeights.h" />
+    <ClInclude Include="..\src\WeightsByClosestJoint.h" />
+    <ClInclude Include="..\src\InflListerBase.h" />
+    <ClInclude Include="..\src\InflListerByProximity.h" />
+    <ClInclude Include="..\src\InflListerByWeights.h" />
+    <ClInclude Include="..\src\RelaxEngine.h" />
+    <ClInclude Include="..\src\VertexRelaxData.h" />
+    <ClInclude Include="..\src\ngSkinLayerCmd.h" />
+    <ClInclude Include="..\src\SkinLayerPaintContextCmds.h" />
+    <ClInclude Include="..\src\base64.h" />
+    <ClInclude Include="..\src\ClosestInfluenceFinder.h" />
+    <ClInclude Include="..\src\defines.h" />
+    <ClInclude Include="..\src\geometrymath.h" />
+    <ClInclude Include="..\src\LimitWeightsUtil.h" />
+    <ClInclude Include="..\src\maya.h" />
+    <ClInclude Include="..\src\ProgressWindow.h" />
+    <ClInclude Include="..\src\StatusException.h" />
+    <ClInclude Include="..\src\types.h" />
+    <ClInclude Include="..\src\utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\InfluenceMatchRules.cpp" />
+    <ClCompile Include="..\src\NeighbourAssociationInfo.cpp" />
+    <ClCompile Include="..\src\ngLayerColorDisplayNode.cpp" />
+    <ClCompile Include="..\src\ngSkinLayerDataNode.cpp" />
+    <ClCompile Include="..\src\PaintStrokeInfo.cpp" />
+    <ClCompile Include="..\src\SkinLayer.cpp" />
+    <ClCompile Include="..\src\SkinLayerChanges.cpp" />
+    <ClCompile Include="..\src\SkinLayerData.cpp" />
+    <ClCompile Include="..\src\SkinLayerManager.cpp" />
+    <ClCompile Include="..\src\SkinLayerPaintGlobals.cpp" />
+    <ClCompile Include="..\src\SkinLayerPerformanceTrack.cpp" />
+    <ClCompile Include="..\src\SkinLayerWeightList.cpp" />
+    <ClCompile Include="..\src\WeightTransferAssociation.cpp" />
+    <ClCompile Include="..\src\GeometryInfo.cpp" />
+    <ClCompile Include="..\src\WeightedVertex.cpp" />
+    <ClCompile Include="..\src\WeightsModifierEngine.cpp" />
+    <ClCompile Include="..\src\ClusteredPointCloud.cpp" />
+    <ClCompile Include="..\src\md5.cpp" />
+    <ClCompile Include="..\src\AssignWeightsEngineBase.cpp" />
+    <ClCompile Include="..\src\LimitWeights.cpp" />
+    <ClCompile Include="..\src\MakeRigidWeights.cpp" />
+    <ClCompile Include="..\src\WeightsByClosestJoint.cpp" />
+    <ClCompile Include="..\src\InflListerBase.cpp" />
+    <ClCompile Include="..\src\InflListerByProximity.cpp" />
+    <ClCompile Include="..\src\InflListerByWeights.cpp" />
+    <ClCompile Include="..\src\RelaxEngine.cpp" />
+    <ClCompile Include="..\src\VertexRelaxData.cpp" />
+    <ClCompile Include="..\src\ngSkinLayerCmd.cpp" />
+    <ClCompile Include="..\src\SkinLayerPaintContextCmds.cpp" />
+    <ClCompile Include="..\src\base64.cpp" />
+    <ClCompile Include="..\src\ClosestInfluenceFinder.cpp" />
+    <ClCompile Include="..\src\geometrymath.cpp" />
+    <ClCompile Include="..\src\LimitWeightsUtil.cpp" />
+    <ClCompile Include="..\src\ProgressWindow.cpp" />
+    <ClCompile Include="..\src\utils.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
