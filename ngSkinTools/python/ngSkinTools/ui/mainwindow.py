@@ -20,7 +20,6 @@ from ngSkinTools.ui.basetoolwindow import BaseToolWindow
 from ngSkinTools.log import LoggerFactory
 from ngSkinTools.importExport import Formats
 from ngSkinTools.ui.utilities.importInfluencesUi import ImportInfluencesAction
-from ngSkinTools.utilities.duplicateLayers import DuplicateLayers
 from ngSkinTools.ui.utilities.duplicateLayerAction import DuplicateLayersAction
 from ngSkinTools.ui.headlessDataHost import HeadlessDataHost
 from ngSkinTools.doclink import SkinToolsDocs

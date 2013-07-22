@@ -2,17 +2,9 @@ from __future__ import with_statement
 import unittest
 from ngSkinToolsTest import testUtils
 from ngSkinTools.mllInterface import MllInterface
-from ngSkinTools.ui.actions import ExportAction, ImportAction, ImportOptions,\
-    BaseAction
 from maya import cmds
 from ngSkinToolsTest.decorators import insideMayaOnly
-from ngSkinTools.importExport import Formats
-from ngSkinTools.ui.headlessDataHost import HeadlessDataHost
-import os
-import tempfile
-import random
-from ngSkinToolsTest.testUtils import openMayaFile, AdditionalAsserts
-from ngSkinTools.ui.layerDataModel import LayerDataModel
+from ngSkinToolsTest.testUtils import AdditionalAsserts
 from ngSkinTools.layerUtils import LayerUtils
 from ngSkinTools.utilities.weightsClipboard import WeightsClipboard
 from ngSkinTools.utils import MessageException

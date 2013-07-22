@@ -25,5 +25,5 @@ class VersionTest(unittest.TestCase):
         ID must consist of 40 hexadecimal values
         '''
         for _ in xrange(1000):
-            id = generateUniqueClientId()
-            self.assertTrue(re.match("[a-fA-F0-9]{40}",id),"client id is invalid: "+id)
+            clientId = generateUniqueClientId()
+            self.assertTrue(re.match("[a-fA-F0-9]{40}",clientId),"client id is invalid: "+clientId)

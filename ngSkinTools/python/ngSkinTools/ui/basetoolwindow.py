@@ -1,5 +1,4 @@
 from maya import cmds
-from ngSkinTools.utils import Utils
 from ngSkinTools.ui.headlessDataHost import HeadlessDataHost
 from ngSkinTools.log import LoggerFactory
 

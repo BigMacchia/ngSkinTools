@@ -206,6 +206,7 @@
     <ClInclude Include="..\src\ngLayerColorDisplayNode.h" />
     <ClInclude Include="..\src\ngSkinLayerDataNode.h" />
     <ClInclude Include="..\src\PaintStrokeInfo.h" />
+    <ClInclude Include="..\src\ReferenceMeshHolder.h" />
     <ClInclude Include="..\src\SkinLayer.h" />
     <ClInclude Include="..\src\SkinLayerChanges.h" />
     <ClInclude Include="..\src\SkinLayerData.h" />
@@ -250,6 +251,7 @@
     <ClCompile Include="..\src\ngLayerColorDisplayNode.cpp" />
     <ClCompile Include="..\src\ngSkinLayerDataNode.cpp" />
     <ClCompile Include="..\src\PaintStrokeInfo.cpp" />
+    <ClCompile Include="..\src\ReferenceMeshHolder.cpp" />
     <ClCompile Include="..\src\SkinLayer.cpp" />
     <ClCompile Include="..\src\SkinLayerChanges.cpp" />
     <ClCompile Include="..\src\SkinLayerData.cpp" />

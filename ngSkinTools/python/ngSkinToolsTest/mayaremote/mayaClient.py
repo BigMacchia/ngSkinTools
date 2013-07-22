@@ -11,7 +11,6 @@ cmds.commandPort(name="127.0.0.1:6005", cl=True)
 '''
 
 import socket
-from threading import Thread
 import time
 
 class MayaClient(object):
@@ -20,7 +19,7 @@ class MayaClient(object):
         self.port = 6005
         
     def connectWait(self,numRetries):
-        for i in range(numRetries):
+        for _ in range(numRetries):
             try:
                 self.connect()
                 return

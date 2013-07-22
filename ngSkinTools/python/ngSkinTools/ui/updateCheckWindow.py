@@ -1,13 +1,10 @@
 import threading
-from ngSkinTools.version import Version
 from ngSkinTools.utils import Utils
 from maya import cmds
-import maya.utils as mutils
 from ngSkinTools.ui.uiWrappers import CheckBoxField
 from ngSkinTools.ui.options import Options
 from ngSkinTools.ui.constants import Constants
 from ngSkinTools.ui.basetoolwindow import BaseToolWindow
-from ngSkinTools.versioncheck import VersionChecker, HttpPostTransport
 from datetime import datetime
 from ngSkinTools.log import LoggerFactory
 from ngSkinTools.context import applicationContext

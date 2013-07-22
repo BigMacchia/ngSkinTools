@@ -6,7 +6,6 @@ from ngSkinTools.ui.dlgLayerProperties import LayerPropertiesDialog
 from ngSkinTools.ui.basedialog import BaseDialog
 from ngSkinTools.utils import Utils
 from ngSkinTools.ui.basetoolwindow import BaseToolWindow
-from ngSkinTools.importExport import JsonExporter, XmlExporter, Formats
 from ngSkinTools.log import LoggerFactory
 
 log = LoggerFactory.getLogger("actions")
@@ -221,7 +220,6 @@ class MirrorLayerWeightsAction(BaseLayerAction):
         button handler for "Mirror Skin Weights"
         '''
         from ngSkinTools.ui.mainwindow import MainWindow
-        from ngSkinTools.ui.tabMirror import TabMirror
 
         try:
             mirrorTab = MainWindow.getInstance().tabMirror

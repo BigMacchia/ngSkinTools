@@ -41,6 +41,9 @@ TEST_F(ManagerBasedTest,addRemoveManualMirrorInfluences){
 	ASSERT_EQ(result[3],leftJoint);
 }
 
+/***
+ * make sure that managers can be saved and loaded without being attached to a skin cluster
+ */ 
 TEST(SkinLayerManagerTest,detachedManagerLoadSave){
 	setupMayaLibrary();
 

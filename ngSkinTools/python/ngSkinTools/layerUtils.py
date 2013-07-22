@@ -1,4 +1,4 @@
-from maya import cmds,OpenMaya as om
+from maya import cmds
 from ngSkinTools.log import LoggerFactory
 
 
