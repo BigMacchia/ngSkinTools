@@ -1,4 +1,5 @@
-* Import/Export: importing weights on to a different mesh is now possible. Mesh information is now exported 
+* Import/Export: TODO: not implemented yet fully!:
+  importing weights on to a different mesh is now possible. Mesh information is now exported 
   with weights file (vertex positions + triangles), and when importing into a mesh with different vertex count/
   different structure, an approximation is used instead.
 * API changes:
