@@ -836,7 +836,6 @@
     <ClCompile Include="..\src\ngListInfluencesCmd.cpp" />
     <ClCompile Include="..\src\ngSkinRelaxCmd.cpp" />
     <ClCompile Include="..\src\ngSkinTransferCmd.cpp" />
-    <ClCompile Include="..\src\ngTestCmd.cpp" />
     <ClCompile Include="..\src\pluginMain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -844,7 +843,6 @@
     <ClInclude Include="..\src\ngListInfluencesCmd.h" />
     <ClInclude Include="..\src\ngSkinRelaxCmd.h" />
     <ClInclude Include="..\src\ngSkinTransferCmd.h" />
-    <ClInclude Include="..\src\ngTestCmd.h" />
     <ClInclude Include="..\src\pluginVersion.h" />
   </ItemGroup>
   <ItemGroup>

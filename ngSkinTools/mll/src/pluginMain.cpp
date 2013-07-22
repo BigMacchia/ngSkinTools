@@ -10,9 +10,6 @@
 #include "ngLayerColorDisplayNode.h"
 #include "SkinLayerData.h"
 #include "ngSkinLayerDataNode.h"
-#ifdef _DEBUG
-#include "ngTestCmd.h"
-#endif
 #include "StatusException.h"
 
 #include <maya/MFnPlugin.h>
@@ -66,11 +63,6 @@ MStatus initializePlugin( MObject obj )
 		status = plugin.registerNode(ngSkinLayerDataNode::NODENAME,ngSkinLayerDataNode::NODEID,ngSkinLayerDataNode::creator,ngSkinLayerDataNode::initialize,MPxNode::kDependNode);
 		CHECK_STATUS("failed to register layer color display node",status);
 
-
-#ifdef _DEBUG
-		status = plugin.registerCommand( COMMAND_NGTESTCMD_NAME, ngTestCmd::creator,ngTestCmd::newSyntax);
-		CHECK_STATUS("failed to register testcmd",status);
-#endif
 	}
 	catch (StatusException e){
 		return e.getStatus();
@@ -122,11 +114,6 @@ MStatus uninitializePlugin( MObject obj )
 		status = plugin.deregisterData(SkinLayerData::id);
 		DEBUG_REPORT_ERROR_STATUS("failed to deregister skin layer data");
 
-
-#ifdef _DEBUG
-		status = plugin.deregisterCommand( COMMAND_NGTESTCMD_NAME );
-		ngTestCmd::removeCallbacks();
-#endif
 
 	}
 	catch (StatusException e){
