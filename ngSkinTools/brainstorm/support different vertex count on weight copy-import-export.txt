@@ -1,3 +1,7 @@
+
+Feature brainstorm
+----------------------
+
 * usage scenarios:
 	* from one character part to another
 	* from one weights region to another
@@ -10,3 +14,15 @@
 * all operations should work between two SkinLayerManagers
 
  
+ 
+ Roadmap
+ ------------
+ 
+ * Finalize ideas about how mesh information is exported together with skin information.
+ 	* the need of making inclusion of mesh info optional?
+ 	* is tri-mesh enough? (won't quads be used later?)
+ 	*  
+ 
+ * get a transfer between two LayerManagers going on
+ 
+ * Allow "import into in-memory LayerManager", and use that for "import on to similar mesh" scenario
