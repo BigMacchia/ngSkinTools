@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.ui.externaltools.ProgramLaunchConfigurationType">
+<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="MAYA_LOCATION" value="C:\Program Files\Autodesk\Maya2011"/>
+<mapEntry key="PATH" value="C:\Program Files\Autodesk\Maya2011\bin"/>
+</mapAttribute>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${workspace_loc:/ngSkinTools/mll/vsprojects2012/output/TestCases Debug 2011 x64/TestCases.exe}"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/ngSkinTools/mll}"/>
+</launchConfiguration>
