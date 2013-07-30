@@ -296,5 +296,20 @@ void SetLayerWeights::undo(){
 }
 
 
+void SetMaxInfluencesPerVert::execute(){
+	this->previousValue = manager->getInfluenceLimitPerVert();
+	this->redo();
+}
+
+void SetMaxInfluencesPerVert::redo(){
+	manager->setInfluenceLimitPerVert(this->value);
+}
+
+void SetMaxInfluencesPerVert::undo(){
+	manager->setInfluenceLimitPerVert(this->previousValue);
+}
+
 
 } // end of namespace
+
+

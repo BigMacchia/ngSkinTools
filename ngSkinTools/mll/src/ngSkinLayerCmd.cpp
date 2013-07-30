@@ -297,6 +297,12 @@ MStatus ngSkinLayerCmd::handleQuery(){
 		return MStatus::kSuccess;
 	}
 
+	if (argData->isFlagSet(FlagNames::INFLUENCE_LIMIT_PER_VERTEX)) {
+		requireManager();
+		this->setResult(static_cast<int>(layerManager->getInfluenceLimitPerVert()));
+		return MStatus::kSuccess;
+	}
+
 
 	// invalid query?
 	return MStatus::kInvalidParameter;
@@ -489,6 +495,12 @@ SkinLayerChanges::SkinLayerChange * ngSkinLayerCmd::createUndoableBit(){
 
 		return change;
 	}
+
+	if (argData->isFlagSet(FlagNames::INFLUENCE_LIMIT_PER_VERTEX)){
+		requireManager();
+		return new SkinLayerChanges::SetMaxInfluencesPerVert(argData->flagArgumentInt(FlagNames::INFLUENCE_LIMIT_PER_VERTEX,0));
+	}
+
 
 	return NULL;
 }
@@ -772,6 +784,9 @@ MSyntax ngSkinLayerCmd::syntaxCreator(){
 	
 	result.addFlag(FlagNames::BEGINDATAUPDATE,"-beginDataUpdate");
 	result.addFlag(FlagNames::ENDDATAUPDATE,"-endDataUpdate");
+
+	result.addFlag(FlagNames::INFLUENCE_LIMIT_PER_VERTEX,"-influenceLimitPerVertex",MSyntax::kLong);
+	
 
 	result.enableQuery(true);
 	result.enableEdit(true);

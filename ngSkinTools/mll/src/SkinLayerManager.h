@@ -88,6 +88,8 @@ private:
 	
 	// a list of display nodes that are/were autocreated;
 	static std::vector<MObjectHandle> autoDisplayNodes;
+
+	unsigned int influenceLimitPerVert;
 	
 public:
 	static const SkinLayerID UNDEFINED_LAYER_ID = -1;
@@ -199,7 +201,11 @@ public:
 	}
 
 
+	inline const unsigned int getInfluenceLimitPerVert() const{
+		return this->influenceLimitPerVert;
+	}
 
+	void setInfluenceLimitPerVert(const unsigned int limit);
 
 };
 

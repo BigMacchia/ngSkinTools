@@ -100,5 +100,20 @@ class MllInterfaceTest(AdditionalAsserts, unittest.TestCase):
         result = self.mll.listManualMirrorInfluenceAssociations()
         self.assertDictionariesEqual(result, {"L_joint1":"R_joint1","R_joint1":"L_joint1"})
         
+
+    @insideMayaOnly
+    def testSetMaxInfluencePerVertex(self):
+        testUtils.openMayaFile("genericSkinnedMesh.mb")
+        self.mll.setCurrentMesh("mesh|pPlane1")
+        self.mll.initLayers()
+        layerId = self.mll.createLayer("initial weights")
+        
+        self.assertEqual(self.mll.getInfluenceLimitPerVertex(),0,"initial limit per vertex should be zero")
+
+        self.mll.setInfluenceLimitPerVertex(10)
+        self.assertEqual(self.mll.getInfluenceLimitPerVertex(),10,"was not able to set limit to the desired value")
+
+        self.mll.setInfluenceLimitPerVertex(2)
+        self.assertEqual(self.mll.getInfluenceLimitPerVertex(),2,"was not able to set limit to the desired value")
         
         

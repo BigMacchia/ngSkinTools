@@ -100,6 +100,8 @@ class SkinToolsDocs(DocumentationBase):
     MIRRORWEIGHTS_INTERFACE = DocLink('mirror weights','mirroring','limitWeights')
 
     INITWEIGHTTRANSFER_INTERFACE = DocLink('Init Weight Transfer','iwt-interface','')
+
+    CURRENTSKINSETTINGS_INTERFACE = DocLink('Current skin settings','settings-skin','')
     
     DOCUMENTATION_ROOT = DocLink("Current documentation",'index')
     

@@ -258,7 +258,19 @@ public:
 	void redo();
 };
 
+class SetMaxInfluencesPerVert: public SkinLayerChange {
+private:
+	unsigned int previousValue;
+	unsigned int value;
+public:
+	SetMaxInfluencesPerVert(unsigned int value): value(value){
+	}
 
+
+	void execute();
+	void undo();
+	void redo();
+};
 
 
 }

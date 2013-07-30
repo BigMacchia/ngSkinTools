@@ -11,6 +11,45 @@ class Controls:
     pass
 
 
+class ActionCommandWrapper:
+    def __init__(self,action):
+        self.action=action
+    def __call__(self,*args):
+        self.action.execute()
+        
+class CommandLayout:
+    def __init__(self,helpLink,commandIterator):
+        from ngSkinTools.ui.actions import BaseAction
+        
+        self.buttons = []
+        self.outerLayout = FormLayout()
+        self.helpButton = BaseTab.createHelpButton(helpLink)
+        scrollLayout = BaseTab.createScrollLayout(self.outerLayout)
+        self.innerLayout = cmds.columnLayout(adjustableColumn=1)        
+        
+        self.buttonForm = FormLayout(parent=self.outerLayout,numberOfDivisions=100,height=Constants.BUTTON_HEIGHT)
+        for name,command,annotation in commandIterator:
+            button = cmds.button(label=name,height=Constants.BUTTON_HEIGHT)
+            if isinstance(command, BaseAction):
+                cmds.button(button,e=True,command=ActionCommandWrapper(command))
+                command.addUpdateControl(button)
+            else:
+                cmds.button(button,e=True,command=command)
+                
+            if annotation is not None:
+                cmds.button(button,e=True,annotation=annotation)
+            self.buttons.append(button)
+            
+        BaseTab.layoutButtonForm(self.buttonForm, self.buttons)
+        
+        self.outerLayout.attachForm(scrollLayout, 0, 0, None, 0)
+        self.outerLayout.attachForm(self.buttonForm,None,Constants.MARGIN_SPACING_HORIZONTAL,Constants.MARGIN_SPACING_VERTICAL,None)
+        self.outerLayout.attachControl(scrollLayout, self.buttonForm, None, None, 5, None)
+        self.outerLayout.attachControl(self.buttonForm, self.helpButton, None, None, None, Constants.MARGIN_SPACING_HORIZONTAL)
+        self.outerLayout.attachForm(self.helpButton,None,None,Constants.MARGIN_SPACING_VERTICAL,Constants.MARGIN_SPACING_HORIZONTAL)
+
+
+
 class BaseTab(object):
     '''
     base class for ui group (tab) classes
@@ -147,9 +186,6 @@ class BaseTab(object):
                             )
             
         
-            
-    
-        
     def createCommandLayout(self,commandIterator,helpLink):
         '''
         creates a layout that has a help button and command buttons at the bottom of the page, with a scroll layout created for the rest of the page;
@@ -161,46 +197,7 @@ class BaseTab(object):
             * button handler - either BaseAction action, or an executable object
         '''
         
-        class ActionCommandWrapper:
-            def __init__(self,action):
-                self.action=action
-            def __call__(self,*args):
-                self.action.execute()
-        
-        class CommandLayout:
-            def __init__(self):
-                from ngSkinTools.ui.actions import BaseAction
-                
-                self.buttons = []
-                self.outerLayout = FormLayout()
-                self.helpButton = BaseTab.createHelpButton(helpLink)
-                scrollLayout = BaseTab.createScrollLayout(self.outerLayout)
-                self.innerLayout = cmds.columnLayout(adjustableColumn=1)        
-                
-                self.buttonForm = FormLayout(parent=self.outerLayout,numberOfDivisions=100,height=Constants.BUTTON_HEIGHT)
-                for name,command,annotation in commandIterator:
-                    button = cmds.button(label=name,height=Constants.BUTTON_HEIGHT)
-                    if isinstance(command, BaseAction):
-                        cmds.button(button,e=True,command=ActionCommandWrapper(command))
-                        command.addUpdateControl(button)
-                    else:
-                        cmds.button(button,e=True,command=command)
-                        
-                    if annotation is not None:
-                        cmds.button(button,e=True,annotation=annotation)
-                    self.buttons.append(button)
-                    
-                BaseTab.layoutButtonForm(self.buttonForm, self.buttons)
-                
-                self.outerLayout.attachForm(scrollLayout, 0, 0, None, 0)
-                self.outerLayout.attachForm(self.buttonForm,None,Constants.MARGIN_SPACING_HORIZONTAL,Constants.MARGIN_SPACING_VERTICAL,None)
-                self.outerLayout.attachControl(scrollLayout, self.buttonForm, None, None, 5, None)
-                self.outerLayout.attachControl(self.buttonForm, self.helpButton, None, None, None, Constants.MARGIN_SPACING_HORIZONTAL)
-                self.outerLayout.attachForm(self.helpButton,None,None,Constants.MARGIN_SPACING_VERTICAL,Constants.MARGIN_SPACING_HORIZONTAL)
-        
-        
-            
-        return CommandLayout()
+        return CommandLayout(helpLink, commandIterator)
         
 
         

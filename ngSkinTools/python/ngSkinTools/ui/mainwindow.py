@@ -27,6 +27,7 @@ from ngSkinTools.doclink import SkinToolsDocs
 from ngSkinTools.ui.utilities.weightsClipboardActions import CopyWeights,\
     CutWeights, PasteWeightsAdd, PasteWeightsReplace
 from ngSkinTools.layerUtils import LayerUtils
+from ngSkinTools.ui.tabSettings import TabSettings
 
 log = LoggerFactory.getLogger("MainWindow")
 
@@ -276,6 +277,8 @@ class MainWindow(BaseToolWindow):
         self.tabMirror = self.addTab(TabMirror())
         self.tabRelax = self.addTab(TabSkinRelax())
         self.tabAssignWeights = self.addTab(TabAssignWeights())
+        self.tabSettings = self.addTab(TabSettings())
+        
 
         self.actions.updateEnabledAll()
         

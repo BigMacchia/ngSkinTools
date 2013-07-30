@@ -59,7 +59,7 @@ def storeTestResult():
     
     
 def runTests():
-    runSingleTest(allTests.MllInterfaceTest,'testOverwriteWeightsCrashesMaya')
+    runSingleTest(allTests.MllInterfaceTest,'testSetMaxInfluencePerVertex')
     
     #runTestClass(allTests.CopyPasteActionsTest)
     #runTestClass(VariousImportScenarios)

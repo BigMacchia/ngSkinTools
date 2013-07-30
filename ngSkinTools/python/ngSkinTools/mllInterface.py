@@ -319,7 +319,15 @@ class MllInterface(object):
         returns a dictionary "source influence name"->"destination influence name"
         '''
         influenceAssociations = self.ngSkinLayerCmd(q=True,mirrorInfluenceAssociation=True)
-        return dict(zip(influenceAssociations[0::2],influenceAssociations[1::2])) 
+        return dict(zip(influenceAssociations[0::2],influenceAssociations[1::2]))
+    
+    def getInfluenceLimitPerVertex(self):
+        return self.ngSkinLayerCmd(q=True,influenceLimitPerVertex=True)
+    
+    def setInfluenceLimitPerVertex(self,limit=None):
+        if limit is None:
+            limit=0
+        self.ngSkinLayerCmd(e=True,influenceLimitPerVertex=limit)
         
         
 class BatchUpdateContext:

@@ -25,7 +25,8 @@ SkinLayerManager::SkinLayerManager():
 		layerIDGenerator(0),
 		meshVertCount(0),
 		isDisplayDirty(false),
-		vertSelectionAvailable(false)
+		vertSelectionAvailable(false),
+		influenceLimitPerVert(0)
 {
 	rootLayer = new SkinLayer(0,*this);
 	this->delayedUpdatesState.setManager(this);
@@ -525,4 +526,8 @@ bool SkinLayerManager::removeMirrorInfluenceAssociation(const MString &source,co
 	mirrorManualOverrides.erase(item);
 		
 	return true;
+}
+
+void SkinLayerManager::setInfluenceLimitPerVert(const unsigned int limit) {
+	this->influenceLimitPerVert = limit;
 }

@@ -61,6 +61,9 @@ namespace SkinLayerCmd{
 		// start/end batch updates
 		const char BEGINDATAUPDATE[] = "-bdu";
 		const char ENDDATAUPDATE[] = "-edu";
+
+		const char INFLUENCE_LIMIT_PER_VERTEX[]="-il"; // global influence limit per vertex; use "0" for no limit
+
 	}
 
 

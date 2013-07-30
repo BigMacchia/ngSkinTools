@@ -16,3 +16,4 @@ ngSkinTools/mll/vsprojects/output
 RemoteSystemsTempFiles
 jreleasedb/src/main/java/META-INF/sun-jaxb.episode
 *.opensdf
+*.vcxproj.user

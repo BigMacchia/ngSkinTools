@@ -127,11 +127,18 @@ class ModelUIWrapper(ValueUIWrapper):
 
 class IntField(ModelUIWrapper):
     def __init__(self,model,minValue=1,maxValue=1000,step=1,defaultValue=1,annotation=''):
+        '''
+        minValue/maxValue accept none as "no-limit" value
+        '''
+        
         ModelUIWrapper.__init__(self,model, cmds.intField,defaultValue,annotation)
         self.createUI(minValue=minValue,value=defaultValue,maxValue=maxValue,step=step)
         
     def createUI(self,**kargs):
         kargs['width'] = Constants.NUMBER_FIELD_WIDTH
+        for key in ('minValue','maxValue'):
+            if kargs[key] is None:
+                del kargs[key]
         ModelUIWrapper.createUI(self,**kargs)
         
     
@@ -260,14 +267,20 @@ class DropDownField(ModelUIWrapper):
         
     
     
+class Layout():
+    @staticmethod
+    def setEnabled(layout,enabled):        
+        cmds.layout(layout,e=True,enable=enabled)
         
-        
-class FormLayout():
+class FormLayout:
     def __init__(self,useExisting=None,**kargs):
         if useExisting is None:
             self.layout = cmds.formLayout(**kargs)
         else:
             self.layout = useExisting
+            
+    def setEnabled(self,enabled):
+        Layout.setEnabled(self.layout, enabled)
         
     def repeatTBLR(self,function,top,right,bottom,left):
         '''
