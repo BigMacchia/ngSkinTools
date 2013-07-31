@@ -17,13 +17,14 @@ Manual install
 
 1. Extract archive somewhere you'll keep it, for example ``C:\my-maya-plugins\ngSkinTools``.
 2. If you have Python installed, running *install.py* should do the rest of the work.
-Otherwise, manually copy file *ngSkinTools-module.txt* to ``<user documents>\maya\<maya version>\modules`` directory, where:
-	* ``<user documents>`` is your windows user home folder (under WinXP that's ``C:\Documents And Settings\Username\Documents`` and in Win7 that's ``C:\Users\Username\My Documents``)
-	* ``<maya version>`` is the folder for your Maya version. If you've downloaded plugin for 2011 64bit Maya, folder will be named *"2011 x64"*. This folder should already exist, as this is where Maya keeps your personalized settings, custom shelves, etc.
+   Otherwise, manually copy file *ngSkinTools-module.txt* to ``<user documents>\maya\<maya version>\modules`` directory, where:
 	
-	Edit the *ngSkinTools-module.txt*, replacing ``C:\Path\to\ngSkinTools\base\dir`` with location where you extracted archive contents.
-	
-.. note::	If ``modules`` directory does not exist, just go ahead and create it as well. It's not created by default by Maya, though added automatically into module search path.
+   * ``<user documents>`` is your windows user home folder (under WinXP that's ``C:\Documents And Settings\Username\Documents`` and in Win7 that's ``C:\Users\Username\My Documents``)
+   * ``<maya version>`` is the folder for your Maya version. If you've downloaded plugin for 2011 64bit Maya, folder will be named *"2011 x64"*. This folder should already exist, as this is where Maya keeps your personalized settings, custom shelves, etc.
+
+   Edit the *ngSkinTools-module.txt*, replacing ``C:\Path\to\ngSkinTools\base\dir`` with location where you extracted archive contents.
+
+   .. note::	If ``modules`` directory does not exist, just go ahead and create it as well. It's not created by default by Maya, though added automatically into module search path.
 	
 
 3. (Re)start Maya.
