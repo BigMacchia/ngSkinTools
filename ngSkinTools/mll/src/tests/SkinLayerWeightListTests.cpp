@@ -95,6 +95,101 @@ TEST_F(SkinLayerWeightListTests,normalizeToRemainingSpace){
 	ASSERT_NEAR(0.7,*map.getLogicalInfluence(2,vertIndex),1.0e-11);
 }
 
+TEST_F(SkinLayerWeightListTests,applyInfluenceLimit){
+	InfluenceWeightsMap map(false);
+	map.resize(1,4,false);
+	map.addInfluenceMapping(1);
+	map.addInfluenceMapping(2);
+	map.addInfluenceMapping(3);
+	map.addInfluenceMapping(4);
+	map.addInfluenceMapping(5);
+
+
+	*map.getLogicalInfluence(1,0) = 0.05;
+	*map.getLogicalInfluence(2,0) = 0.21;
+	*map.getLogicalInfluence(3,0) = 0.5;
+	*map.getLogicalInfluence(4,0) = 0.19;
+	*map.getLogicalInfluence(5,0) = 0.05;
+
+	map.limitNumberOfInfluences(0,0,2);
+
+	ASSERT_NEAR(0,*map.getLogicalInfluence(1,0),1.0e-11);
+	ASSERT_NEAR(0,*map.getLogicalInfluence(4,0),1.0e-11);
+	ASSERT_NEAR(0,*map.getLogicalInfluence(5,0),1.0e-11);
+
+	ASSERT_NEAR(1.0,*map.getLogicalInfluence(2,0)+*map.getLogicalInfluence(3,0),1.0e-11);
+
+	ASSERT_NEAR(0.295,*map.getLogicalInfluence(2,0),0.001);
+	ASSERT_NEAR(0.704,*map.getLogicalInfluence(3,0),0.001);
+}
+
+TEST_F(SkinLayerWeightListTests,applyInfluenceLimitWithMax1){
+	InfluenceWeightsMap map(false);
+	map.resize(1,4,false);
+	map.addInfluenceMapping(1);
+	map.addInfluenceMapping(2);
+	map.addInfluenceMapping(3);
+
+
+	*map.getLogicalInfluence(1,0) = 0.05;
+	*map.getLogicalInfluence(2,0) = 0.21;
+	*map.getLogicalInfluence(3,0) = 0.5;
+
+	map.limitNumberOfInfluences(0,0,1);
+
+	ASSERT_NEAR(0,*map.getLogicalInfluence(1,0),1.0e-11);
+	ASSERT_NEAR(0,*map.getLogicalInfluence(2,0),1.0e-11);
+	ASSERT_NEAR(1,*map.getLogicalInfluence(3,0),1.0e-11);
+}
+
+TEST_F(SkinLayerWeightListTests,applyInvalidInfluenceLimit){
+	InfluenceWeightsMap map(false);
+	map.resize(1,4,false);
+	map.addInfluenceMapping(1);
+	map.addInfluenceMapping(2);
+	map.addInfluenceMapping(3);
+
+
+	*map.getLogicalInfluence(1,0) = 0.05;
+	*map.getLogicalInfluence(2,0) = 0.21;
+	*map.getLogicalInfluence(3,0) = 0.5;
+
+	// limit to more influences than there currently are
+	map.limitNumberOfInfluences(0,0,10);
+
+	ASSERT_NEAR(0.05,*map.getLogicalInfluence(1,0),1.0e-11);
+	ASSERT_NEAR(0.21,*map.getLogicalInfluence(2,0),1.0e-11);
+	ASSERT_NEAR(0.5,*map.getLogicalInfluence(3,0),1.0e-11);
+}
+
+TEST_F(SkinLayerWeightListTests,applyInfluenceLimitMultipleVerts){
+	InfluenceWeightsMap map(false);
+	map.resize(2,3,false);
+	map.addInfluenceMapping(1);
+	map.addInfluenceMapping(2);
+	map.addInfluenceMapping(3);
+
+
+	*map.getLogicalInfluence(1,0) = 0.1;
+	*map.getLogicalInfluence(2,0) = 0.2;
+	*map.getLogicalInfluence(3,0) = 0.4;
+
+	*map.getLogicalInfluence(1,1) = 0.2;
+	*map.getLogicalInfluence(2,1) = 0.4;
+	*map.getLogicalInfluence(3,1) = 0.4;
+
+
+	map.limitNumberOfInfluences(0,1,2);
+
+	ASSERT_NEAR(0,*map.getLogicalInfluence(1,0),0.0001);
+	ASSERT_NEAR(0.3333,*map.getLogicalInfluence(2,0),0.0001);
+	ASSERT_NEAR(0.6666,*map.getLogicalInfluence(3,0),0.0001);
+
+	ASSERT_NEAR(0,*map.getLogicalInfluence(1,1),0.001);
+	ASSERT_NEAR(0.5,*map.getLogicalInfluence(2,1),0.001);
+	ASSERT_NEAR(0.5,*map.getLogicalInfluence(3,1),0.001);
+}
+
 
 /**
  * test: distribute weight evenly to the remaining influences

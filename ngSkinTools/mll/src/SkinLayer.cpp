@@ -295,6 +295,9 @@ void SkinLayer::notifyWeightsChanged(const int firstVert,const int lastVert){
 	}
 	if (this->manager.rootLayer==this){
 		DEBUG_COUT_ENDL("writting skin weights "<<firstVert<<" "<<lastVert);
+		if (manager.getInfluenceLimitPerVert()>0){
+			this->finalWeightList.limitNumberOfInfluences(firstVert,lastVert,manager.getInfluenceLimitPerVert());
+		}
 		this->writeWeightsToSkinCluster(firstVert,lastVert,this->finalWeightList);
 	}
 

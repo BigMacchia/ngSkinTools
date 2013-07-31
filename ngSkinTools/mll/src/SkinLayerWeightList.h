@@ -442,6 +442,8 @@ public:
 		}
 	}
 
+	void limitNumberOfInfluences(const int firstVert,const int lastVert, const unsigned int maxInfluences);
+
 };
 
 /**

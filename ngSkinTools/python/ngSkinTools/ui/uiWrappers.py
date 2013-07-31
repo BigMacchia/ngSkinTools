@@ -166,6 +166,12 @@ class CheckBoxField(ModelUIWrapper):
         ModelUIWrapper.__init__(self,model, cmds.checkBox,defaultValue,annotation)
         self.createUI(label=label,align='left')
         
+    def isChecked(self):
+        '''
+        just a more readable alias to getModelValue()
+        '''
+        return self.getModelValue()
+        
     
         
 class RadioButtonField(ModelUIWrapper):

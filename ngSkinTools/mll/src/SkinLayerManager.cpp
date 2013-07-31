@@ -530,4 +530,5 @@ bool SkinLayerManager::removeMirrorInfluenceAssociation(const MString &source,co
 
 void SkinLayerManager::setInfluenceLimitPerVert(const unsigned int limit) {
 	this->influenceLimitPerVert = limit;
+	this->delayedUpdatesState.mixChildWeights(*this->rootLayer);
 }

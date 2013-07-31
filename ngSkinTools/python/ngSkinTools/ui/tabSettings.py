@@ -33,8 +33,10 @@ class TabSettings(BaseTab):
         self.controls.influenceLimitRow.setEnabled(self.controls.useInfluenceLimit.getModelValue())
         
     def applyCurrentSkinSettings(self):
-        print "setting limit enabled to",self.controls.useInfluenceLimit.getModelValue()
-        print "setting limit number to",self.controls.numMaxInfluences.getModelValue()
+        limit = 0 if not self.controls.useInfluenceLimit.isChecked() else self.controls.numMaxInfluences.getModelValue()
+        LayerDataModel.getInstance().mll.setInfluenceLimitPerVertex(limit)
+        
+        self.updateUIEnabled()
         
     def refreshSettingsFromSelection(self):
         layersAvailable = LayerDataModel.getInstance().getLayersAvailable()
@@ -66,6 +68,7 @@ class TabSettings(BaseTab):
         BaseTab.createHelpButton(SkinToolsDocs.CURRENTSKINSETTINGS_INTERFACE)
         cmds.button(height=Constants.BUTTON_HEIGHT,label='Apply',command=lambda *args:self.applyCurrentSkinSettings())        
         
+        LayerEvents.layerAvailabilityChanged.addHandler(self.refreshSettingsFromSelection, parent)
         MayaEvents.nodeSelectionChanged.addHandler(self.refreshSettingsFromSelection,parent)
         MayaEvents.undoRedoExecuted.addHandler(self.refreshSettingsFromSelection,parent)
         

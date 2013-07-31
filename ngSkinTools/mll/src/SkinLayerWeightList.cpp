@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "SkinLayerWeightList.h"
 #include "defines.h"
 #include "VertIndexIterators.h"
@@ -469,6 +471,69 @@ void InfluenceWeightsMap::setInfluenceWeights(const unsigned int influence, MDou
 
 	recalcTransparency();
 }
+
+inline void putNextMaximumCandidate(double *weights, unsigned int *maximums, const unsigned int maxInfluences, const double currentValue, const int currentInfluenceIndex){
+	// try putting currentvalue somewhere in maximums table, where values are expected to be ordered in descending order
+
+	for (unsigned int *maximum=maximums,*end=maximums+maxInfluences;maximum<end;maximums++){
+		if (*maximum==InfluenceWeightsMap::UNDEFINED_PHYSICAL_INFLUENCE || currentValue>weights[*maximum]){
+			// shift remainder of the maximums table - move each N-1 value to index N
+			for (unsigned int *current=end-2,*next=end-1;current>maximum;current--,next--){
+				*next=*current;
+			}
+
+			*maximum=currentInfluenceIndex;
+		}
+	}
+
+}
+
+void InfluenceWeightsMap::limitNumberOfInfluences(const int firstVert,const int lastVert, const unsigned int maxInfluences) {
+	size_t numInfluences = this->inflPhysicalToLogical.size();
+	if (maxInfluences>numInfluences)
+		return;
+
+	std::vector<unsigned int> influencesSplitByWeightSize;
+	influencesSplitByWeightSize.resize(this->numInfluences);
+
+	for (int vert=firstVert;vert<=lastVert;vert++){
+
+		double * weights = this->getVertWeights(vert);
+
+		struct CompareByWeightValue : public std::binary_function<unsigned int,unsigned int,bool>
+		{
+			const double * const weights;
+			CompareByWeightValue(const double * const weights): weights(weights) {};
+			inline const bool operator()(const unsigned int & a, const unsigned int & b) const
+			{
+				return  weights[a]> weights[b];
+			}
+		};
+
+		CompareByWeightValue comparator(weights);
+
+		for (unsigned int i=0;i<this->numInfluences;i++)
+			influencesSplitByWeightSize[i] = i;
+
+		std::nth_element(influencesSplitByWeightSize.begin(),influencesSplitByWeightSize.begin()+maxInfluences,influencesSplitByWeightSize.end(),CompareByWeightValue(weights));
+		
+		// nullify all influences with weights lower than top N
+		for (std::vector<unsigned int>::const_iterator i=influencesSplitByWeightSize.begin()+maxInfluences; i!=influencesSplitByWeightSize.end();i++){
+			weights[*i] = 0.0;
+		}
+
+		// normalize top N influences to 1.0
+		double totalWeight = 0;
+		for (std::vector<unsigned int>::const_iterator i=influencesSplitByWeightSize.begin(); i!=influencesSplitByWeightSize.begin()+maxInfluences;i++){
+			totalWeight+=weights[*i];
+		}
+		for (std::vector<unsigned int>::const_iterator i=influencesSplitByWeightSize.begin(); i!=influencesSplitByWeightSize.begin()+maxInfluences;i++){
+			weights[*i] /= totalWeight;
+		}
+
+	}
+}
+
 
 
 WeightsChange::WeightsChange():
