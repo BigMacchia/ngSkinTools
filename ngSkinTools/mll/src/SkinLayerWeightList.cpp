@@ -488,6 +488,17 @@ inline void putNextMaximumCandidate(double *weights, unsigned int *maximums, con
 
 }
 
+struct CompareByWeightValue : public std::binary_function<unsigned int,unsigned int,bool>
+{
+	const double * const weights;
+	CompareByWeightValue(const double * const weights): weights(weights) {};
+	inline const bool operator()(const unsigned int & a, const unsigned int & b) const
+	{
+		return  weights[a]> weights[b];
+	}
+};
+
+
 void InfluenceWeightsMap::limitNumberOfInfluences(const int firstVert,const int lastVert, const unsigned int maxInfluences) {
 	size_t numInfluences = this->inflPhysicalToLogical.size();
 	if (maxInfluences>numInfluences)
@@ -500,15 +511,6 @@ void InfluenceWeightsMap::limitNumberOfInfluences(const int firstVert,const int 
 
 		double * weights = this->getVertWeights(vert);
 
-		struct CompareByWeightValue : public std::binary_function<unsigned int,unsigned int,bool>
-		{
-			const double * const weights;
-			CompareByWeightValue(const double * const weights): weights(weights) {};
-			inline const bool operator()(const unsigned int & a, const unsigned int & b) const
-			{
-				return  weights[a]> weights[b];
-			}
-		};
 
 		CompareByWeightValue comparator(weights);
 
