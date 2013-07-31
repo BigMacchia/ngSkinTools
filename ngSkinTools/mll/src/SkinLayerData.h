@@ -13,7 +13,8 @@ namespace SKIN_LAYER_DATA_VERSIONS {
 	const boost::uint32_t V2 = 2;
 	const boost::uint32_t V3 = 3;
 	const boost::uint32_t V4 = 4; // introducing line breaks to ascii encoded format
-	const boost::uint32_t CURR = V4;
+	const boost::uint32_t V5 = 5; // introducing influence limit per vertex setting
+	const boost::uint32_t CURR = V5;
 }
 
 /**

@@ -257,9 +257,13 @@ void SkinLayerData::loadManager(SkinLayerManager &manager,std::istream &input,bo
 		loadLayer(manager,inReader,*manager.rootLayer);
 		manager.findDefaultCurrentLayer();
 
-		// save manual pairs
+		// load manual pairs
 		if (inReader.getVersion()>=SKIN_LAYER_DATA_VERSIONS::V2){
 			loadManualOverrides(inReader,manager.mirrorManualOverrides);
+		}
+
+		if (inReader.getVersion()>=SKIN_LAYER_DATA_VERSIONS::V5){
+			manager.setInfluenceLimitPerVert(inReader.readValue<boost::uint32_t>());
 		}
 	}
 }
@@ -270,6 +274,8 @@ void SkinLayerData::saveManager(SkinLayerManager &manager, std::ostream &output)
 	saveLayer(outWriter,*manager.rootLayer);
 	
 	saveManualOverrides(outWriter,manager.mirrorManualOverrides);
+
+	outWriter.writeValue<boost::uint32_t>(manager.getInfluenceLimitPerVert());
 }
 
 

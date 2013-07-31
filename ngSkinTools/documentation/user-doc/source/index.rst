@@ -14,6 +14,7 @@ Table of Contents
 	layers/index
 	mirroring
 	weightsrelax/index
+	settings/index
 	compare-builtintools
 	todo
 	troubleshooting
