@@ -1,3 +1,9 @@
+1.0beta.875
+* Added new skinCluster-wide setting "maximum influences per vertex limit".  It is a post-processing filter 
+  that limits maximum number of influences used per vertex. Setting can be found in a new tab "Settings", 
+  "Selected Skin Settings" group.
+
+
 1.0beta.870
 * "new layer" window will appear with empty layer name box, instead of having a "new layer" text in it.
   You can still submit the dialog without typing anything in, in that case new layer will get default name.
