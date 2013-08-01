@@ -113,12 +113,18 @@ class MainMenu:
     def viewManual(self,*args):
         documentation = HeadlessDataHost.get().documentation
         documentation.openLink(SkinToolsDocs.DOCUMENTATION_ROOT)
+        
+    def openIssueTracker(self,*args):
+        import webbrowser
+        webbrowser.open_new("http://www.ngskintools.com/issue-tracker")
+        
 
     def createHelpMenu(self,actions):
         cmds.menu( label='Help',mnemonic='H' )
         cmds.menuItem( label='View Manual Online',command=self.viewManual )
         cmds.menuItem( label='Check for Updates',command=self.execCheckForUpdates )
         self.createDivider()
+        cmds.menuItem( label='Planned Features and Known Issues',command=self.openIssueTracker)
         cmds.menuItem( label='About ngSkinTools',mnemonic='A',command=self.execAbout )
         
     def createDivider(self):
