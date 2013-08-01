@@ -1,3 +1,5 @@
+* Layers/Influences list UI is now sizable with window; tab height can be adjusted via horizontal splitter.
+
 1.0beta.875
 * Added new skinCluster-wide setting "maximum influences per vertex limit".  It is a post-processing filter 
   that limits maximum number of influences used per vertex. Setting can be found in a new tab "Settings", 
