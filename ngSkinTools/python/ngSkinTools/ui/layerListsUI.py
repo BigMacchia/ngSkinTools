@@ -9,6 +9,7 @@ from ngSkinTools.ui.options import Options, PersistentValueModel
 from ngSkinTools.log import LoggerFactory
 from ngSkinTools.InfluenceNameTransforms import InfluenceNameTransform
 from ngSkinTools.InfluenceNameFilter import InfluenceNameFilter
+from ngSkinTools.ui.basetab import BaseTab
 
 log = LoggerFactory.getLogger("layerListsUI")
 

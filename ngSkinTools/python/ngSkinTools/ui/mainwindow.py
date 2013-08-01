@@ -28,6 +28,7 @@ from ngSkinTools.ui.utilities.weightsClipboardActions import CopyWeights,\
     CutWeights, PasteWeightsAdd, PasteWeightsReplace
 from ngSkinTools.layerUtils import LayerUtils
 from ngSkinTools.ui.tabSettings import TabSettings
+from ngSkinTools.ui.options import PersistentValueModel
 
 log = LoggerFactory.getLogger("MainWindow")
 
@@ -264,14 +265,32 @@ class MainWindow(BaseToolWindow):
 
         # putting tabs in a from targetUiLayout is needed to workaround maya2011 
         # bug with an additional empty tab appearing otherwise
-        form = FormLayout(parent=self.windowName)
+#        form = FormLayout(parent=self.windowName)
+#        targetUiLayout = self.targetUI.create(form)
+#        form.attachForm(targetUiLayout, 0, Constants.MARGIN_SPACING_HORIZONTAL,None,Constants.MARGIN_SPACING_HORIZONTAL)
+#        
+#        self.mainTabLayout = cmds.tabLayout(childResizable=True,parent=form,scrollable=False,innerMarginWidth=3)
+#        form.attachControl(self.mainTabLayout, targetUiLayout, Constants.MARGIN_SPACING_VERTICAL, None,None,None)
+#        form.attachForm(self.mainTabLayout, None, 0,0,0)
         
-        targetUiLayout = self.targetUI.create(form)
-        form.attachForm(targetUiLayout, 0, Constants.MARGIN_SPACING_HORIZONTAL,None,Constants.MARGIN_SPACING_HORIZONTAL)
         
-        self.mainTabLayout = cmds.tabLayout(childResizable=True,parent=form,scrollable=False,innerMarginWidth=3)
-        form.attachControl(self.mainTabLayout, targetUiLayout, Constants.MARGIN_SPACING_VERTICAL, None,None,None)
-        form.attachForm(self.mainTabLayout, None, 0,0,0)
+        self.splitPosition = PersistentValueModel(name="ngSkinTools_mainWindow_splitPosition", defaultValue=50)
+        def updateSplitPosition(*args):
+            size = cmds.paneLayout(horizontalSplit,q=True,paneSize=True)
+            # returns (widht, height, width, height)
+            self.splitPosition.set(size[1])
+        horizontalSplit = cmds.paneLayout(configuration="horizontal2",width=100,height=200,separatorMovedCommand=updateSplitPosition)
+        if Utils.getMayaVersion()>=Utils.MAYA2011:
+            cmds.paneLayout(horizontalSplit,e=True,staticHeightPane=2)
+        cmds.paneLayout(horizontalSplit,e=True,paneSize=(1,100,self.splitPosition.get()))
+        cmds.paneLayout(horizontalSplit,e=True,paneSize=(2,100,100-self.splitPosition.get()))
+        
+        
+        
+        targetUiLayout = self.targetUI.create(horizontalSplit)
+        self.mainTabLayout = cmds.tabLayout(childResizable=True,parent=horizontalSplit,scrollable=False,innerMarginWidth=3)        
+        
+        
         
         self.tabPaint = self.addTab(TabPaint())
         self.tabMirror = self.addTab(TabMirror())
