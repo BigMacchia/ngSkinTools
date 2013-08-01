@@ -14,6 +14,8 @@ class MllInterface(object):
     Example usage:
     
     .. code-block:: python
+        
+        from ngSkinTools.mllInterface import MllInterface
     
         mll = MllInterface()
         mll.setCurrentMesh('myMesh')

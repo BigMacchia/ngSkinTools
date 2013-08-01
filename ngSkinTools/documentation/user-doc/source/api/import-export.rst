@@ -15,6 +15,8 @@ For example, to import layers from XML into mesh you'd have to do the following:
 
 .. code-block:: python
 
+    from ngSkinTools.importExport import XmlImporter
+
 	# create layers from	
 	importer = XmlImporter()
 	# read file contents here using one of your prefered methods
@@ -29,6 +31,8 @@ To export, the process is reversed - we load data from skinned mesh (which shoul
 have skin layers initialized for it) and save it to file:
 
 .. code-block:: python
+
+    from ngSkinTools.importExport import LayerData,XmlExporter
 
     data = LayerData()
     data.loadFrom('skinnedMesh')
