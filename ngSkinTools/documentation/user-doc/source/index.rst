@@ -10,7 +10,7 @@ Table of Contents
 	:maxdepth: 2
 	
 	install
-	intro
+	quickstart
 	layers/index
 	mirroring
 	weightsrelax/index

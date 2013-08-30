@@ -15,7 +15,7 @@ For example, to import layers from XML into mesh you'd have to do the following:
 
 .. code-block:: python
 
-    from ngSkinTools.importExport import XmlImporter
+	from ngSkinTools.importExport import XmlImporter
 
 	# create layers from	
 	importer = XmlImporter()
