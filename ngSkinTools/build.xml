@@ -72,7 +72,7 @@
 
 		<echo message="resolved platform: ${os.current}" />
 	</target>
-
+	
 	<target name="resolve-common-parameters" depends="detect-platform">
 		<property file="version.properties" />
 
@@ -122,8 +122,10 @@
 			</and>
 		</condition>
 
-		<propertycopy name="maya.includedir" from="maya.${mll.maya}.${mll.platform}.includedir" />
-		<propertycopy name="maya.lib" from="maya.${mll.maya}.${mll.platform}.lib" />
+		<propertycopy name="maya.sdklocation" from="maya.${mll.maya}.${mll.platform}" />
+		<property name="maya.includedir" location="${maya.sdklocation}/include" />
+		<property name="maya.lib" location="${maya.sdklocation}/lib" />
+		
 		<fail unless="maya.includedir">Include dir not configured for maya ${mll.maya}/${mll.platform}</fail>
 		<fail unless="maya.lib">Include dir not configured for maya ${mll.maya}/${mll.platform}</fail>
 		<echo message="maya include dir: ${maya.includedir}" />
@@ -584,7 +586,7 @@
 			<!-- determine if we're building or not -->
 			<condition property="build-for-@{maya}-@{platform}" value="build">
 				<and>
-					<isset property="maya.@{maya}.@{platform}.includedir" />
+					<isset property="maya.@{maya}.@{platform}" />
 				</and>
 			</condition>
 			<property name="build-for-@{maya}-@{platform}" value="build-skip" />

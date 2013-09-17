@@ -6,7 +6,7 @@ import sys, os
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.append(os.path.abspath('../../_sphinx_extensions'))
 sys.path.append(os.path.abspath('../../../python'))
-sys.path.append(os.path.abspath('../../../../ngUtils-MayaDummyModules/src'))
+sys.path.append(os.path.abspath('../../_dummy_import_modules'))
 
 # -- General configuration -----------------------------------------------------
 
@@ -17,7 +17,7 @@ exclude_dirnames = ['.svn']
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.todo','sphinx.ext.autodoc','sphinx.ext.ifconfig','neglostyti.faqext']
+extensions = ['sphinx.ext.todo','sphinx.ext.autodoc','sphinx.ext.ifconfig']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
