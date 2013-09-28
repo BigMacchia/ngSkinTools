@@ -41,7 +41,7 @@ WeightedVertex * RelaxEngine::createVertexInfoInstance(GeometryInfo &parent){
 
 void RelaxEngine::initVertTension(){
 	// vertList size changes during this loop
-	for (uint i=0;i<this->vertList.size();i++){
+	for (unsigned int i=0;i<this->vertList.size();i++){
 		static_cast<VertexRelaxData *>(this->vertList[i])->initTension();
 	}
 }

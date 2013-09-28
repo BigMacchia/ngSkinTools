@@ -30,7 +30,7 @@ private:
 	/**
      * initializes inflUsage vector
 	 */
-	void calcUsedInfluences(MDoubleArray &skinWeights,const uint inflCount);
+	void calcUsedInfluences(MDoubleArray &skinWeights,const unsigned int inflCount);
 
 	/**
 	 * stores old skin weights at the time of setting new skin weights
@@ -183,7 +183,7 @@ public:
 	 * 
 	 * function returns NULL if vertex number is invalid (index>=vertex count)
 	 */
-	WeightedVertex * initVertex(const uint index);
+	WeightedVertex * initVertex(const unsigned int index);
 
 	/**
 	 * initializes skin weights. should be called after all vertices that

@@ -177,7 +177,7 @@ void saveLayer(BinaryStreamWriter &outWriter,const SkinLayer &layer){
 	
 
 
-	// casting to uint because of compatibility between 32bit and 64bit readers
+	// casting to uint32_t because of compatibility between 32bit and 64bit readers
 	//unsigned int numChildren = static_cast<unsigned int>(layer.children.size());
 	outWriter.writeValue<boost::uint32_t>(static_cast<unsigned int>(layer.children.size()));
 	for (std::vector<SkinLayer *>::const_iterator i=layer.children.begin();i!=layer.children.end();i++){

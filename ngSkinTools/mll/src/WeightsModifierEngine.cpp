@@ -101,7 +101,7 @@ void WeightsModifierEngine::initSkinWeights(){
 
 size_t WeightsModifierEngine::getInfluenceGlobalIndex(const MDagPath &inflPath){
 	// add each of the influence to the list, making sure we're not duplicating same influence twice
-	for (uint influence=0;influence<influences.size();influence++){
+	for (unsigned int influence=0;influence<influences.size();influence++){
 		if (influences[influence]==inflPath)
 			return influence;
 	}

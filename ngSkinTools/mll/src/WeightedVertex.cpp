@@ -46,7 +46,7 @@ void WeightedVertex::addNeighboursBySurface(WeightedVertex &vert) {
 	itMesh.getConnectedVertices(neighbourIndexes);
 
 	// add all verts to calculation and make sure they are present in a calculation
-	for (uint i=0,neighbourCount = neighbourIndexes.length();i<neighbourCount;i++) {
+	for (unsigned int i=0,neighbourCount = neighbourIndexes.length();i<neighbourCount;i++) {
 		if (vert.geometry.isInvisibleVert(neighbourIndexes[i]))
 			continue;
 
@@ -119,7 +119,7 @@ void WeightedVertex::initFreeWeight(double *weights){
 
 	this->totalFreeWeight = 1.0;
 	if (geometry.engine->preserveLockedInfluences){
-		for (uint i=0;i<this->geometry.inflLocked.size();i++){
+		for (unsigned int i=0;i<this->geometry.inflLocked.size();i++){
 			if (this->geometry.inflLocked[i]) {
 				this->totalFreeWeight -= weights[i];
 			}
@@ -167,7 +167,7 @@ void WeightedVertex::normalizeWeights(double *weights){
 		return;
 
 	// normalize each weight otherwise
-	for (uint i=0;i<this->geometry.numVertWeights();i++){
+	for (unsigned int i=0;i<this->geometry.numVertWeights();i++){
 		if (this->geometry.influencesMask[i])
 			weights[i] /= totalWeights;
 	}

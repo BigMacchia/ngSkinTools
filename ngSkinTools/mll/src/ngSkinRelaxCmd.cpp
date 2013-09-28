@@ -41,7 +41,7 @@ bool readMultiUseFlag(const char flagName[], MArgDatabase &args, MSelectionList 
 		return false;
 	MStatus status;
 
-    for(uint i=0,numUses = args.numberOfFlagUses(flagName); i<numUses; i++ )
+    for(unsigned int i=0,numUses = args.numberOfFlagUses(flagName); i<numUses; i++ )
     {
             MArgList argList;
             status = args.getFlagArgumentList( flagName, i, argList );

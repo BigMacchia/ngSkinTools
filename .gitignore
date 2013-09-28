@@ -17,3 +17,4 @@ RemoteSystemsTempFiles
 jreleasedb/src/main/java/META-INF/sun-jaxb.episode
 *.opensdf
 *.vcxproj.user
+/ngSkinTools/mll/vsprojects2012/Debug

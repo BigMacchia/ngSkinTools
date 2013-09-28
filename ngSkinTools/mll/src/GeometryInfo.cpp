@@ -88,7 +88,7 @@ void GeometryInfo::initGeomFn(){
 	status = this->geomFn->getPoints(this->vertPositions); CHECK_STATUS("retreiving points in geomInfo init()",status);
 }
 
-WeightedVertex * GeometryInfo::initVertex(const uint index){
+WeightedVertex * GeometryInfo::initVertex(const unsigned int index){
 	if (this->verts.size()<=index)
 		return NULL;
 
@@ -132,7 +132,7 @@ void GeometryInfo::calcLockedInfluences(){
 
 }
 
-void GeometryInfo::calcUsedInfluences(MDoubleArray &skinWeights,const uint inflCount){
+void GeometryInfo::calcUsedInfluences(MDoubleArray &skinWeights,const unsigned int inflCount){
 	/*
 	for(std::set<int>::const_iterator i=usedInfluences.begin();i!=usedInfluences.end();i++){
 		size_t globalIndex = this->engine->getInfluenceGlobalIndex(
@@ -155,12 +155,12 @@ void GeometryInfo::calcUsedInfluences(MDoubleArray &skinWeights,const uint inflC
 		return;
 	}
 
-	for (uint i=0;i<inflCount;i++){
+	for (unsigned int i=0;i<inflCount;i++){
 		/* in a particular case, when influence is already used by simulation,
 		 * flag it as used anyway, so weights are loaded - even if for current skin skin cluster
 		 * selected weights aren't weighted to that
 		 */
-		for (uint globalIndex=0;globalIndex<this->engine->influences.size();globalIndex++){
+		for (unsigned int globalIndex=0;globalIndex<this->engine->influences.size();globalIndex++){
 			if (this->engine->influences[globalIndex]==this->influences[i]){
 				this->addLogicalToGlobalMapping(this->inflPhysicalToLogical[i],globalIndex);
 				continue;
@@ -171,7 +171,7 @@ void GeometryInfo::calcUsedInfluences(MDoubleArray &skinWeights,const uint inflC
 			// check usage of this influence in all components
 			// influence I weight for component C: weights[C*inflCount+I]= weights[componentRow+I]
 			// loop iterator represents "influence position in component row
-			for (uint componentRow=i;componentRow<skinWeights.length();componentRow+=inflCount){
+			for (unsigned int componentRow=i;componentRow<skinWeights.length();componentRow+=inflCount){
 				if (skinWeights[componentRow]!=0){
 					// influence is used.
 					this->addLogicalToGlobalMapping(inflPhysicalToLogical[i],engine->getInfluenceGlobalIndex(influences[i]));
@@ -214,7 +214,7 @@ void GeometryInfo::initSkinWeights(){
 
 	// get skin weights
 	MStatus status;
-	uint inflCount;
+	unsigned int inflCount;
 	MDoubleArray skinWeights;
 	status = this->skinFn->getWeights(this->path,components,skinWeights,inflCount);
 	CHECK_STATUS("skin fn get weights in initSkinWeights()",status);
@@ -239,7 +239,7 @@ void GeometryInfo::initSkinWeights(){
 	// made of only those vertice indices that exist in skin cluster input
 	if (!layer){
 		MItMeshVertex itComponents(this->path,components);
-		uint currWeight=0; /// points to weight in weights array
+		unsigned int currWeight=0; /// points to weight in weights array
 		for (;!itComponents.isDone();itComponents.next()){
 			WeightedVertex * vert = this->verts[itComponents.index()];
 
@@ -247,7 +247,7 @@ void GeometryInfo::initSkinWeights(){
 			// for all influences are written. we only write those weights
 			// that are currently used (defined by inflUsage)
 			// and index in vert->skinWeights is remapped by localToGlobal map
-			for (uint i=0;i<inflCount;i++,currWeight++){
+			for (unsigned int i=0;i<inflCount;i++,currWeight++){
 				LogicalIndex logical = inflPhysicalToLogical[i];
 				//influence not used
 				if (usedInfluences.find(logical)==usedInfluences.end())
@@ -289,7 +289,7 @@ void GeometryInfo::finishInfluenceLists(){
 	for (size_t globalIndex=oldSize;globalIndex<this->engine->influences.size();globalIndex++){
 
 		// lets see if we have influence engine->influences[globalIndex]
-		for (uint localIndex=0;localIndex<this->influences.length();localIndex++){
+		for (unsigned int localIndex=0;localIndex<this->influences.length();localIndex++){
 			if (!(engine->influences[globalIndex]==this->influences[localIndex]))
 				continue;
 
@@ -436,7 +436,7 @@ void GeometryInfo::writeOldSkinWeights(){
 			verticeSelection.addElement(static_cast<int>((*i)->vertNum));
 	}
 	MIntArray inflIndices;
-	for (uint i=0;i<this->influences.length();i++)
+	for (unsigned int i=0;i<this->influences.length();i++)
 		inflIndices.append(i);
 	this->skinFn->setWeights(this->path,components,inflIndices,this->oldSkinWeights,false);
 	CHECK_STATUS("skinfn set weights in writeOldSkinWeights()",status);
