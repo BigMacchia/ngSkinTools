@@ -147,14 +147,14 @@ private:
 
 public:
 	// logical index for transparency
-	static const unsigned int TRANSPARENCY_LOGICAL_INDEX = 0xFFFFFF00;
+	static const unsigned int TRANSPARENCY_LOGICAL_INDEX;
 	// physical transparency index in list
-	static const unsigned int TRANSPARENCY_PHYSICAL_INDEX = 0;
+	static const unsigned int TRANSPARENCY_PHYSICAL_INDEX;
 
 
 	// indexes indicating that no logical or physical influence was defined
-	static const unsigned int UNDEFINED_LOGICAL_INFLUENCE = 0xFFFFFF01;
-	static const unsigned int UNDEFINED_PHYSICAL_INFLUENCE = 0xFFFFFF00;
+	static const unsigned int UNDEFINED_LOGICAL_INFLUENCE;
+	static const unsigned int UNDEFINED_PHYSICAL_INFLUENCE;
 
 	const bool hasTransparencyInfluence;
 

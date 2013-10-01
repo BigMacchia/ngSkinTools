@@ -1,6 +1,7 @@
 #include "defines.h"
 #include "ClusteredPointCloud.h"
 
+
 ClusteredPointCloud::ClusteredPointCloud(const double clusterSize)
 {
 	this->vertexData = NULL;

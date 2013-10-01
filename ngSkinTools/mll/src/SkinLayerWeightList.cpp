@@ -5,6 +5,12 @@
 #include "VertIndexIterators.h"
 #include "utils.h"
 
+const unsigned int InfluenceWeightsMap::TRANSPARENCY_LOGICAL_INDEX = 0xFFFFFF00;
+const unsigned int InfluenceWeightsMap::TRANSPARENCY_PHYSICAL_INDEX = 0;
+const unsigned int InfluenceWeightsMap::UNDEFINED_LOGICAL_INFLUENCE = 0xFFFFFF01;
+const unsigned int InfluenceWeightsMap::UNDEFINED_PHYSICAL_INFLUENCE = 0xFFFFFF00;
+
+
 void SkinLayerWeightList::transferWeights(const SkinLayerWeightList &source,const unsigned int vertexNum,const VertexTransferInfo &mirrorInfo,const double blendWeight) {
 
 	assert(vertexNum<this->weightCount);

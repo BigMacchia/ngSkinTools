@@ -13,6 +13,14 @@
 
 using namespace std;
 
+
+const int SkinLayer::PAINT_TARGET_UNDEFINED = -1;
+const int SkinLayer::PAINT_TARGET_MASK = -2;
+
+const int SkinLayer::LAYER_POSITION_LAST = -1;
+const int SkinLayer::LAYER_POSITION_UNDEFINED = -2;
+
+
 SkinLayer::SkinLayer(const SkinLayerID id,SkinLayerManager &manager):
 	parent(NULL),
 	manager(manager),

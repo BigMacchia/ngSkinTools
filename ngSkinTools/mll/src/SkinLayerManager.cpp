@@ -8,6 +8,9 @@
 #include "SkinLayer.h"
 
 
+const SkinLayerID SkinLayerManager::UNDEFINED_LAYER_ID = -1;
+
+
 bool SkinLayerManager::isPainting = false;
 std::vector<MObjectHandle> SkinLayerManager::autoDisplayNodes;
 

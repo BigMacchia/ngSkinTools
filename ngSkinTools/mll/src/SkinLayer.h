@@ -19,11 +19,11 @@ class SkinLayer
 public:
 
 
-	static const int PAINT_TARGET_UNDEFINED = -1;
-	static const int PAINT_TARGET_MASK = -2;
+	static const int PAINT_TARGET_UNDEFINED;
+	static const int PAINT_TARGET_MASK;
 
-	static const int LAYER_POSITION_LAST = -1;
-	static const int LAYER_POSITION_UNDEFINED = -2;
+	static const int LAYER_POSITION_LAST;
+	static const int LAYER_POSITION_UNDEFINED;
 
 private:
 	double opacity;

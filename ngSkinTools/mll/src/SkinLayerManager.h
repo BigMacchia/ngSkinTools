@@ -92,7 +92,7 @@ private:
 	unsigned int influenceLimitPerVert;
 	
 public:
-	static const SkinLayerID UNDEFINED_LAYER_ID = -1;
+	static const SkinLayerID UNDEFINED_LAYER_ID;
 
 	static void displayColorOnSelection(const bool colorsEnabled);
 
